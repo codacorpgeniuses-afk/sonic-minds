@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SONIC MINDS UNIPORT BASIC CBT TEST✨😃</title>
+  <nav>
+    <div><strong>MyBrand</strong></div>
+    <div id="nav-links">
+        <a href="index.html">Home</a>
+        <a href="admin.html" class="restricted-link locked" onclick="checkLink(event)">🔒 ADMIN SECTION</a>
+        <a href="jamb.html" class="restricted-link locked" onclick="checkLink(event)">🔒 JAMB TEST</a>
+        <a href="basic.html" class="restricted-link locked" onclick="checkLink(event)">🔒 BASIC CBT TRIAL</a>
+        <a href="about.html" style="color: #ffc107; font-size: 13px;">About SONIC MINDS</a>
+        <button id="nav-logout" class="btn-logout hidden" onclick="logout()">Log Out</button>
+    </div>
+</nav>
+  <style>
+    :root {
+      --primary: #0f3d2e;
+      --primary-light: #1a634b;
+      --accent: #d97706;
+      --bg: #f1f5f9;
+      --card: #ffffff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #cbd5e1;
+      --success: #16a34a;
+      --danger: #dc2626;
+      --answered: #2563eb;
+    }
+    * { box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+    body { margin: 0; background: var(--bg); color: var(--text); }
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: #fff;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    header h1 { margin: 0; font-size: 1.35rem; letter-spacing: 0.3px; }
+    header small { opacity: 0.85; display: block; font-size: 0.82rem; }
+    .nav-actions { display: flex; gap: 0.75rem; align-items: center; }
+    .btn {
+      border: none;
+      padding: 0.6rem 1.15rem;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.9rem;
+    }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-light); }
+    .btn-accent { background: var(--accent); color: #fff; }
+    .btn-accent:hover { background: #b45309; }
+    .btn-outline { background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.4); }
+    .btn-outline:hover { background: rgba(255,255,255,0.25); }
+    .btn-secondary { background: #e2e8f0; color: var(--text); }
+    .btn-secondary:hover { background: #cbd5e1; }
+    .btn-danger { background: var(--danger); color: #fff; }
+    .btn-success { background: var(--success); color: #fff; }
+    .container { max-width: 1180px; margin: 1.5rem auto; padding: 0 1rem; }
+    .card {
+      background: var(--card);
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+      margin-bottom: 1.5rem;
+      border: 1px solid #e2e8f0;
+    }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; }
+    .subject-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      background: #f8fafc;
+    }
+    .subject-card label.title { font-weight: 700; display: flex; justify-content: space-between; margin-bottom: 0.5rem; color: var(--primary); }
+    select, input[type="number"], input[type="text"] {
+      width: 100%;
+      padding: 0.55rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.95rem;
+      background: #fff;
+    }
+    .badge {
+      background: #dcfce7;
+      color: #166534;
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .exam-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      background: #fff;
+      padding: 1rem 1.5rem;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      border-left: 5px solid var(--primary);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    .timer-box {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--danger);
+      background: #fef2f2;
+      padding: 0.45rem 1rem;
+      border-radius: 8px;
+      border: 1px solid #fecaca;
+      font-variant-numeric: tabular-nums;
+    }
+    .subject-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .tab-btn {
+      padding: 0.45rem 0.9rem;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: #f8fafc;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+    .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .exam-body { display: grid; grid-template-columns: 1fr 300px; gap: 1.25rem; }
+    @media (max-width: 860px) { .exam-body { grid-template-columns: 1fr; } }
+    .option-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.85rem 1rem;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 0.65rem;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+    .option-item:hover { background: #f1f5f9; border-color: var(--primary-light); }
+    .option-item.selected { background: #eff6ff; border-color: var(--answered); font-weight: 600; }
+    .option-key {
+      background: #e2e8f0;
+      color: var(--text);
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .option-item.selected .option-key { background: var(--answered); color: #fff; }
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.45rem;
+      max-height: 360px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+    .p-btn {
+      padding: 0.45rem 0;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      background: #fff;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.82rem;
+    }
+    .p-btn.answered { background: var(--answered); color: #fff; border-color: var(--answered); }
+    .p-btn.current { outline: 2.5px solid var(--accent); }
+    .hidden { display: none !important; }
+    .review-item {
+      border-left: 4px solid var(--border);
+      padding: 1rem;
+      margin-bottom: 1rem;
+      background: #f8fafc;
+      border-radius: 0 8px 8px 0;
+    }
+    .review-item.correct { border-left-color: var(--success); background: #f0fdf4; }
+    .review-item.wrong { border-left-color: var(--danger); background: #fef2f2; }
+    .explanation-box {
+      margin-top: 0.65rem;
+      padding: 0.65rem 0.85rem;
+      background: #fff;
+      border-radius: 6px;
+      border: 1px dashed #94a3b8;
+      font-size: 0.9rem;
+    }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    th, td { padding: 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
+    th { background: #f8fafc; color: var(--primary); }
+    .score-big { font-size: 2.2rem; font-weight: 800; color: var(--primary); }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>UNIPORT Basic Studies & JAMB Multi-Subject CBT Portal</h1>
+    <small>Authentic Question Bank • Randomized Engine • Full Explanations</small>
+  </div>
+  <div class="nav-actions">
+    <button class="btn btn-outline" onclick="showView('setup')">New CBT Session</button>
+    <a href="#review-portal" class="btn btn-accent" onclick="showView('history'); return false;">
+      Saved Test Reviews & Corrections (<span id="savedCountBadge">0</span>)
+    </a>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- VIEW 1: SETUP -->
+  <section id="view-setup" class="card">
+    <h2 style="margin-top:0; color:var(--primary);">Configure Your CBT Examination</h2>
+    <p style="color:var(--muted); margin-bottom:1.25rem;">
+      Select the number of randomized questions per subject and set your custom countdown timer.
+    </p>
+
+    <div class="grid-2" style="margin-bottom:1.25rem;">
+      <div>
+        <label style="font-weight:700; display:block; margin-bottom:0.4rem;">Candidate Name / Reg No.</label>
+        <input type="text" id="candidateName" placeholder="e.g., Chinedu Okafor - SBS/2026/014" value="Candidate - UNIPORT" />
+      </div>
+      <div>
+        <label style="font-weight:700; display:block; margin-bottom:0.4rem;">Custom Timer (Minutes)</label>
+        <input type="number" id="customMinutes" min="1" max="300" value="45" />
+      </div>
+    </div>
+
+    <h3 style="margin-bottom:0.75rem; font-size:1.05rem;">Select Questions Per Subject</h3>
+    <div class="grid-2">
+      <div class="subject-card">
+        <label class="title"><span>Chemistry</span><span class="badge" id="badge-Chemistry">0 in Bank</span></label>
+        <select id="qty-Chemistry">
+          <option value="10" selected>10 Questions</option>
+          <option value="15">15 Questions</option>
+          <option value="20">20 Questions</option>
+          <option value="40">40 Questions</option>
+          <option value="60">20 Questions</option>     
+          <option value="0">Exclude Subject (0)</option>
+        </select>
+      </div>
+      <div class="subject-card">
+        <label class="title"><span>Use of English</span><span class="badge" id="badge-English">0 in Bank</span></label>
+        <select id="qty-English">
+          <option value="10" selected>10 Questions</option>
+          <option value="15">15 Questions</option>
+          <option value="20">20 Questions</option>
+          <option value="0">Exclude Subject (0)</option>
+        </select>
+      </div>
+      <div class="subject-card">
+        <label class="title"><span>Mathematics</span><span class="badge" id="badge-Mathematics">0 in Bank</span></label>
+        <select id="qty-Mathematics">
+          <option value="10" selected>10 Questions</option>
+          <option value="15">15 Questions</option>
+          <option value="20">20 Questions</option>
+          <option value="40">40 Questions</option>
+          <option value="60">20 Questions</option>     
+          <option value="0">Exclude Subject (0)</option>
+        </select>
+      </div>
+      <div class="subject-card">
+        <label class="title"><span>Biology</span><span class="badge" id="badge-Biology">0 in Bank</span></label>
+        <select id="qty-Biology">
+          <option value="10" selected>10 Questions</option>
+          <option value="15">15 Questions</option>
+          <option value="20">20 Questions</option>
+          <option value="40">40 Questions</option>
+          <option value="60">20 Questions</option>     
+          <option value="0">Exclude Subject (0)</option>
+        </select>
+      </div>
+      <div class="subject-card">
+        <label class="title"><span>Physics</span><span class="badge" id="badge-Physics">0 in Bank</span></label>
+        <select id="qty-Physics">
+          <option value="10" selected>10 Questions</option>
+          <option value="15">15 Questions</option>
+          <option value="20">20 Questions</option>
+          <option value="40">40 Questions</option>
+          <option value="60">20 Questions</option>     
+          <option value="0">Exclude Subject (0)</option>
+        </select>
+      </div>
+    </div>
+
+    <div style="margin-top:1.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+      <div style="font-size:0.9rem; color:var(--muted);">
+        Total available in current bank: <strong id="totalBankCount">0</strong> Questions
+      </div>
+      <button class="btn btn-primary" style="font-size:1rem; padding:0.8rem 1.75rem;" onclick="startExam()">
+        Start Randomized CBT Exam →
+      </button>
+    </div>
+  </section>
+
+  <!-- VIEW 2: EXAM -->
+  <section id="view-exam" class="hidden">
+    <div class="exam-header">
+      <div>
+        <div style="font-size:0.82rem; color:var(--muted);" id="examCandidateDisplay">Candidate</div>
+        <div class="subject-tabs" id="subjectTabs" style="margin-top:0.4rem;"></div>
+      </div>
+      <div style="display:flex; align-items:center; gap:1rem;">
+        <div class="timer-box" id="timerDisplay">00:00:00</div>
+        <button class="btn btn-danger" onclick="confirmSubmit()">Submit Exam</button>
+      </div>
+    </div>
+
+    <div class="exam-body">
+      <div class="card" style="margin-bottom:0;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:0.75rem; color:var(--muted); font-size:0.88rem;">
+          <span id="qSubjectTag" style="font-weight:700; color:var(--primary);">SUBJECT</span>
+          <span id="qCounterTag">Question 1 of 50</span>
+        </div>
+        <h3 id="questionText" style="margin-top:0; line-height:1.5; font-size:1.12rem;">Question goes here</h3>
+        <div id="optionsContainer" style="margin-top:1rem;"></div>
+
+        <div style="display:flex; justify-content:space-between; margin-top:1.5rem; padding-top:1rem; border-top:1px solid var(--border);">
+          <button class="btn btn-secondary" onclick="prevQuestion()">← Previous</button>
+          <button class="btn btn-secondary" onclick="clearResponse()">Clear Choice</button>
+          <button class="btn btn-primary" onclick="nextQuestion()">Next →</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:0;">
+        <h4 style="margin-top:0; margin-bottom:0.5rem;">Question Navigator</h4>
+        <div style="font-size:0.8rem; color:var(--muted); margin-bottom:0.75rem;">
+          Answered: <strong id="answeredCount">0</strong> / <strong id="totalExamCount">0</strong>
+        </div>
+        <div class="palette-grid" id="paletteGrid"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIEW 3: HISTORY & REVIEW -->
+  <section id="view-history" class="hidden">
+    <div class="card">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+        <div>
+          <h2 style="margin:0; color:var(--primary);">Saved CBT History & Corrections Portal</h2>
+          <p style="margin:0.3rem 0 0; color:var(--muted);">All completed exams are stored locally in your browser.</p>
+        </div>
+        <button class="btn btn-secondary" onclick="showView('setup')">← Back to Exam Setup</button>
+      </div>
+      <div id="historyListContainer" style="margin-top:1rem;"></div>
+    </div>
+
+    <div id="detailedReviewCard" class="card hidden">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; border-bottom:1px solid var(--border); padding-bottom:1rem; margin-bottom:1rem;">
+        <div>
+          <h3 style="margin:0; color:var(--primary);" id="reviewTitle">Test Review</h3>
+          <small id="reviewMeta" style="color:var(--muted);"></small>
+        </div>
+        <div>
+          <select id="reviewFilter" onchange="renderReviewQuestions()" style="width:auto;">
+            <option value="all">Show All Questions</option>
+            <option value="wrong">Show Missed / Unanswered Only</option>
+            <option value="correct">Show Correct Only</option>
+          </select>
+        </div>
+      </div>
+      <div id="subjectBreakdownBox" style="margin-bottom:1.25rem;"></div>
+      <div id="reviewQuestionsContainer"></div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+// ===================== QUESTION BANK =====================
+// Practical, accurate set. Expand easily by adding more objects.
+const QUESTION_BANK = {
+  Chemistry: [
+    { q: "In oxidation-reduction, what does OIL RIG represent?", opts: ["Oxidation Is Loss, Reduction Is Gain", "Oxidation Is Liberation, Reduction Is Gain", "Oxidation Is Loss of oxygen, Reduction Is Gain", "Oxidation Is Lowering, Reduction Is Growth"], ans: 0, exp: "OIL RIG = Oxidation Is Loss of electrons, Reduction Is Gain of electrons." },
+    { q: "Determine the oxidation number of chlorine in KClO₃.", opts: ["+3", "+5", "+7", "-1"], ans: 1, exp: "K(+1) + Cl + 3O(-2) = 0 → Cl = +5." },
+    { q: "What is the oxidation state of Cr in K₂Cr₂O₇?", opts: ["+3", "+7", "+6", "+4"], ans: 2, exp: "2K(+1) + 2Cr + 7O(-2) = 0 → 2Cr = +12 → Cr = +6." },
+    { q: "Which is the strongest oxidizing agent?", opts: ["Chlorine", "Oxygen", "Fluorine", "KMnO₄"], ans: 2, exp: "Fluorine (F₂) is the most electronegative element." },
+    { q: "For an endothermic reaction, ΔH is:", opts: ["Negative", "Zero", "Positive", "Equal to activation energy"], ans: 2, exp: "Endothermic reactions absorb heat → ΔH > 0." },
+    { q: "Standard enthalpy of neutralization (strong acid + strong base) is approximately:", opts: ["-285.8 kJ/mol", "-890.3 kJ/mol", "-57.4 kJ/mol", "+25.0 kJ/mol"], ans: 2, exp: "Approximately −57.4 kJ mol⁻¹." },
+    { q: "Which condition guarantees a spontaneous reaction?", opts: ["ΔG > 0", "ΔG = 0", "ΔG < 0", "ΔS < 0 and ΔH > 0"], ans: 2, exp: "Spontaneity requires ΔG < 0." },
+    { q: "Hybridisation of carbon in ethene (C₂H₄) is:", opts: ["sp", "sp²", "sp³", "sp³d"], ans: 1, exp: "Double bond → trigonal planar → sp²." },
+    { q: "Gas evolved when dilute HCl reacts with zinc is:", opts: ["Chlorine", "Oxygen", "Hydrogen", "Sulphur dioxide"], ans: 2, exp: "Zn + 2HCl → ZnCl₂ + H₂." },
+    { q: "Conversion of vegetable oil to margarine is called:", opts: ["Hydration", "Hydrogenation", "Dehydration", "Polymerization"], ans: 1, exp: "Addition of hydrogen across C=C bonds." },
+    { q: "The pH of a neutral solution at 25 °C is:", opts: ["0", "7", "14", "1"], ans: 1, exp: "Neutral water has [H⁺] = 10⁻⁷ → pH = 7." },
+    { q: "Which is an example of a weak acid?", opts: ["HCl", "HNO₃", "CH₃COOH", "H₂SO₄"], ans: 2, exp: "Ethanoic acid is a weak acid." },
+    { q: "Avogadro’s number is approximately:", opts: ["6.02 × 10²³", "6.02 × 10²²", "3.01 × 10²³", "1.6 × 10⁻¹⁹"], ans: 0, exp: "Number of particles in one mole." },
+    { q: "The shape of the methane molecule is:", opts: ["Linear", "Trigonal planar", "Tetrahedral", "Octahedral"], ans: 2, exp: "Four bonding pairs → tetrahedral." },
+    { q: "Which process is used in the extraction of aluminium?", opts: ["Bessemer process", "Hall–Héroult process", "Contact process", "Haber process"], ans: 1, exp: "Electrolytic reduction of alumina." }
+  ],
+  English: [
+    { q: "Word nearest in meaning to MANDATORY:", opts: ["Optional", "Compulsory", "Difficult", "Temporary"], ans: 1, exp: "Mandatory = required by rule or law." },
+    { q: "Opposite of PESSIMIST:", opts: ["Optimist", "Realist", "Cynic", "Fatalist"], ans: 0, exp: "Optimist expects the best." },
+    { q: "Neither the teacher nor the students ___ present.", opts: ["was", "were", "is", "has been"], ans: 1, exp: "Verb agrees with the nearer subject (students → were)." },
+    { q: "Figure of speech: 'The wind whispered through the trees'", opts: ["Simile", "Metaphor", "Personification", "Hyperbole"], ans: 2, exp: "Human quality given to non-human object." },
+    { q: "He has been living in Port Harcourt ___ three years.", opts: ["since", "from", "for", "during"], ans: 2, exp: "'For' is used with a period of time." },
+    { q: "Synonym of METICULOUS:", opts: ["Careless", "Thorough and careful", "Fast", "Hasty"], ans: 1, exp: "Showing great attention to detail." },
+    { q: "Antonym of GENEROUS:", opts: ["Kind", "Stingy", "Bountiful", "Philanthropic"], ans: 1, exp: "Stingy is the opposite of generous." },
+    { q: "Correct sentence:", opts: ["He gave me an advice.", "He gave me some good advice.", "He gave me many advices.", "He gave advices to me."], ans: 1, exp: "'Advice' is uncountable." },
+    { q: "Idiom 'beat around the bush' means:", opts: ["Cut down trees", "Avoid speaking directly", "Search for animals", "Clean the garden"], ans: 1, exp: "Avoiding the main point." },
+    { q: "Correctly spelt word:", opts: ["Accomodation", "Accommodation", "Acommodation", "Accomodation"], ans: 1, exp: "Double c and double m." },
+    { q: "Choose the correct option: She is good ___ Mathematics.", opts: ["in", "at", "on", "for"], ans: 1, exp: "Good at a subject/skill." },
+    { q: "The passive form of 'They built the house' is:", opts: ["The house was built by them.", "The house is built by them.", "The house has built by them.", "The house built them."], ans: 0, exp: "Simple past passive." },
+    { q: "Word that best completes: The committee has ___ a decision.", opts: ["take", "took", "taken", "taking"], ans: 2, exp: "Present perfect needs past participle." },
+    { q: "Synonym of ABUNDANT:", opts: ["Scarce", "Plentiful", "Rare", "Limited"], ans: 1, exp: "Existing in large quantities." },
+    { q: "Choose the correct article: ___ honest man.", opts: ["A", "An", "The", "No article"], ans: 1, exp: "'Honest' begins with a vowel sound." }
+  ],
+  Mathematics: [
+    { q: "Solve for x: 3x − 5 = 2x + 7", opts: ["x = 2", "x = 7", "x = 12", "x = −2"], ans: 2, exp: "3x − 2x = 7 + 5 → x = 12." },
+    { q: "Derivative of y = 4x³ − 5x² + 7 is:", opts: ["12x² − 10x", "12x² − 10x + 7", "12x − 10", "4x² − 5x"], ans: 0, exp: "d/dx(4x³) = 12x², d/dx(−5x²) = −10x." },
+    { q: "log₂(32) + log₃(81) =", opts: ["7", "9", "5", "8"], ans: 1, exp: "5 + 4 = 9." },
+    { q: "5th term of AP 3, 7, 11, … is:", opts: ["15", "19", "23", "27"], ans: 1, exp: "a = 3, d = 4 → T₅ = 3 + 4×4 = 19." },
+    { q: "Discriminant of 2x² − 4x + 1 = 0 is:", opts: ["8", "16", "12", "0"], ans: 0, exp: "b² − 4ac = 16 − 8 = 8." },
+    { q: "If sin θ = 3/5 (acute), cos θ =", opts: ["4/5", "3/4", "5/3", "1/2"], ans: 0, exp: "√(1 − 9/25) = 4/5." },
+    { q: "Simplify: (x² − 9)/(x − 3)", opts: ["x + 3", "x − 3", "x² − 3", "x + 9"], ans: 0, exp: "Difference of squares → (x−3)(x+3)/(x−3) = x+3." },
+    { q: "The gradient of the line 2y = 6x − 4 is:", opts: ["6", "3", "2", "−2"], ans: 1, exp: "y = 3x − 2 → gradient = 3." },
+    { q: "Mean of 4, 8, 6, 10, 12 is:", opts: ["8", "10", "7", "9"], ans: 0, exp: "(4+8+6+10+12)/5 = 40/5 = 8." },
+    { q: "If 2ˣ = 32, then x =", opts: ["4", "5", "6", "3"], ans: 1, exp: "2⁵ = 32." },
+    { q: "Area of a circle of radius 7 cm is (take π = 22/7):", opts: ["154 cm²", "44 cm²", "22 cm²", "308 cm²"], ans: 0, exp: "πr² = 22/7 × 49 = 154." },
+    { q: "Solve: 2x + 3 > 11", opts: ["x > 4", "x < 4", "x > 7", "x < 7"], ans: 0, exp: "2x > 8 → x > 4." },
+    { q: "The sum of the interior angles of a hexagon is:", opts: ["720°", "540°", "360°", "1080°"], ans: 0, exp: "(n−2)×180° = 4×180 = 720°." },
+    { q: "If a : b = 2 : 3 and b : c = 4 : 5, then a : c =", opts: ["8 : 15", "2 : 5", "3 : 4", "4 : 5"], ans: 0, exp: "a/b = 2/3, b/c = 4/5 → a/c = (2/3)×(4/5) = 8/15." },
+    { q: "Value of sin 30° is:", opts: ["1/2", "√3/2", "1", "0"], ans: 0, exp: "Standard value." }
+  ],
+  Biology: [
+    { q: "The basic unit of life is the:", opts: ["Tissue", "Organ", "Cell", "Organism"], ans: 2, exp: "Cell theory – all living things are made of cells." },
+    { q: "Photosynthesis mainly occurs in the:", opts: ["Mitochondria", "Chloroplast", "Nucleus", "Ribosome"], ans: 1, exp: "Chloroplasts contain chlorophyll." },
+    { q: "The process by which plants lose water vapour is:", opts: ["Respiration", "Transpiration", "Photosynthesis", "Osmosis"], ans: 1, exp: "Transpiration occurs mainly through stomata." },
+    { q: "Which blood group is the universal donor?", opts: ["A", "B", "AB", "O"], ans: 3, exp: "Group O has no A or B antigens." },
+    { q: "The organelle responsible for protein synthesis is the:", opts: ["Lysosome", "Ribosome", "Golgi body", "Vacuole"], ans: 1, exp: "Ribosomes translate mRNA into proteins." },
+    { q: "DNA stands for:", opts: ["Deoxyribonucleic acid", "Diribonucleic acid", "Deoxyribonuclear acid", "None of the above"], ans: 0, exp: "Standard expansion." },
+    { q: "The functional unit of the kidney is the:", opts: ["Neuron", "Nephron", "Alveolus", "Villus"], ans: 1, exp: "Each kidney contains about a million nephrons." },
+    { q: "Which vitamin is synthesised in the skin by sunlight?", opts: ["Vitamin A", "Vitamin C", "Vitamin D", "Vitamin K"], ans: 2, exp: "UV light converts 7-dehydrocholesterol to vitamin D." },
+    { q: "The largest organ of the human body is the:", opts: ["Liver", "Brain", "Skin", "Heart"], ans: 2, exp: "Skin is the largest organ by surface area and weight." },
+    { q: "Aerobic respiration produces approximately how many ATP molecules from one glucose?", opts: ["2", "18", "36–38", "4"], ans: 2, exp: "Complete oxidation yields ~36–38 ATP." },
+    { q: "The green pigment in plants is called:", opts: ["Haemoglobin", "Chlorophyll", "Melanin", "Carotene"], ans: 1, exp: "Chlorophyll absorbs light energy." },
+    { q: "Which of the following is a vector of malaria?", opts: ["Housefly", "Tsetse fly", "Anopheles mosquito", "Aedes mosquito"], ans: 2, exp: "Female Anopheles transmits Plasmodium." },
+    { q: "The process of cell division that produces gametes is:", opts: ["Mitosis", "Meiosis", "Binary fission", "Budding"], ans: 1, exp: "Meiosis halves the chromosome number." },
+    { q: "Enzymes are biologically:", opts: ["Carbohydrates", "Lipids", "Proteins", "Nucleic acids"], ans: 2, exp: "Almost all enzymes are proteins." },
+    { q: "The site of gaseous exchange in the lungs is the:", opts: ["Bronchi", "Trachea", "Alveoli", "Bronchioles"], ans: 2, exp: "Alveoli provide a large surface area for diffusion." }
+    
+  ],
+  Physics: [
+    { q: "SI unit of force is the:", opts: ["Joule", "Watt", "Newton", "Pascal"], ans: 2, exp: "1 N = 1 kg m s⁻²." },
+    { q: "Speed of light in vacuum is approximately:", opts: ["3 × 10⁶ m/s", "3 × 10⁸ m/s", "3 × 10¹⁰ m/s", "3 × 10⁴ m/s"], ans: 1, exp: "c ≈ 3.0 × 10⁸ m s⁻¹." },
+    { q: "Which quantity is a vector?", opts: ["Mass", "Temperature", "Velocity", "Energy"], ans: 2, exp: "Velocity has magnitude and direction." },
+    { q: "Ohm’s law states that V =", opts: ["IR", "I/R", "R/I", "I²R"], ans: 0, exp: "V = IR (at constant temperature)." },
+    { q: "The unit of electric charge is the:", opts: ["Ampere", "Volt", "Coulomb", "Ohm"], ans: 2, exp: "1 C = 1 A s." },
+    { q: "A body moving with constant speed in a circle has:", opts: ["Zero acceleration", "Constant velocity", "Centripetal acceleration", "Zero force"], ans: 2, exp: "Direction of velocity changes continuously." },
+    { q: "The frequency of a wave is 50 Hz. Its period is:", opts: ["0.02 s", "0.2 s", "50 s", "2 s"], ans: 0, exp: "T = 1/f = 1/50 = 0.02 s." },
+    { q: "Which mirror is used as a rear-view mirror in vehicles?", opts: ["Plane", "Concave", "Convex", "Parabolic"], ans: 2, exp: "Convex mirrors give a wider field of view." },
+    { q: "Power is defined as:", opts: ["Force × distance", "Work done per unit time", "Mass × acceleration", "Energy × time"], ans: 1, exp: "P = W/t." },
+    { q: "The instrument used to measure current is the:", opts: ["Voltmeter", "Ammeter", "Ohmmeter", "Galvanometer only"], ans: 1, exp: "Ammeter is connected in series." },
+    { q: "Acceleration due to gravity on Earth is approximately:", opts: ["9.8 m/s²", "10 m/s", "6.7 × 10⁻¹¹", "3 × 10⁸"], ans: 0, exp: "g ≈ 9.8 m s⁻²." },
+    { q: "Which colour of light has the highest frequency?", opts: ["Red", "Green", "Blue", "Violet"], ans: 3, exp: "Violet has the shortest wavelength and highest frequency in the visible spectrum." },
+    { q: "The work done by a force of 10 N moving an object 5 m in the direction of the force is:", opts: ["2 J", "15 J", "50 J", "0.5 J"], ans: 2, exp: "W = F × s = 50 J." },
+    { q: "Sound cannot travel through a:", opts: ["Solid", "Liquid", "Gas", "Vacuum"], ans: 3, exp: "Sound needs a material medium." },
+    { q: "The refractive index of a medium is the ratio of:", opts: ["Speed of light in medium to speed in vacuum", "Speed of light in vacuum to speed in medium", "Wavelength in medium to frequency", "None"], ans: 1, exp: "n = c / v." }
+  ]
+};
+
+// ===================== STATE =====================
+let examState = null;
+let timerInterval = null;
+let currentReviewId = null;
+
+// ===================== UTILITIES =====================
+function shuffle(array) {
+  const a = [...array];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function formatTime(seconds) {
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = seconds % 60;
+  return [h, m, s].map(v => String(v).padStart(2, '0')).join(':');
+}
+
+function updateBankBadges() {
+  let total = 0;
+  for (const sub of Object.keys(QUESTION_BANK)) {
+    const count = QUESTION_BANK[sub].length;
+    total += count;
+    const badge = document.getElementById('badge-' + sub);
+    if (badge) badge.textContent = count + ' in Bank';
+  }
+  document.getElementById('totalBankCount').textContent = total;
+}
+
+// ===================== VIEW MANAGEMENT =====================
+function showView(view) {
+  ['setup', 'exam', 'history'].forEach(v => {
+    document.getElementById('view-' + v).classList.add('hidden');
+  });
+  document.getElementById('view-' + view).classList.remove('hidden');
+
+  if (view === 'history') {
+    renderHistoryList();
+    document.getElementById('detailedReviewCard').classList.add('hidden');
+  }
+  updateSavedCount();
+}
+
+// ===================== START EXAM =====================
+function startExam() {
+  const name = document.getElementById('candidateName').value.trim() || 'Candidate - UNIPORT';
+  const minutes = parseInt(document.getElementById('customMinutes').value, 10) || 45;
+
+  const subjects = ['Chemistry', 'English', 'Mathematics', 'Biology', 'Physics'];
+  const selected = [];
+  let totalQ = 0;
+
+  subjects.forEach(sub => {
+    const qty = parseInt(document.getElementById('qty-' + sub).value, 10) || 0;
+    if (qty > 0) {
+      const bank = QUESTION_BANK[sub] || [];
+      const take = Math.min(qty, bank.length);
+      if (take === 0) return;
+      const sampled = shuffle(bank).slice(0, take).map(q => ({
+        ...q,
+        subject: sub,
+        userAns: null
+      }));
+      selected.push(...sampled);
+      totalQ += take;
+    }
+  });
+
+  if (totalQ === 0) {
+    alert('Please select at least one subject with questions > 0.');
+    return;
+  }
+
+  // Final shuffle of the whole paper
+  const questions = shuffle(selected);
+
+  examState = {
+    candidate: name,
+    questions,
+    currentIndex: 0,
+    totalSeconds: minutes * 60,
+    remaining: minutes * 60,
+    startedAt: new Date().toISOString(),
+    submitted: false
+  };
+
+  // Build subject tabs
+  const tabs = document.getElementById('subjectTabs');
+  tabs.innerHTML = '';
+  const uniqueSubs = [...new Set(questions.map(q => q.subject))];
+  uniqueSubs.forEach(sub => {
+    const btn = document.createElement('button');
+    btn.className = 'tab-btn';
+    btn.textContent = sub;
+    btn.onclick = () => jumpToSubject(sub);
+    tabs.appendChild(btn);
+  });
+
+  document.getElementById('examCandidateDisplay').textContent = name;
+  document.getElementById('totalExamCount').textContent = questions.length;
+
+  showView('exam');
+  renderQuestion();
+  startTimer();
+}
+
+// ===================== TIMER =====================
+function startTimer() {
+  clearInterval(timerInterval);
+  updateTimerDisplay();
+  timerInterval = setInterval(() => {
+    if (!examState || examState.submitted) return;
+    examState.remaining--;
+    updateTimerDisplay();
+    if (examState.remaining <= 0) {
+      clearInterval(timerInterval);
+      alert('Time is up! Your exam will be submitted automatically.');
+      submitExam(true);
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const el = document.getElementById('timerDisplay');
+  if (!examState) return;
+  el.textContent = formatTime(Math.max(0, examState.remaining));
+  if (examState.remaining <= 60) {
+    el.style.background = '#fef2f2';
+    el.style.color = '#b91c1c';
+  }
+}
+
+// ===================== QUESTION RENDERING =====================
+function renderQuestion() {
+  if (!examState) return;
+  const q = examState.questions[examState.currentIndex];
+  const idx = examState.currentIndex;
+
+  document.getElementById('qSubjectTag').textContent = q.subject.toUpperCase();
+  document.getElementById('qCounterTag').textContent = `Question ${idx + 1} of ${examState.questions.length}`;
+  document.getElementById('questionText').textContent = q.q;
+
+  const container = document.getElementById('optionsContainer');
+  container.innerHTML = '';
+  const letters = ['A', 'B', 'C', 'D'];
+  q.opts.forEach((opt, i) => {
+    const div = document.createElement('div');
+    div.className = 'option-item' + (q.userAns === i ? ' selected' : '');
+    div.onclick = () => selectOption(i);
+    div.innerHTML = `<span class="option-key">${letters[i]}</span><span>${opt}</span>`;
+    container.appendChild(div);
+  });
+
+  // Highlight active subject tab
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent === q.subject);
+  });
+
+  updatePalette();
+  updateAnsweredCount();
+}
+
+function selectOption(i) {
+  if (!examState || examState.submitted) return;
+  examState.questions[examState.currentIndex].userAns = i;
+  renderQuestion();
+}
+
+function clearResponse() {
+  if (!examState || examState.submitted) return;
+  examState.questions[examState.currentIndex].userAns = null;
+  renderQuestion();
+}
+
+function nextQuestion() {
+  if (!examState) return;
+  if (examState.currentIndex < examState.questions.length - 1) {
+    examState.currentIndex++;
+    renderQuestion();
+  }
+}
+
+function prevQuestion() {
+  if (!examState) return;
+  if (examState.currentIndex > 0) {
+    examState.currentIndex--;
+    renderQuestion();
+  }
+}
+
+function jumpToQuestion(index) {
+  if (!examState) return;
+  examState.currentIndex = index;
+  renderQuestion();
+}
+
+function jumpToSubject(sub) {
+  if (!examState) return;
+  const idx = examState.questions.findIndex(q => q.subject === sub);
+  if (idx !== -1) {
+    examState.currentIndex = idx;
+    renderQuestion();
+  }
+}
+
+function updatePalette() {
+  const grid = document.getElementById('paletteGrid');
+  grid.innerHTML = '';
+  examState.questions.forEach((q, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'p-btn';
+    if (q.userAns !== null) btn.classList.add('answered');
+    if (i === examState.currentIndex) btn.classList.add('current');
+    btn.textContent = i + 1;
+    btn.onclick = () => jumpToQuestion(i);
+    grid.appendChild(btn);
+  });
+}
+
+function updateAnsweredCount() {
+  const answered = examState.questions.filter(q => q.userAns !== null).length;
+  document.getElementById('answeredCount').textContent = answered;
+}
+
+// ===================== SUBMIT =====================
+function confirmSubmit() {
+  if (!examState) return;
+  const answered = examState.questions.filter(q => q.userAns !== null).length;
+  const total = examState.questions.length;
+  if (confirm(`You have answered ${answered} out of ${total} questions.\n\nAre you sure you want to submit?`)) {
+    submitExam(false);
+  }
+}
+
+function submitExam(auto = false) {
+  if (!examState || examState.submitted) return;
+  clearInterval(timerInterval);
+  examState.submitted = true;
+  examState.finishedAt = new Date().toISOString();
+
+  // Score
+  let correct = 0;
+  const bySubject = {};
+  examState.questions.forEach(q => {
+    if (!bySubject[q.subject]) bySubject[q.subject] = { correct: 0, total: 0 };
+    bySubject[q.subject].total++;
+    if (q.userAns === q.ans) {
+      correct++;
+      bySubject[q.subject].correct++;
+    }
+  });
+
+  examState.score = correct;
+  examState.bySubject = bySubject;
+  examState.percentage = Math.round((correct / examState.questions.length) * 100);
+
+  // Save to localStorage
+  const history = JSON.parse(localStorage.getItem('uniport_cbt_history') || '[]');
+  const record = {
+    id: Date.now().toString(),
+    candidate: examState.candidate,
+    startedAt: examState.startedAt,
+    finishedAt: examState.finishedAt,
+    score: examState.score,
+    total: examState.questions.length,
+    percentage: examState.percentage,
+    bySubject: examState.bySubject,
+    questions: examState.questions // full review data
+  };
+  history.unshift(record);
+  // Keep only last 30
+  if (history.length > 30) history.length = 30;
+  localStorage.setItem('uniport_cbt_history', JSON.stringify(history));
+
+  updateSavedCount();
+
+  // Show quick result then go to history
+  alert(`Exam Submitted!\n\nScore: ${correct} / ${examState.questions.length} (${examState.percentage}%)\n\nYou can now review your answers in the Saved Reviews section.`);
+  showView('history');
+  // Auto open the latest review
+  setTimeout(() => viewDetailedReview(record.id), 300);
+}
+
+// ===================== HISTORY & REVIEW =====================
+function updateSavedCount() {
+  const history = JSON.parse(localStorage.getItem('uniport_cbt_history') || '[]');
+  document.getElementById('savedCountBadge').textContent = history.length;
+}
+
+function renderHistoryList() {
+  const container = document.getElementById('historyListContainer');
+  const history = JSON.parse(localStorage.getItem('uniport_cbt_history') || '[]');
+
+  if (history.length === 0) {
+    container.innerHTML = '<p style="color:var(--muted);">No saved tests yet. Complete an exam to see it here.</p>';
+    return;
+  }
+
+  let html = '<table><thead><tr><th>Date</th><th>Candidate</th><th>Score</th><th>Percentage</th><th>Action</th></tr></thead><tbody>';
+  history.forEach(rec => {
+    const date = new Date(rec.finishedAt).toLocaleString();
+    html += `<tr>
+      <td>${date}</td>
+      <td>${rec.candidate}</td>
+      <td>${rec.score} / ${rec.total}</td>
+      <td><strong>${rec.percentage}%</strong></td>
+      <td><button class="btn btn-primary" style="padding:0.35rem 0.8rem;font-size:0.85rem;" onclick="viewDetailedReview('${rec.id}')">Review & Corrections</button></td>
+    </tr>`;
+  });
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+
+function viewDetailedReview(id) {
+  const history = JSON.parse(localStorage.getItem('uniport_cbt_history') || '[]');
+  const rec = history.find(r => r.id === id);
+  if (!rec) return;
+
+  currentReviewId = id;
+  document.getElementById('detailedReviewCard').classList.remove('hidden');
+  document.getElementById('reviewTitle').textContent = `Review – ${rec.candidate}`;
+  document.getElementById('reviewMeta').textContent = 
+    `Finished: ${new Date(rec.finishedAt).toLocaleString()}  •  Score: ${rec.score}/${rec.total} (${rec.percentage}%)`;
+
+  // Subject breakdown
+  let breakdown = '<div style="display:flex;flex-wrap:wrap;gap:1rem;">';
+  for (const [sub, data] of Object.entries(rec.bySubject || {})) {
+    const pct = Math.round((data.correct / data.total) * 100);
+    breakdown += `<div style="background:#f8fafc;padding:0.75rem 1rem;border-radius:8px;border:1px solid var(--border);">
+      <strong>${sub}</strong><br>
+      ${data.correct}/${data.total} (${pct}%)
+    </div>`;
+  }
+  breakdown += '</div>';
+  document.getElementById('subjectBreakdownBox').innerHTML = breakdown;
+
+  renderReviewQuestions();
+}
+
+function renderReviewQuestions() {
+  if (!currentReviewId) return;
+  const history = JSON.parse(localStorage.getItem('uniport_cbt_history') || '[]');
+  const rec = history.find(r => r.id === currentReviewId);
+  if (!rec) return;
+
+  const filter = document.getElementById('reviewFilter').value;
+  const container = document.getElementById('reviewQuestionsContainer');
+  container.innerHTML = '';
+
+  rec.questions.forEach((q, i) => {
+    const isCorrect = q.userAns === q.ans;
+    const isUnanswered = q.userAns === null;
+
+    if (filter === 'wrong' && isCorrect) return;
+    if (filter === 'correct' && !isCorrect) return;
+
+    const div = document.createElement('div');
+    div.className = 'review-item ' + (isCorrect ? 'correct' : 'wrong');
+
+    const letters = ['A', 'B', 'C', 'D'];
+    let userChoice = isUnanswered ? '<em>Unanswered</em>' : `${letters[q.userAns]}. ${q.opts[q.userAns]}`;
+    let correctChoice = `${letters[q.ans]}. ${q.opts[q.ans]}`;
+
+    div.innerHTML = `
+      <div style="font-size:0.85rem;color:var(--muted);margin-bottom:0.4rem;">
+        Q${i + 1} • ${q.subject} • ${isCorrect ? '✓ Correct' : (isUnanswered ? '– Unanswered' : '✗ Wrong')}
+      </div>
+      <strong>${q.q}</strong>
+      <div style="margin-top:0.6rem;">
+        <div>Your answer: ${userChoice}</div>
+        <div>Correct answer: <strong>${correctChoice}</strong></div>
+      </div>
+      <div class="explanation-box"><strong>Explanation:</strong> ${q.exp || 'No explanation provided.'}</div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+// ===================== INIT =====================
+updateBankBadges();
+updateSavedCount();
+showView('setup');
+</script>
+</body>
+</html>

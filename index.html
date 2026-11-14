@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Members Portal</title>
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<body>
+
+    <!-- NAVIGATION BAR -->
+    <nav>
+        <div><strong>MyBrand</strong></div>
+        <div id="nav-links">
+            <a href="index.html">Home</a>
+            <a href="admin.html">🔒 ADMIN SECTION</a>
+            <a href="jamb.html" class="restricted-link locked" onclick="checkLink(event)">🔒 JAMB TEST</a>
+            <a href="basic.html" class="restricted-link locked" onclick="checkLink(event)">🔒 BASIC CBT TRIAL</a>
+            <a href="about.html" style="color: #ffc107; font-size: 13px;">About SONIC MINDS</a>
+            <button id="nav-logout" class="btn-logout hidden" onclick="logout()">Log Out</button>
+        </div>
+    </nav>
+
+    <!-- STEP 1: SIGNUP -->
+    <div id="signup-section" class="container">
+        <h2>Create Your Account</h2>
+        <p>Sign up to get started with your membership.</p>
+        <form id="signup-form">
+            <input type="text" id="username" placeholder="Full Name" required>
+            <input type="email" id="email" placeholder="Email Address" required>
+            <input type="password" id="password" placeholder="Create Password" required>
+            <button type="submit">Continue to Payment</button>
+        </form>
+    </div>
+
+    <!-- STEP 2: MANUAL BANK TRANSFER & SUBMISSION -->
+    <div id="payment-section" class="container hidden" style="max-width: 500px;">
+        <h2>Complete Your Payment</h2>
+        <p>Welcome, <strong id="display-name">User</strong>! Please make a manual bank transfer to unlock access.</p>
+       
+        <div class="bank-box">
+            <h4 style="margin-top: 0; color: #0066ff;">Bank Transfer Details:</h4>
+            <ul style="padding-left: 20px; margin-bottom: 0;">
+                <li><strong>Bank Name:</strong> KUDA MFB</li>
+                <li><strong>Account Number:</strong> 2087297092</li>
+                <li><strong>Account Name:</strong> CHUKWU CONQUEROR CHIDERA</li>
+                <li><strong>Amount:</strong> ₦3,000</li>
+            </ul>
+        </div>
+
+        <p style="font-size: 13px; color: #d9534f; text-align: left;"><strong>After transferring, submit your details below:</strong></p>
+       
+        <form id="manual-payment-form">
+            <input type="text" id="sender-name" placeholder="Sender's Exact Bank Account Name" required>
+            <input type="text" id="transfer-ref" placeholder="Teller Number / Reference / Narration" required>
+            <button type="submit" class="btn-pay">I Have Made the Transfer</button>
+        </form>
+    </div>
+
+    <!-- STEP 3: PENDING OR UNLOCKED DASHBOARD -->
+    <div id="main-website" class="container hidden" style="max-width: 650px;">
+        <h1 id="portal-title">🎉 Welcome to the Main Website!</h1>
+        <p id="portal-desc">Hello <strong id="vip-name">Member</strong>, your payment is confirmed. You can now access all restricted pages.</p>
+       
+        <div id="unlocked-actions" style="margin-top: 25px; display: flex; gap: 15px; justify-content: center;">
+            <a href="jamb.html" style="padding: 12px 20px; background: #0066ff; color: white; text-decoration: none; border-radius: 5px;">JAMB CBT →</a>
+            <a href="basic.html" style="padding: 12px 20px; background: #28a745; color: white; text-decoration: none; border-radius: 5px;">BASIC CBT →</a>
+        </div>
+    </div>
+
+    <script>
+        function checkAccess() {
+            const currentUserEmail = localStorage.getItem('currentLoggedInEmail');
+            const allUsers = JSON.parse(localStorage.getItem('allSiteUsers')) || [];
+           
+            // Find currently logged-in user from the database list
+            const user = allUsers.find(u => u.email === currentUserEmail);
+           
+            const signupSection = document.getElementById('signup-section');
+            const paymentSection = document.getElementById('payment-section');
+            const mainWebsite = document.getElementById('main-website');
+            const navLogout = document.getElementById('nav-logout');
+            const links = document.querySelectorAll('.restricted-link');
+
+            if (!user) {
+                // Not logged in / signed up yet
+                signupSection.classList.remove('hidden');
+                paymentSection.classList.add('hidden');
+                mainWebsite.classList.add('hidden');
+                navLogout.classList.add('hidden');
+            } else if (user && user.hasPaid) {
+                // Paid and Approved -> Fully Unlocked
+                signupSection.classList.add('hidden');
+                paymentSection.classList.add('hidden');
+                mainWebsite.classList.remove('hidden');
+                navLogout.classList.remove('hidden');
+                document.getElementById('vip-name').textContent = user.name;
+
+                links.forEach(link => {
+                    link.classList.remove('locked');
+                    link.textContent = link.textContent.replace('🔒 ', '');
+                });
+            } else if (user && !user.hasPaid && user.reference) {
+                // Submitted payment, waiting for admin approval
+                signupSection.classList.add('hidden');
+                paymentSection.classList.add('hidden');
+                mainWebsite.classList.remove('hidden');
+                navLogout.classList.remove('hidden');
+               
+                document.getElementById('portal-title').textContent = "⏳ Payment Verification Pending";
+                document.getElementById('portal-desc').innerHTML = `Hi <strong>${user.name}</strong>, we have received your transfer details (Ref: <code>${user.reference}</code>). Once the admin verifies the funds, your account will be unlocked automatically!`;
+                document.getElementById('unlocked-actions').style.display = 'none';
+            } else if (user && !user.hasPaid) {
+                // Signed up, but hasn't submitted transfer form yet
+                signupSection.classList.add('hidden');
+                paymentSection.classList.remove('hidden');
+                mainWebsite.classList.add('hidden');
+                navLogout.classList.remove('hidden');
+                document.getElementById('display-name').textContent = user.name;
+            }
+        }
+
+        // Prevent clicking locked navbar links
+        function checkLink(event) {
+            const currentUserEmail = localStorage.getItem('currentLoggedInEmail');
+            const allUsers = JSON.parse(localStorage.getItem('allSiteUsers')) || [];
+            const user = allUsers.find(u => u.email === currentUserEmail);
+
+            if (!user || !user.hasPaid) {
+                event.preventDefault();
+                alert("Please complete your account setup and bank transfer verification to access this page.");
+            }
+        }
+
+        // Handle Signup Form Submission
+        document.getElementById('signup-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value.trim();
+            const name = document.getElementById('username').value.trim();
+
+            let allUsers = JSON.parse(localStorage.getItem('allSiteUsers')) || [];
+           
+            // Check if user already exists
+            let existingUser = allUsers.find(u => u.email === email);
+            if (!existingUser) {
+                existingUser = { name: name, email: email, hasPaid: false, senderName: '', reference: '' };
+                allUsers.push(existingUser);
+                localStorage.setItem('allSiteUsers', JSON.stringify(allUsers));
+            }
+
+            // Set active session tracker
+            localStorage.setItem('currentLoggedInEmail', email);
+            checkAccess();
+        });
+
+        // Handle Manual Transfer Details Form Submission
+        document.getElementById('manual-payment-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const senderName = document.getElementById('sender-name').value.trim();
+            const reference = document.getElementById('transfer-ref').value.trim();
+            const currentUserEmail = localStorage.getItem('currentLoggedInEmail');
+
+            let allUsers = JSON.parse(localStorage.getItem('allSiteUsers')) || [];
+            let userIndex = allUsers.findIndex(u => u.email === currentUserEmail);
+
+            if (userIndex !== -1) {
+                allUsers[userIndex].senderName = senderName;
+                allUsers[userIndex].reference = reference;
+                localStorage.setItem('allSiteUsers', JSON.stringify(allUsers));
+                alert("Transfer details submitted successfully! Check back later or head to the admin panel to approve it.");
+                checkAccess();
+            }
+        });
+
+        function logout() {
+            localStorage.removeItem('currentLoggedInEmail');
+            location.reload();
+        }
+
+        // Run check on page load
+        checkAccess();
+    </script>
+</body>
+</html>
