@@ -422,19 +422,30 @@ form.addEventListener("submit", async function(event) {
         return;
     }
 
-    displayDashboard(data);
+    console.log("ADMIN DATA:", data);
+displayDashboard(data);
 });
+
 
 function displayDashboard(codes) {
 
-    document.getElementById("loginPanel").classList.add("hidden");
-
+    const loginPanel = document.getElementById("loginPanel");
     const dashboard = document.getElementById("dashboard");
+
+    loginPanel.style.display = "none";
     dashboard.style.display = "block";
 
-    const available = codes.filter(x => x.status === "Available").length;
-    const activated = codes.filter(x => x.status === "Activated").length;
-    const revoked = codes.filter(x => x.status === "Revoked").length;
+    const available = codes.filter(
+        item => item.status === "Available"
+    ).length;
+
+    const activated = codes.filter(
+        item => item.status === "Activated"
+    ).length;
+
+    const revoked = codes.filter(
+        item => item.status === "Revoked"
+    ).length;
 
     document.getElementById("total").textContent = codes.length;
     document.getElementById("available").textContent = available;
@@ -442,69 +453,67 @@ function displayDashboard(codes) {
     document.getElementById("revoked").textContent = revoked;
 
     const rows = document.getElementById("passcodeRows");
-    rows.innerHTML = "";
+    rows.replaceChildren();
 
     codes.forEach((item, index) => {
 
         const tr = document.createElement("tr");
 
-        const statusClass = item.status.toLowerCase();
+        const values = [
+            index + 1,
+            item.passcode,
+            item.status,
+            item.activated_at
+                ? new Date(item.activated_at).toLocaleString()
+                : "Not activated"
+        ];
 
-        const date = item.activated_at
-            ? new Date(item.activated_at).toLocaleString()
-            : "—";
+        values.forEach((value, position) => {
+            const td = document.createElement("td");
 
-        const number = document.createElement("td");
-        number.textContent = index + 1;
-
-        const codeCell = document.createElement("td");
-        codeCell.className = "code";
-        codeCell.textContent = item.passcode;
-
-        const statusCell = document.createElement("td");
-        const badge = document.createElement("span");
-        badge.className = "status " + statusClass;
-        badge.textContent = item.status;
-        statusCell.appendChild(badge);
-
-        const dateCell = document.createElement("td");
-        dateCell.textContent = date;
-
-        const actionCell = document.createElement("td");
-        const copyButton = document.createElement("button");
-        copyButton.className = "copy-btn";
-        copyButton.textContent = "COPY";
-
-        copyButton.addEventListener("click", async () => {
-            try {
-                await navigator.clipboard.writeText(item.passcode);
-                copyButton.textContent = "COPIED";
-                setTimeout(() => copyButton.textContent = "COPY", 1500);
-            } catch {
-                copyButton.textContent = "COPY FAILED";
+            if (position === 1) {
+                td.className = "code";
             }
+
+            if (position === 2) {
+                const badge = document.createElement("span");
+                badge.className = "status " + item.status.toLowerCase();
+                badge.textContent = item.status;
+                td.appendChild(badge);
+            } else {
+                td.textContent = value;
+            }
+
+            tr.appendChild(td);
         });
 
-        actionCell.appendChild(copyButton);
+        const action = document.createElement("td");
+        const copy = document.createElement("button");
 
-        tr.append(
-            number,
-            codeCell,
-            statusCell,
-            dateCell,
-            actionCell
-        );
+        copy.className = "copy-btn";
+        copy.textContent = "COPY";
 
+        copy.onclick = async () => {
+            try {
+                await navigator.clipboard.writeText(item.passcode);
+                copy.textContent = "COPIED";
+                setTimeout(() => copy.textContent = "COPY", 1500);
+            } catch {
+                copy.textContent = "FAILED";
+            }
+        };
+
+        action.appendChild(copy);
+        tr.appendChild(action);
         rows.appendChild(tr);
     });
-}
 
-document.getElementById("logoutButton").addEventListener("click", function() {
-    document.getElementById("dashboard").style.display = "none";
-    document.getElementById("loginPanel").classList.remove("hidden");
-    document.getElementById("masterCode").value = "";
-    message.textContent = "";
-});
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+        }
+    
 </script>
 
 </body>
