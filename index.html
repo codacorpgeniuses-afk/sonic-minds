@@ -1,47 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-    
-<!-- SONIC MINDS LINK PREVIEW -->
-<meta property="og:type" content="website">
-
-<meta property="og:site_name" content="SONIC MINDS">
-
-<meta property="og:title" content="SONIC MINDS | Smart CBT Learning">
-
-<meta property="og:description" content="Learn. Practice. Excel. Prepare for examinations with SONIC MINDS, your smart CBT learning platform.">
-
-<meta property="og:image" content="https://codacorpgeniuses-afk.github.io/sonic-minds/file_000000008f5882119c53aaed536da736.png">
-
-<meta property="og:image:width" content="1200">
-
-<meta property="og:image:height" content="630">
-
-<meta property="og:url" content="https://YOUR-USERNAME.github.io/sonic-minds/">
-
-<meta name="twitter:card" content="summary_large_image">
-
-<meta name="twitter:title" content="SONIC MINDS">
-
-<meta name="twitter:description" content="Your Smart CBT Learning Platform">
-
-<meta name="twitter:image" content="https://codacorpgeniuses-afk.github.io/sonic-minds/file_000000008f5882119c53aaed536da736.png">
-    
 <head>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-  const SUPABASE_URL = 'https://YOUR-PROJECT.supabase.co'
-  const SUPABASE_ANON_KEY = 'YOUR-ANON-KEY'
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - Members Portal</title>
+    <title>Home - Members Portal | SONIC MINDS</title>
     <link rel="stylesheet" href="style.css">
-    
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // ⬇️ REPLACE THESE TWO VALUES WITH YOURS
+        const SUPABASE_URL = 'https://YOUR-PROJECT-ID.supabase.co'
+        const SUPABASE_ANON_KEY = 'YOUR-ANON-KEY-HERE'
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+    </script>
 </head>
 <body>
 
-    <!-- NAVIGATION BAR -->
+    <!-- NAVIGATION -->
     <nav>
         <div><strong>MyBrand</strong></div>
         <div id="nav-links">
@@ -66,7 +42,7 @@
         </form>
     </div>
 
-    <!-- STEP 2: MANUAL BANK TRANSFER & SUBMISSION -->
+    <!-- STEP 2: PAYMENT -->
     <div id="payment-section" class="container hidden" style="max-width: 500px;">
         <h2>Complete Your Payment</h2>
         <p>Welcome, <strong id="display-name">User</strong>! Please make a manual bank transfer to unlock access.</p>
@@ -90,123 +66,142 @@
         </form>
     </div>
 
-    <!-- STEP 3: PENDING OR UNLOCKED DASHBOARD -->
+    <!-- STEP 3: MAIN / PENDING -->
     <div id="main-website" class="container hidden" style="max-width: 650px;">
         <h1 id="portal-title">🎉 Welcome to the Main Website!</h1>
         <p id="portal-desc">Hello <strong id="vip-name">Member</strong>, your payment is confirmed. You can now access all restricted pages.</p>
     </div>
 
     <script>
-        function checkAccess() {
-            const currentUserEmail = localStorage.getItem('currentLoggedInEmail');
-            const allUsers = JSON.parse(localStorage.getItem('allSiteUsers')) || [];
-           
-            // Find currently logged-in user from the database list
-            const user = allUsers.find(u => u.email === currentUserEmail);
-           
-            const signupSection = document.getElementById('signup-section');
-            const paymentSection = document.getElementById('payment-section');
-            const mainWebsite = document.getElementById('main-website');
-            const navLogout = document.getElementById('nav-logout');
-            const links = document.querySelectorAll('.restricted-link');
+        // ========== HELPERS ==========
+        async function getCurrentUser() {
+            const email = localStorage.getItem('currentLoggedInEmail')
+            if (!email) return null
+
+            const { data, error } = await supabase
+                .from('users')
+                .select('*')
+                .eq('email', email.toLowerCase())
+                .single()
+
+            if (error || !data) return null
+            return data
+        }
+
+        // ========== CHECK ACCESS ==========
+        async function checkAccess() {
+            const user = await getCurrentUser()
+            const signupSection = document.getElementById('signup-section')
+            const paymentSection = document.getElementById('payment-section')
+            const mainWebsite = document.getElementById('main-website')
+            const navLogout = document.getElementById('nav-logout')
+            const links = document.querySelectorAll('.restricted-link')
 
             if (!user) {
-                // Not logged in / signed up yet
-                signupSection.classList.remove('hidden');
-                paymentSection.classList.add('hidden');
-                mainWebsite.classList.add('hidden');
-                navLogout.classList.add('hidden');
-            } else if (user && user.hasPaid) {
-                // Paid and Approved -> Fully Unlocked
-                signupSection.classList.add('hidden');
-                paymentSection.classList.add('hidden');
-                mainWebsite.classList.remove('hidden');
-                navLogout.classList.remove('hidden');
-                document.getElementById('vip-name').textContent = user.name;
+                signupSection.classList.remove('hidden')
+                paymentSection.classList.add('hidden')
+                mainWebsite.classList.add('hidden')
+                navLogout.classList.add('hidden')
+                return
+            }
 
+            navLogout.classList.remove('hidden')
+
+            if (user.has_paid) {
+                // Fully unlocked
+                signupSection.classList.add('hidden')
+                paymentSection.classList.add('hidden')
+                mainWebsite.classList.remove('hidden')
+                document.getElementById('portal-title').textContent = '🎉 Welcome to the Main Website!'
+                document.getElementById('portal-desc').innerHTML = `Hello <strong>${user.name}</strong>, your payment is confirmed. You can now access all restricted pages.`
+                
                 links.forEach(link => {
-                    link.classList.remove('locked');
-                    link.textContent = link.textContent.replace('🔒 ', '');
-                });
-            } else if (user && !user.hasPaid && user.reference) {
-                // Submitted payment, waiting for admin approval
-                signupSection.classList.add('hidden');
-                paymentSection.classList.add('hidden');
-                mainWebsite.classList.remove('hidden');
-                navLogout.classList.remove('hidden');
-               
-                document.getElementById('portal-title').textContent = "⏳ Payment Verification Pending";
-                document.getElementById('portal-desc').innerHTML = `Hi <strong>${user.name}</strong>, we have received your transfer details (Ref: <code>${user.reference}</code>). Once the admin verifies the funds, your account will be unlocked automatically!`;
-                document.getElementById('unlocked-actions').style.display = 'none';
-            } else if (user && !user.hasPaid) {
-                // Signed up, but hasn't submitted transfer form yet
-                signupSection.classList.add('hidden');
-                paymentSection.classList.remove('hidden');
-                mainWebsite.classList.add('hidden');
-                navLogout.classList.remove('hidden');
-                document.getElementById('display-name').textContent = user.name;
+                    link.classList.remove('locked')
+                    link.textContent = link.textContent.replace('🔒 ', '')
+                })
+            } 
+            else if (user.reference) {
+                // Submitted, waiting for approval
+                signupSection.classList.add('hidden')
+                paymentSection.classList.add('hidden')
+                mainWebsite.classList.remove('hidden')
+                document.getElementById('portal-title').textContent = '⏳ Payment Verification Pending'
+                document.getElementById('portal-desc').innerHTML = `Hi <strong>\( {user.name}</strong>, we have received your transfer details (Ref: <code> \){user.reference}</code>). Once the admin verifies the funds, your account will be unlocked automatically!`
+            } 
+            else {
+                // Signed up but not yet submitted transfer
+                signupSection.classList.add('hidden')
+                paymentSection.classList.remove('hidden')
+                mainWebsite.classList.add('hidden')
+                document.getElementById('display-name').textContent = user.name
             }
         }
 
-        // Prevent clicking locked navbar links
-        function checkLink(event) {
-            const currentUserEmail = localStorage.getItem('currentLoggedInEmail');
-            const allUsers = JSON.parse(localStorage.getItem('allSiteUsers')) || [];
-            const user = allUsers.find(u => u.email === currentUserEmail);
-
-            if (!user || !user.hasPaid) {
-                event.preventDefault();
-                alert("Please complete your account setup and bank transfer verification to access this page.");
+        // ========== PROTECT LINKS ==========
+        async function checkLink(event) {
+            const user = await getCurrentUser()
+            if (!user || !user.has_paid) {
+                event.preventDefault()
+                alert('Please complete your account setup and bank transfer verification to access this page.')
             }
         }
 
-        // Handle Signup Form Submission
-        document.getElementById('signup-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const email = document.getElementById('email').value.trim();
-            const name = document.getElementById('username').value.trim();
+        // ========== SIGNUP ==========
+        document.getElementById('signup-form').addEventListener('submit', async function(e) {
+            e.preventDefault()
+            const name = document.getElementById('username').value.trim()
+            const email = document.getElementById('email').value.trim().toLowerCase()
 
-            let allUsers = JSON.parse(localStorage.getItem('allSiteUsers')) || [];
-           
-            // Check if user already exists
-            let existingUser = allUsers.find(u => u.email === email);
-            if (!existingUser) {
-                existingUser = { name: name, email: email, hasPaid: false, senderName: '', reference: '' };
-                allUsers.push(existingUser);
-                localStorage.setItem('allSiteUsers', JSON.stringify(allUsers));
+            const { data, error } = await supabase
+                .from('users')
+                .upsert(
+                    { name, email, has_paid: false },
+                    { onConflict: 'email' }
+                )
+                .select()
+                .single()
+
+            if (error) {
+                alert('Error: ' + error.message)
+                return
             }
 
-            // Set active session tracker
-            localStorage.setItem('currentLoggedInEmail', email);
-            checkAccess();
-        });
+            localStorage.setItem('currentLoggedInEmail', email)
+            checkAccess()
+        })
 
-        // Handle Manual Transfer Details Form Submission
-        document.getElementById('manual-payment-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const senderName = document.getElementById('sender-name').value.trim();
-            const reference = document.getElementById('transfer-ref').value.trim();
-            const currentUserEmail = localStorage.getItem('currentLoggedInEmail');
+        // ========== PAYMENT SUBMISSION ==========
+        document.getElementById('manual-payment-form').addEventListener('submit', async function(e) {
+            e.preventDefault()
+            const email = localStorage.getItem('currentLoggedInEmail')
+            const senderName = document.getElementById('sender-name').value.trim()
+            const reference = document.getElementById('transfer-ref').value.trim()
 
-            let allUsers = JSON.parse(localStorage.getItem('allSiteUsers')) || [];
-            let userIndex = allUsers.findIndex(u => u.email === currentUserEmail);
+            const { error } = await supabase
+                .from('users')
+                .update({ 
+                    sender_name: senderName, 
+                    reference: reference 
+                })
+                .eq('email', email)
 
-            if (userIndex !== -1) {
-                allUsers[userIndex].senderName = senderName;
-                allUsers[userIndex].reference = reference;
-                localStorage.setItem('allSiteUsers', JSON.stringify(allUsers));
-                alert("Transfer details submitted successfully! Check back later or head to the admin panel to approve it.");
-                checkAccess();
+            if (error) {
+                alert('Error: ' + error.message)
+                return
             }
-        });
 
+            alert('Transfer details submitted successfully! Waiting for admin verification.')
+            checkAccess()
+        })
+
+        // ========== LOGOUT ==========
         function logout() {
-            localStorage.removeItem('currentLoggedInEmail');
-            location.reload();
+            localStorage.removeItem('currentLoggedInEmail')
+            location.reload()
         }
 
-        // Run check on page load
-        checkAccess();
+        // Run on load
+        checkAccess()
     </script>
 </body>
 </html>
