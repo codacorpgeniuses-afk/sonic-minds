@@ -1,0 +1,389 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SONIC MINDS | Results Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #050816;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+}
+
+header {
+    padding: 22px;
+    text-align: center;
+    background: #0b1430;
+    border-bottom: 1px solid #1d3c68;
+}
+
+header h1 {
+    font-family: 'Orbitron', sans-serif;
+    color: #42c8ff;
+    font-size: 25px;
+}
+
+header p {
+    color: #aabbd5;
+    font-size: 12px;
+    margin-top: 8px;
+}
+
+.container {
+    max-width: 1000px;
+    padding: 25px 16px;
+    margin: auto;
+}
+
+.welcome {
+    background: linear-gradient(130deg, #102b55, #101326);
+    padding: 28px;
+    border-radius: 18px;
+    border: 1px solid #254a7a;
+    margin-bottom: 22px;
+}
+
+.welcome h2 {
+    color: #42c8ff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 20px;
+}
+
+.welcome p {
+    color: #c6d4e9;
+    font-size: 13px;
+    margin-top: 10px;
+    line-height: 1.8;
+}
+
+.summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.summary-box {
+    background: #101a34;
+    border: 1px solid #253b60;
+    border-radius: 14px;
+    text-align: center;
+    padding: 20px 8px;
+}
+
+.summary-box h3 {
+    color: #42c8ff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 23px;
+}
+
+.summary-box p {
+    color: #aabbd5;
+    font-size: 11px;
+    margin-top: 7px;
+}
+
+.results-section {
+    background: #0c1429;
+    padding: 23px;
+    border: 1px solid #23395e;
+    border-radius: 16px;
+}
+
+.results-section h2 {
+    color: #42c8ff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 17px;
+    margin-bottom: 20px;
+}
+
+.result-card {
+    background: #111e39;
+    border: 1px solid #29466f;
+    padding: 18px;
+    border-radius: 12px;
+    margin-bottom: 14px;
+}
+
+.result-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.result-top h3 {
+    color: white;
+    font-size: 15px;
+}
+
+.score {
+    color: #42c8ff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 19px;
+}
+
+.details {
+    color: #aabbd5;
+    font-size: 12px;
+    line-height: 2;
+    margin-top: 12px;
+}
+
+.status {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 5px 12px;
+    background: #123d45;
+    color: #63e6be;
+    font-size: 11px;
+    border-radius: 20px;
+}
+
+.empty {
+    text-align: center;
+    padding: 40px 15px;
+    color: #9aabc6;
+}
+
+.empty h3 {
+    color: #42c8ff;
+    margin-bottom: 10px;
+}
+
+button, .back {
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 12px;
+}
+
+.back {
+    display: inline-block;
+    background: #42c8ff;
+    color: #06101e;
+    margin-bottom: 20px;
+}
+
+.clear {
+    background: #a52d42;
+    color: white;
+    margin-top: 20px;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    font-size: 11px;
+    color: #72829e;
+}
+
+@media(max-width:550px) {
+    .summary {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .summary-box h3 {
+        font-size: 18px;
+    }
+
+    .welcome h2 {
+        font-size: 17px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>SONIC MINDS</h1>
+    <p>STUDENT PERFORMANCE CENTRE</p>
+</header>
+
+<div class="container">
+
+    <a href="home.html" class="back">← BACK TO HOME</a>
+
+    <div class="welcome">
+        <h2>MY RESULTS DASHBOARD</h2>
+        <p>
+            Welcome to your personal academic performance
+            centre. View your previous CBT attempts, monitor
+            your progress and keep track of your achievements.
+        </p>
+    </div>
+
+    <div class="summary">
+        <div class="summary-box">
+            <h3 id="total">0</h3>
+            <p>Total Attempts</p>
+        </div>
+
+        <div class="summary-box">
+            <h3 id="average">0%</h3>
+            <p>Average Score</p>
+        </div>
+
+        <div class="summary-box">
+            <h3 id="best">0%</h3>
+            <p>Best Performance</p>
+        </div>
+    </div>
+
+    <div class="results-section">
+        <h2>MY CBT HISTORY</h2>
+
+        <div id="resultsList"></div>
+
+        <button class="clear" onclick="clearResults()">
+            CLEAR LOCAL RESULTS
+        </button>
+    </div>
+
+</div>
+
+<footer>
+    © 2026 SONIC MINDS. All Rights Reserved.
+    <br>
+    Empowering Minds. Building Excellence.
+</footer>
+
+<script>
+const STORAGE_KEY = "sonicMindsResults";
+
+function getResults() {
+    try {
+        const data = JSON.parse(
+            localStorage.getItem(STORAGE_KEY) || "[]"
+        );
+
+        return Array.isArray(data) ? data : [];
+    } catch (error) {
+        return [];
+    }
+}
+
+function renderResults() {
+    const results = getResults();
+    const list = document.getElementById("resultsList");
+
+    document.getElementById("total").textContent =
+        results.length;
+
+    const percentages = results.map(result => {
+        const value = Number(result.percentage);
+        if (Number.isFinite(value)) return value;
+
+        const score = Number(result.score);
+        const total = Number(result.total);
+
+        return total > 0 ? (score / total) * 100 : 0;
+    });
+
+    const average = percentages.length
+        ? percentages.reduce((a, b) => a + b, 0) /
+          percentages.length
+        : 0;
+
+    const best = percentages.length
+        ? Math.max(...percentages)
+        : 0;
+
+    document.getElementById("average").textContent =
+        average.toFixed(1) + "%";
+
+    document.getElementById("best").textContent =
+        best.toFixed(1) + "%";
+
+    if (results.length === 0) {
+        list.innerHTML = `
+            <div class="empty">
+                <h3>NO RESULTS YET</h3>
+                <p>
+                    Your CBT results will appear here
+                    after you complete a test.
+                </p>
+            </div>
+        `;
+        return;
+    }
+
+    list.innerHTML = "";
+
+    [...results].reverse().forEach(result => {
+        const score = Number(result.score) || 0;
+        const total = Number(result.total) || 0;
+
+        const percentage = Number.isFinite(
+            Number(result.percentage)
+        ) ? Number(result.percentage) :
+            (total > 0 ? score / total * 100 : 0);
+
+        const date = result.date
+            ? new Date(result.date).toLocaleString()
+            : "Date unavailable";
+
+        const card = document.createElement("div");
+        card.className = "result-card";
+
+        const heading = document.createElement("div");
+        heading.className = "result-top";
+
+        const title = document.createElement("h3");
+        title.textContent = result.subject || "CBT Practice";
+
+        const scoreText = document.createElement("span");
+        scoreText.className = "score";
+        scoreText.textContent = `${score}/${total}`;
+
+        heading.append(title, scoreText);
+
+        const details = document.createElement("div");
+        details.className = "details";
+        details.textContent =
+            `Percentage: ${percentage.toFixed(1)}% | Date: ${date}`;
+
+        const status = document.createElement("span");
+        status.className = "status";
+        status.textContent = "COMPLETED";
+
+        card.append(heading, details, status);
+        list.appendChild(card);
+    });
+}
+
+function clearResults() {
+    const confirmed = confirm(
+        "Are you sure you want to delete all locally saved results on this device? This cannot be undone."
+    );
+
+    if (!confirmed) return;
+
+    localStorage.removeItem(STORAGE_KEY);
+    renderResults();
+}
+
+renderResults();
+</script>
+
+</body>
+  </html>
+  
