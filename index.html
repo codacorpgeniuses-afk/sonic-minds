@@ -1,217 +1,290 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - Members Portal | SONIC MINDS</title>
+    <title>SONIC MINDS | Learn. Practice. Excel.</title>
+
     <link rel="stylesheet" href="style.css">
 
-    <!-- Supabase -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script>
-        // ⬇️ REPLACE THESE TWO VALUES WITH YOURS
-        const SUPABASE_URL = 'https://yqicyiflmkfujoqstqcc.supabase.co'
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlxaWN5aWZsbWtmdWpvcXN0cWNjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ2NTA1MzcsImV4cCI6MjExMDIyNjUzN30.fEhjL7XUGNv6iFCQqgYN-EloAsOvooC5MZay45GHQDk'
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
+    <!-- SPACE BACKGROUND -->
+    <div class="space-background">
+        <div class="stars"></div>
+        <div class="planet planet-one"></div>
+        <div class="planet planet-two"></div>
+        <div class="planet planet-three"></div>
+        <div class="orbit orbit-one"></div>
+        <div class="orbit orbit-two"></div>
+    </div>
+
     <!-- NAVIGATION -->
-    <nav>
-        <div><strong>MyBrand</strong></div>
-        <div id="nav-links">
-            <a href="index.html">Home</a>
-            <a href="admin.html">🔒 ADMIN SECTION</a>
-            <a href="jamb.html" class="restricted-link locked" onclick="checkLink(event)">🔒 JAMB TEST</a>
-            <a href="basic.html" class="restricted-link locked" onclick="checkLink(event)">🔒 BASIC CBT TRIAL</a>
-            <a href="about.html" style="color: #ffc107; font-size: 13px;">About SONIC MINDS</a>
-            <button id="nav-logout" class="btn-logout hidden" onclick="logout()">Log Out</button>
+    <header class="topbar">
+        <a href="home.html" class="logo">
+            <span class="logo-icon">✦</span>
+            SONIC <span>MINDS</span>
+        </a>
+
+        <div class="nav-tag">
+            THE FUTURE OF LEARNING
         </div>
-    </nav>
+    </header>
 
-    <!-- STEP 1: SIGNUP -->
-    <div id="signup-section" class="container">
-        <h2>Create Your Account</h2>
-        <p>Sign up to get started with your membership.</p>
-        <form id="signup-form">
-            <input type="text" id="username" placeholder="Full Name" required>
-            <input type="email" id="email" placeholder="Email Address" required>
-            <input type="password" id="password" placeholder="Create Password" required>
-            <button type="submit">Continue to Payment</button>
-        </form>
-    </div>
+    <!-- MAIN CONTENT -->
+    <main class="main-container">
 
-    <!-- STEP 2: PAYMENT -->
-    <div id="payment-section" class="container hidden" style="max-width: 500px;">
-        <h2>Complete Your Payment</h2>
-        <p>Welcome, <strong id="display-name">User</strong>! Please make a manual bank transfer to unlock access.</p>
-       
-        <div class="bank-box">
-            <h4 style="margin-top: 0; color: #0066ff;">Bank Transfer Details:</h4>
-            <ul style="padding-left: 20px; margin-bottom: 0;">
-                <li><strong>Bank Name:</strong> KUDA MFB</li>
-                <li><strong>Account Number:</strong> 2087297092</li>
-                <li><strong>Account Name:</strong> CHUKWU CONQUEROR CHIDERA</li>
-                <li><strong>Amount:</strong> ₦3,000</li>
-            </ul>
-        </div>
+        <section class="hero">
 
-        <p style="font-size: 13px; color: #d9534f; text-align: left;"><strong>After transferring, submit your details below:</strong></p>
-       
-        <form id="manual-payment-form">
-            <input type="text" id="sender-name" placeholder="Sender's Exact Bank Account Name" required>
-            <input type="text" id="transfer-ref" placeholder="Teller Number / Reference / Narration" required>
-            <button type="submit" class="btn-pay">I Have Made the Transfer</button>
-        </form>
-    </div>
+            <div class="hero-text">
+                <p class="eyebrow">WELCOME TO A NEW LEARNING EXPERIENCE</p>
 
-    <!-- STEP 3: MAIN / PENDING -->
-    <div id="main-website" class="container hidden" style="max-width: 650px;">
-        <h1 id="portal-title">🎉 Welcome to the Main Website!</h1>
-        <p id="portal-desc">Hello <strong id="vip-name">Member</strong>, your payment is confirmed. You can now access all restricted pages.</p>
-    </div>
+                <h1>
+                    EXPLORE YOUR
+                    <span>INTELLIGENCE.</span>
+                </h1>
 
-    <script>
-        // ========== HELPERS ==========
-        async function getCurrentUser() {
-            const email = localStorage.getItem('currentLoggedInEmail')
-            if (!email) return null
+                <p class="hero-description">
+                    Your journey to academic excellence starts here.
+                    Practise, improve and unlock your full potential
+                    with SONIC MINDS.
+                </p>
 
-            const { data, error } = await supabase
-                .from('users')
-                .select('*')
-                .eq('email', email.toLowerCase())
-                .single()
+                <div class="features">
+                    <div class="feature">
+                        <span>✦</span>
+                        BASIC CBT
+                    </div>
 
-            if (error || !data) return null
-            return data
-        }
+                    <div class="feature">
+                        <span>✦</span>
+                        JAMB CBT
+                    </div>
 
-        // ========== CHECK ACCESS ==========
-        async function checkAccess() {
-            const user = await getCurrentUser()
-            const signupSection = document.getElementById('signup-section')
-            const paymentSection = document.getElementById('payment-section')
-            const mainWebsite = document.getElementById('main-website')
-            const navLogout = document.getElementById('nav-logout')
-            const links = document.querySelectorAll('.restricted-link')
+                    <div class="feature">
+                        <span>✦</span>
+                        RESULTS
+                    </div>
 
-            if (!user) {
-                signupSection.classList.remove('hidden')
-                paymentSection.classList.add('hidden')
-                mainWebsite.classList.add('hidden')
-                navLogout.classList.add('hidden')
-                return
-            }
+                    <div class="feature">
+                        <span>✦</span>
+                        ADVICE
+                    </div>
+                </div>
+            </div>
 
-            navLogout.classList.remove('hidden')
+            <!-- LOGIN PANEL -->
+            <div class="login-card">
 
-            if (user.has_paid) {
-                // Fully unlocked
-                signupSection.classList.add('hidden')
-                paymentSection.classList.add('hidden')
-                mainWebsite.classList.remove('hidden')
-                document.getElementById('portal-title').textContent = '🎉 Welcome to the Main Website!'
-                document.getElementById('portal-desc').innerHTML = `Hello <strong>${user.name}</strong>, your payment is confirmed. You can now access all restricted pages.`
-                
-                links.forEach(link => {
-                    link.classList.remove('locked')
-                    link.textContent = link.textContent.replace('🔒 ', '')
-                })
-            } 
-            else if (user.reference) {
-                // Submitted, waiting for approval
-                signupSection.classList.add('hidden')
-                paymentSection.classList.add('hidden')
-                mainWebsite.classList.remove('hidden')
-                document.getElementById('portal-title').textContent = '⏳ Payment Verification Pending'
-                document.getElementById('portal-desc').innerHTML = `Hi <strong>\( {user.name}</strong>, we have received your transfer details (Ref: <code> \){user.reference}</code>). Once the admin verifies the funds, your account will be unlocked automatically!`
-            } 
-            else {
-                // Signed up but not yet submitted transfer
-                signupSection.classList.add('hidden')
-                paymentSection.classList.remove('hidden')
-                mainWebsite.classList.add('hidden')
-                document.getElementById('display-name').textContent = user.name
-            }
-        }
+                <div class="login-symbol">◈</div>
 
-        // ========== PROTECT LINKS ==========
-        async function checkLink(event) {
-            const user = await getCurrentUser()
-            if (!user || !user.has_paid) {
-                event.preventDefault()
-                alert('Please complete your account setup and bank transfer verification to access this page.')
-            }
-        }
+                <p class="login-small">SECURE ACCESS PORTAL</p>
 
-        // ========== SIGNUP ==========
-        document.getElementById('signup-form').addEventListener('submit', async function(e) {
-            e.preventDefault()
-            const name = document.getElementById('username').value.trim()
-            const email = document.getElementById('email').value.trim().toLowerCase()
+                <h2>WELCOME BACK</h2>
 
-            const { data, error } = await supabase
-                .from('users')
-                .upsert(
-                    { name, email, has_paid: false },
-                    { onConflict: 'email' }
-                )
-                .select()
-                .single()
+                <p class="login-description">
+                    Enter your SONIC MINDS passcode to unlock your learning dashboard.
+                </p>
 
-            if (error) {
-                alert('Error: ' + error.message)
-                return
-            }
+                <form id="loginForm">
 
-            localStorage.setItem('currentLoggedInEmail', email)
-            checkAccess()
-        })
+                    <label for="passcode">YOUR ACCESS PASSCODE</label>
 
-        // ========== PAYMENT SUBMISSION ==========
-        document.getElementById('manual-payment-form').addEventListener('submit', async function(e) {
-            e.preventDefault()
-            const email = localStorage.getItem('currentLoggedInEmail')
-            const senderName = document.getElementById('sender-name').value.trim()
-            const reference = document.getElementById('transfer-ref').value.trim()
+                    <div class="input-wrapper">
+                        <span class="input-icon">⌑</span>
 
-            const { error } = await supabase
-                .from('users')
-                .update({ 
-                    sender_name: senderName, 
-                    reference: reference 
-                })
-                .eq('email', email)
+                        <input
+                            type="password"
+                            id="passcode"
+                            placeholder="Enter your passcode"
+                            autocomplete="off"
+                            required
+                        >
 
-            if (error) {
-                alert('Error: ' + error.message)
-                return
-            }
+                        <button type="button" id="togglePassword"
+                            class="toggle-password">
+                            SHOW
+                        </button>
+                    </div>
 
-            alert('Transfer details submitted successfully! Waiting for admin verification.')
-            checkAccess()
-        })
+                    <button type="submit" id="loginButton" class="login-button">
+                        <span>UNLOCK ACCESS</span>
+                        <span class="button-arrow">→</span>
+                    </button>
 
-        // ========== LOGOUT ==========
-        function logout() {
-            localStorage.removeItem('currentLoggedInEmail')
-            location.reload()
-        }
+                    <p id="loginMessage" class="login-message"></p>
 
-        // Run on load
-        checkAccess()
-    </script>
+                </form>
 
+                <div class="security-note">
+                    <span>🔒</span>
+                    Your access is protected by SONIC MINDS.
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- UNLOCKED DASHBOARD -->
+        <section id="dashboard" class="dashboard hidden">
+
+            <div class="dashboard-heading">
+                <p class="eyebrow">ACCESS GRANTED</p>
+                <h2>YOUR LEARNING UNIVERSE</h2>
+                <p>Select a destination to continue.</p>
+            </div>
+
+            <div class="dashboard-grid">
+
+                <a href="basic-cbt.html" class="dashboard-card">
+                    <span class="card-icon">📘</span>
+                    <h3>BASIC CBT</h3>
+                    <p>Practise your basic subjects.</p>
+                    <span class="card-link">ENTER →</span>
+                </a>
+
+                <a href="jamb-cbt.html" class="dashboard-card">
+                    <span class="card-icon">🚀</span>
+                    <h3>JAMB CBT</h3>
+                    <p>Prepare for your JAMB examination.</p>
+                    <span class="card-link">ENTER →</span>
+                </a>
+
+                <a href="results.html" class="dashboard-card">
+                    <span class="card-icon">🏆</span>
+                    <h3>RESULTS</h3>
+                    <p>View your examination performance.</p>
+                    <span class="card-link">ENTER →</span>
+                </a>
+
+                <a href="advice.html" class="dashboard-card">
+                    <span class="card-icon">💡</span>
+                    <h3>ADVICE</h3>
+                    <p>Get guidance for your academic journey.</p>
+                    <span class="card-link">ENTER →</span>
+                </a>
+
+                <a href="about.html" class="dashboard-card">
+                    <span class="card-icon">🌌</span>
+                    <h3>ABOUT US</h3>
+                    <p>Discover the SONIC MINDS platform.</p>
+                    <span class="card-link">ENTER →</span>
+                </a>
+
+            </div>
+
+            <button id="logoutButton" class="logout-button">
+                LOG OUT
+            </button>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>© 2026 SONIC MINDS</p>
+        <p>LEARN <span>•</span> PRACTICE <span>•</span> EXCEL</p>
+    </footer>
+
+    <!-- SUPABASE LIBRARY -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script src="auth.js"></script>
+    <!-- YOUR PASSCODE AUTHENTICATION -->
+    <script src="auth.js"></script>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    enforcePaywall();
-});
-</script>
+    <!-- PAGE INTERACTIONS -->
+    <script>
+        const loginForm = document.getElementById("loginForm");
+        const passcodeInput = document.getElementById("passcode");
+        const loginButton = document.getElementById("loginButton");
+        const loginMessage = document.getElementById("loginMessage");
+        const dashboard = document.getElementById("dashboard");
+        const loginCard = document.querySelector(".login-card");
+
+        // Show or hide passcode
+        document.getElementById("togglePassword").addEventListener("click", function () {
+            const isPassword = passcodeInput.type === "password";
+
+            passcodeInput.type = isPassword ? "text" : "password";
+            this.textContent = isPassword ? "HIDE" : "SHOW";
+        });
+
+        // Login
+        loginForm.addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const passcode = passcodeInput.value.trim();
+
+            if (!passcode) {
+                showMessage("Please enter your passcode.", false);
+                return;
+            }
+
+            loginButton.disabled = true;
+            loginButton.innerHTML = "VERIFYING ACCESS...";
+            showMessage("Checking your passcode...", true);
+
+            try {
+                const result = await loginWithPasscode(passcode);
+
+                if (result.success) {
+                    showMessage("Access granted! Welcome to SONIC MINDS.", true);
+
+                    loginCard.classList.add("hidden");
+                    dashboard.classList.remove("hidden");
+
+                    window.scrollTo({
+                        top: dashboard.offsetTop,
+                        behavior: "smooth"
+                    });
+
+                } else {
+                    showMessage(result.message, false);
+                }
+
+            } catch (error) {
+                console.error(error);
+                showMessage("Something went wrong. Please try again.", false);
+            }
+
+            loginButton.disabled = false;
+            loginButton.innerHTML = '<span>UNLOCK ACCESS</span><span class="button-arrow">→</span>';
+        });
+
+        function showMessage(message, success) {
+            loginMessage.textContent = message;
+            loginMessage.className = success
+                ? "login-message success"
+                : "login-message error";
+        }
+
+        // Logout
+        document.getElementById("logoutButton").addEventListener("click", function () {
+            logoutUser();
+        });
+
+        // Restore an already activated session on the same browser
+        window.addEventListener("DOMContentLoaded", async function () {
+            const savedPasscode = localStorage.getItem("sonic_active_passcode");
+
+            if (savedPasscode) {
+                const result = await loginWithPasscode(savedPasscode);
+
+                if (result.success) {
+                    loginCard.classList.add("hidden");
+                    dashboard.classList.remove("hidden");
+                } else {
+                    localStorage.removeItem("sonic_active_passcode");
+                    showMessage(result.message, false);
+                }
+            }
+        });
+    </script>
+
 </body>
 </html>
