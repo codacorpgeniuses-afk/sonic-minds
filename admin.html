@@ -411,12 +411,10 @@ form.addEventListener("submit", async function(event) {
     button.textContent = "VERIFY ADMIN ACCESS";
 
     if (error) {
-        console.error(error);
-        message.textContent =
-            "Access denied or connection error. Check your master code.";
-        return;
+    console.error("ADMIN LOGIN ERROR:", error);
+    message.textContent = "Supabase says: " + error.message;
+    return;
     }
-
     if (!data || data.length === 0) {
         message.textContent = "No passcodes were returned.";
         return;
