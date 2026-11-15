@@ -1,183 +1,511 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Payment Verification</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SONIC MINDS | Admin Portal</title>
 
-    <!-- Supabase -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script>
-        // ⬇️ REPLACE THESE TWO VALUES WITH YOURS (same as index.html)
-        const SUPABASE_URL = 'https://yqicyiflmkfujoqstqcc.supabase.co'
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlxaWN5aWZsbWtmdWpvcXN0cWNjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ2NTA1MzcsImV4cCI6MjExMDIyNjUzN30.fEhjL7XUGNv6iFCQqgYN-EloAsOvooC5MZay45GHQDk'
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-    </script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-    <script src="auth.js"></script>
-    <script>enforceAdminAccess();</script>
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 15% 20%, #14285b, transparent 35%),
+        radial-gradient(circle at 90% 80%, #291047, transparent 35%),
+        #030817;
+    color: white;
+    font-family: Poppins, sans-serif;
+    padding: 25px;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0 25px;
+    border-bottom: 1px solid #263452;
+    margin-bottom: 40px;
+}
+
+.logo {
+    font: 800 21px Orbitron, sans-serif;
+    letter-spacing: 2px;
+}
+
+.logo span {
+    color: #35c9ff;
+}
+
+.tag {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #35c9ff;
+}
+
+.login-panel, .dashboard-panel {
+    background: rgba(8, 20, 48, .88);
+    border: 1px solid rgba(53, 201, 255, .3);
+    border-radius: 18px;
+    padding: 30px;
+    box-shadow: 0 0 35px rgba(53, 201, 255, .08);
+}
+
+.login-panel {
+    max-width: 450px;
+    margin: 70px auto;
+    text-align: center;
+}
+
+h1, h2 {
+    font-family: Orbitron, sans-serif;
+}
+
+.login-panel h1 {
+    font-size: 23px;
+    margin: 15px 0;
+}
+
+.subtitle {
+    color: #9aacca;
+    font-size: 12px;
+    line-height: 1.8;
+    margin-bottom: 25px;
+}
+
+input {
+    width: 100%;
+    padding: 15px;
+    border-radius: 9px;
+    border: 1px solid #315b84;
+    background: #061329;
+    color: white;
+    outline: none;
+    font-size: 13px;
+    margin-bottom: 15px;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    border-radius: 9px;
+    padding: 14px 20px;
+    font-family: Poppins, sans-serif;
+    font-weight: 600;
+}
+
+.primary {
+    width: 100%;
+    color: white;
+    background: linear-gradient(100deg, #087fc2, #7350db);
+}
+
+.primary:disabled {
+    opacity: .6;
+    cursor: wait;
+}
+
+.message {
+    font-size: 12px;
+    margin-top: 15px;
+    color: #ff8585;
+}
+
+.dashboard-panel {
+    display: none;
+}
+
+.dashboard-title {
+    margin-bottom: 25px;
+}
+
+.dashboard-title h1 {
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+
+.dashboard-title p {
+    color: #9aacca;
+    font-size: 12px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.stat {
+    background: #0d1c3a;
+    border: 1px solid #263d66;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.stat p {
+    font-size: 10px;
+    color: #a8bad7;
+}
+
+.stat h2 {
+    margin-top: 10px;
+    font-size: 28px;
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 500px;
+    font-size: 12px;
+}
+
+th, td {
+    text-align: left;
+    padding: 15px 12px;
+    border-bottom: 1px solid #263452;
+}
+
+th {
+    color: #35c9ff;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+.code {
+    font-family: monospace;
+    letter-spacing: 1px;
+    color: white;
+}
+
+.status {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    display: inline-block;
+}
+
+.available {
+    color: #65edb1;
+    background: #123d32;
+}
+
+.activated {
+    color: #54c9ff;
+    background: #103451;
+}
+
+.revoked {
+    color: #ff8b8b;
+    background: #491e2b;
+}
+
+.copy-btn {
+    background: #173a60;
+    color: #7edaff;
+    padding: 7px 10px;
+    font-size: 10px;
+}
+
+.logout {
+    background: #491e2b;
+    color: #ffaaaa;
+    margin-top: 25px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+footer {
+    text-align: center;
+    color: #7386a7;
+    font-size: 10px;
+    margin-top: 40px;
+    letter-spacing: 2px;
+}
+
+@media(max-width: 700px) {
+    body {
+        padding: 15px;
+    }
+
+    header {
+        gap: 10px;
+    }
+
+    .logo {
+        font-size: 16px;
+    }
+
+    .tag {
+        font-size: 8px;
+    }
+
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .login-panel, .dashboard-panel {
+        padding: 22px 16px;
+    }
+
+    .dashboard-title h1 {
+        font-size: 20px;
+    }
+}
+</style>
 </head>
+
 <body>
 
-    <nav>
-        <div><strong>MyBrand</strong></div>
-        <div id="nav-links">
-            <a href="index.html">Home</a>
-            <a href="admin.html" class="restricted-link">🔒 ADMIN SECTION</a>
-            <a href="jamb.html" class="restricted-link locked" onclick="checkLink(event)">🔒 JAMB TEST</a>
-            <a href="basic.html" class="restricted-link locked" onclick="checkLink(event)">🔒 BASIC CBT TRIAL</a>
-            <a href="about.html" style="color: #ffc107; font-size: 13px;">About SONIC MINDS</a>
-            <button id="nav-logout" class="btn-logout" onclick="logout()">Log Out</button>
-        </div>
-    </nav>
+<div class="container">
 
-    <div class="header">
-        <h2>🛠️ Admin Payment Panel</h2>
-        <a href="index.html" style="text-decoration: none; color: #0066ff; font-weight: 500;">← Back to Website</a>
+<header>
+    <div class="logo">SONIC <span>MINDS</span></div>
+    <div class="tag">ADMINISTRATION PORTAL</div>
+</header>
+
+<section class="login-panel" id="loginPanel">
+
+    <div style="font-size:38px;color:#35c9ff">◈</div>
+
+    <h1>ADMIN ACCESS</h1>
+
+    <p class="subtitle">
+        This portal is restricted to authorised SONIC MINDS administrators.
+        Enter your master code to continue.
+    </p>
+
+    <form id="adminForm">
+        <input
+            type="password"
+            id="masterCode"
+            placeholder="Enter admin master code"
+            autocomplete="off"
+            required
+        >
+
+        <button class="primary" id="verifyButton" type="submit">
+            VERIFY ADMIN ACCESS
+        </button>
+    </form>
+
+    <p class="message" id="message"></p>
+
+</section>
+
+<section class="dashboard-panel" id="dashboard">
+
+    <div class="dashboard-title">
+        <h1>ADMIN DASHBOARD</h1>
+        <p>SONIC MINDS passcode management overview</p>
     </div>
 
-    <div class="container">
-        <h3>Pending & Active Member Transfers</h3>
-        <p>Review bank transfer details submitted by users and approve them once funds hit your account.</p>
-        <p style="font-size: 13px; color: #666;">This page updates live when someone submits payment details.</p>
+    <div class="stats">
 
-        <div style="overflow-x: auto;">
-            <table>
-                <thead>
-                    <tr>
-                        <th>User Details</th>
-                        <th>Transfer Info (Sender & Ref)</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="user-table-body">
-                    <tr><td colspan="4" class="empty-state">Loading...</td></tr>
-                </tbody>
-            </table>
+        <div class="stat">
+            <p>TOTAL PASSCODES</p>
+            <h2 id="total">0</h2>
         </div>
+
+        <div class="stat">
+            <p>AVAILABLE</p>
+            <h2 id="available">0</h2>
+        </div>
+
+        <div class="stat">
+            <p>ACTIVATED</p>
+            <h2 id="activated">0</h2>
+        </div>
+
+        <div class="stat">
+            <p>REVOKED</p>
+            <h2 id="revoked">0</h2>
+        </div>
+
     </div>
 
-    <script>
-        // ========== LOAD USERS ==========
-        async function loadAdminPanel() {
-            const tableBody = document.getElementById('user-table-body')
+    <h2 style="font-size:16px;margin:30px 0 15px">
+        PASSCODE REGISTER
+    </h2>
 
-            const { data: users, error } = await supabase
-                .from('users')
-                .select('*')
-                .order('created_at', { ascending: false })
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>NO.</th>
+                    <th>PASSCODE</th>
+                    <th>STATUS</th>
+                    <th>ACTIVATED AT</th>
+                    <th>ACTION</th>
+                </tr>
+            </thead>
 
-            if (error) {
-                tableBody.innerHTML = `<tr><td colspan="4" class="empty-state">Error loading users: ${error.message}</td></tr>`
-                return
-            }
+            <tbody id="passcodeRows">
+            </tbody>
+        </table>
+    </div>
 
-            if (!users || users.length === 0) {
-                tableBody.innerHTML = `<tr><td colspan="4" class="empty-state">No payment submissions found yet.</td></tr>`
-                return
-            }
+    <button class="logout" id="logoutButton">
+        LOG OUT
+    </button>
 
-            tableBody.innerHTML = ''
+</section>
 
-            users.forEach(user => {
-                const row = document.createElement('tr')
-               
-                const statusBadge = user.has_paid
-                    ? `<span class="badge-approved">Approved</span>`
-                    : `<span class="badge-pending">Pending Verification</span>`
+<footer>
+    © 2026 SONIC MINDS • ADMINISTRATION SYSTEM
+</footer>
 
-                const actionButtons = user.has_paid
-                    ? `<button class="btn-danger" onclick="revokeAccess('${user.id}')">Revoke</button>`
-                    : `<button class="btn-approve" onclick="approveUser('${user.id}')">Approve Payment</button>
-                       <button class="btn-danger" onclick="deleteUser('${user.id}')">Delete</button>`
+</div>
 
-                row.innerHTML = `
-                    <td>
-                        <strong>${user.name}</strong><br>
-                        <small style="color: #666;">${user.email}</small>
-                    </td>
-                    <td>
-                        Sender: <strong>${user.sender_name || 'N/A'}</strong><br>
-                        Ref/Teller: <code>${user.reference || 'N/A'}</code>
-                    </td>
-                    <td>${statusBadge}</td>
-                    <td>${actionButtons}</td>
-                `
-                tableBody.appendChild(row)
-            })
-        }
-
-        // ========== APPROVE ==========
-        async function approveUser(id) {
-            const { error } = await supabase
-                .from('users')
-                .update({ has_paid: true })
-                .eq('id', id)
-
-            if (error) {
-                alert('Error: ' + error.message)
-                return
-            }
-            alert('Payment approved!')
-            loadAdminPanel()
-        }
-
-        // ========== REVOKE ==========
-        async function revokeAccess(id) {
-            const { error } = await supabase
-                .from('users')
-                .update({ has_paid: false })
-                .eq('id', id)
-
-            if (error) {
-                alert('Error: ' + error.message)
-                return
-            }
-            loadAdminPanel()
-        }
-
-        // ========== DELETE ==========
-        async function deleteUser(id) {
-            if (!confirm('Are you sure you want to delete this user record?')) return
-
-            const { error } = await supabase
-                .from('users')
-                .delete()
-                .eq('id', id)
-
-            if (error) {
-                alert('Error: ' + error.message)
-                return
-            }
-            loadAdminPanel()
-        }
-
-        // ========== LIVE UPDATES ==========
-        supabase
-            .channel('admin-users')
-            .on('postgres_changes', 
-                { event: '*', schema: 'public', table: 'users' }, 
-                () => {
-                    console.log('Change detected → refreshing...')
-                    loadAdminPanel()
-                }
-            )
-            .subscribe()
-
-        // Load immediately
-        loadAdminPanel()
-    </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script src="auth.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-    enforceAdminAccess().;
+const SUPABASE_URL = "YOUR_SUPABASE_PROJECT_URL";
+const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+
+const db = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+);
+
+const form = document.getElementById("adminForm");
+const message = document.getElementById("message");
+const button = document.getElementById("verifyButton");
+
+form.addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const masterCode =
+        document.getElementById("masterCode").value.trim();
+
+    button.disabled = true;
+    button.textContent = "VERIFYING...";
+    message.textContent = "";
+
+    const { data, error } = await db.rpc(
+        "get_sonic_admin_passcodes",
+        {
+            p_master_code: masterCode
+        }
+    );
+
+    button.disabled = false;
+    button.textContent = "VERIFY ADMIN ACCESS";
+
+    if (error) {
+        console.error(error);
+        message.textContent =
+            "Access denied or connection error. Check your master code.";
+        return;
+    }
+
+    if (!data || data.length === 0) {
+        message.textContent = "No passcodes were returned.";
+        return;
+    }
+
+    displayDashboard(data);
+});
+
+function displayDashboard(codes) {
+
+    document.getElementById("loginPanel").classList.add("hidden");
+
+    const dashboard = document.getElementById("dashboard");
+    dashboard.style.display = "block";
+
+    const available = codes.filter(x => x.status === "Available").length;
+    const activated = codes.filter(x => x.status === "Activated").length;
+    const revoked = codes.filter(x => x.status === "Revoked").length;
+
+    document.getElementById("total").textContent = codes.length;
+    document.getElementById("available").textContent = available;
+    document.getElementById("activated").textContent = activated;
+    document.getElementById("revoked").textContent = revoked;
+
+    const rows = document.getElementById("passcodeRows");
+    rows.innerHTML = "";
+
+    codes.forEach((item, index) => {
+
+        const tr = document.createElement("tr");
+
+        const statusClass = item.status.toLowerCase();
+
+        const date = item.activated_at
+            ? new Date(item.activated_at).toLocaleString()
+            : "—";
+
+        const number = document.createElement("td");
+        number.textContent = index + 1;
+
+        const codeCell = document.createElement("td");
+        codeCell.className = "code";
+        codeCell.textContent = item.passcode;
+
+        const statusCell = document.createElement("td");
+        const badge = document.createElement("span");
+        badge.className = "status " + statusClass;
+        badge.textContent = item.status;
+        statusCell.appendChild(badge);
+
+        const dateCell = document.createElement("td");
+        dateCell.textContent = date;
+
+        const actionCell = document.createElement("td");
+        const copyButton = document.createElement("button");
+        copyButton.className = "copy-btn";
+        copyButton.textContent = "COPY";
+
+        copyButton.addEventListener("click", async () => {
+            try {
+                await navigator.clipboard.writeText(item.passcode);
+                copyButton.textContent = "COPIED";
+                setTimeout(() => copyButton.textContent = "COPY", 1500);
+            } catch {
+                copyButton.textContent = "COPY FAILED";
+            }
+        });
+
+        actionCell.appendChild(copyButton);
+
+        tr.append(
+            number,
+            codeCell,
+            statusCell,
+            dateCell,
+            actionCell
+        );
+
+        rows.appendChild(tr);
+    });
+}
+
+document.getElementById("logoutButton").addEventListener("click", function() {
+    document.getElementById("dashboard").style.display = "none";
+    document.getElementById("loginPanel").classList.remove("hidden");
+    document.getElementById("masterCode").value = "";
+    message.textContent = "";
 });
 </script>
+
 </body>
 </html>
