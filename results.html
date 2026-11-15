@@ -4,207 +4,269 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SONIC MINDS | Results Dashboard</title>
+<title>SONIC MINDS | Results Centre</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
+:root {
+    --blue: #42c8ff;
+    --bg: #050816;
+    --card: #0d172e;
+    --border: #263c61;
+    --muted: #aabbd5;
+}
+
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
-    background: #050816;
+    margin: 0;
+    background: var(--bg);
     color: white;
-    font-family: 'Poppins', sans-serif;
-    min-height: 100vh;
 }
 
 header {
+    background: #0b1430;
     padding: 22px;
     text-align: center;
-    background: #0b1430;
-    border-bottom: 1px solid #1d3c68;
+    border-bottom: 1px solid var(--border);
 }
 
 header h1 {
+    color: var(--blue);
     font-family: 'Orbitron', sans-serif;
-    color: #42c8ff;
+    margin: 0;
     font-size: 25px;
 }
 
 header p {
-    color: #aabbd5;
-    font-size: 12px;
-    margin-top: 8px;
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 2px;
 }
 
 .container {
-    max-width: 1000px;
-    padding: 25px 16px;
+    max-width: 1100px;
     margin: auto;
-}
-
-.welcome {
-    background: linear-gradient(130deg, #102b55, #101326);
-    padding: 28px;
-    border-radius: 18px;
-    border: 1px solid #254a7a;
-    margin-bottom: 22px;
-}
-
-.welcome h2 {
-    color: #42c8ff;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 20px;
-}
-
-.welcome p {
-    color: #c6d4e9;
-    font-size: 13px;
-    margin-top: 10px;
-    line-height: 1.8;
-}
-
-.summary {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    margin-bottom: 25px;
-}
-
-.summary-box {
-    background: #101a34;
-    border: 1px solid #253b60;
-    border-radius: 14px;
-    text-align: center;
-    padding: 20px 8px;
-}
-
-.summary-box h3 {
-    color: #42c8ff;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 23px;
-}
-
-.summary-box p {
-    color: #aabbd5;
-    font-size: 11px;
-    margin-top: 7px;
-}
-
-.results-section {
-    background: #0c1429;
-    padding: 23px;
-    border: 1px solid #23395e;
-    border-radius: 16px;
-}
-
-.results-section h2 {
-    color: #42c8ff;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 17px;
-    margin-bottom: 20px;
-}
-
-.result-card {
-    background: #111e39;
-    border: 1px solid #29466f;
-    padding: 18px;
-    border-radius: 12px;
-    margin-bottom: 14px;
-}
-
-.result-top {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.result-top h3 {
-    color: white;
-    font-size: 15px;
-}
-
-.score {
-    color: #42c8ff;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 19px;
-}
-
-.details {
-    color: #aabbd5;
-    font-size: 12px;
-    line-height: 2;
-    margin-top: 12px;
-}
-
-.status {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 5px 12px;
-    background: #123d45;
-    color: #63e6be;
-    font-size: 11px;
-    border-radius: 20px;
-}
-
-.empty {
-    text-align: center;
-    padding: 40px 15px;
-    color: #9aabc6;
-}
-
-.empty h3 {
-    color: #42c8ff;
-    margin-bottom: 10px;
-}
-
-button, .back {
-    border: none;
-    padding: 12px 20px;
-    border-radius: 25px;
-    cursor: pointer;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    text-decoration: none;
-    font-size: 12px;
+    padding: 25px 16px;
 }
 
 .back {
     display: inline-block;
-    background: #42c8ff;
-    color: #06101e;
+    color: var(--blue);
+    text-decoration: none;
     margin-bottom: 20px;
+    font-size: 13px;
 }
 
-.clear {
-    background: #a52d42;
+.hero {
+    background: linear-gradient(130deg, #102b55, #101326);
+    border: 1px solid var(--border);
+    padding: 28px;
+    border-radius: 17px;
+    margin-bottom: 22px;
+}
+
+.hero h2 {
+    color: var(--blue);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 21px;
+}
+
+.hero p {
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 13px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 13px;
+    margin-bottom: 25px;
+}
+
+.stat {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    padding: 20px 8px;
+    text-align: center;
+}
+
+.stat h3 {
+    color: var(--blue);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 23px;
+    margin: 0;
+}
+
+.stat p {
+    color: var(--muted);
+    font-size: 11px;
+    margin-bottom: 0;
+}
+
+.panel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 22px;
+    border-radius: 15px;
+    margin-bottom: 22px;
+}
+
+.panel h2 {
+    color: var(--blue);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 17px;
+    margin-top: 0;
+}
+
+.filters {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 15px 0;
+}
+
+input, select {
+    padding: 11px;
+    border: 1px solid var(--border);
+    background: #111e39;
     color: white;
-    margin-top: 20px;
+    border-radius: 8px;
+    flex: 1;
+    min-width: 150px;
+}
+
+.result-card {
+    background: #111e39;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 17px;
+    margin-bottom: 13px;
+}
+
+.result-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.result-head h3 {
+    font-size: 14px;
+    margin: 0;
+}
+
+.score {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--blue);
+    font-size: 20px;
+}
+
+.meta {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 2;
+    margin-top: 10px;
+}
+
+.breakdown {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 13px;
+}
+
+.subject {
+    background: #0b2840;
+    border: 1px solid #24527b;
+    padding: 9px 12px;
+    border-radius: 8px;
+    font-size: 11px;
+}
+
+.btn {
+    border: none;
+    padding: 10px 15px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 11px;
+}
+
+.review-btn {
+    background: var(--blue);
+    color: #06101e;
+    margin-top: 13px;
+}
+
+.review {
+    display: none;
+    margin-top: 17px;
+    padding-top: 15px;
+    border-top: 1px solid var(--border);
+}
+
+.review.show {
+    display: block;
+}
+
+.review-question {
+    padding: 13px;
+    background: #0a1225;
+    border-radius: 9px;
+    margin-bottom: 12px;
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.correct {
+    border-left: 3px solid #22c55e;
+}
+
+.wrong {
+    border-left: 3px solid #ef4444;
+}
+
+.explanation {
+    color: #a9d9f5;
+    margin-top: 8px;
+}
+
+.empty {
+    text-align: center;
+    padding: 35px 10px;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.empty h3 {
+    color: var(--blue);
 }
 
 footer {
     text-align: center;
     padding: 25px;
+    color: #71819e;
     font-size: 11px;
-    color: #72829e;
 }
 
 @media(max-width:550px) {
-    .summary {
-        grid-template-columns: repeat(3, 1fr);
+    .stats {
+        gap: 7px;
     }
 
-    .summary-box h3 {
-        font-size: 18px;
+    .stat h3 {
+        font-size: 17px;
     }
 
-    .welcome h2 {
+    .hero h2 {
         font-size: 17px;
     }
 }
@@ -215,47 +277,60 @@ footer {
 
 <header>
     <h1>SONIC MINDS</h1>
-    <p>STUDENT PERFORMANCE CENTRE</p>
+    <p>STUDENT RESULTS & PERFORMANCE CENTRE</p>
 </header>
 
 <div class="container">
 
-    <a href="home.html" class="back">← BACK TO HOME</a>
+    <a href="home.html" class="back">← BACK TO HOMEPAGE</a>
 
-    <div class="welcome">
+    <div class="hero">
         <h2>MY RESULTS DASHBOARD</h2>
         <p>
             Welcome to your personal academic performance
-            centre. View your previous CBT attempts, monitor
-            your progress and keep track of your achievements.
+            centre. Every completed CBT examination saved
+            on this browser will appear here.
+            Monitor your scores, subject performance and
+            previous examination attempts.
         </p>
     </div>
 
-    <div class="summary">
-        <div class="summary-box">
-            <h3 id="total">0</h3>
+    <div class="stats">
+        <div class="stat">
+            <h3 id="totalAttempts">0</h3>
             <p>Total Attempts</p>
         </div>
 
-        <div class="summary-box">
-            <h3 id="average">0%</h3>
+        <div class="stat">
+            <h3 id="averageScore">0%</h3>
             <p>Average Score</p>
         </div>
 
-        <div class="summary-box">
-            <h3 id="best">0%</h3>
-            <p>Best Performance</p>
+        <div class="stat">
+            <h3 id="bestScore">0%</h3>
+            <p>Best Score</p>
         </div>
     </div>
 
-    <div class="results-section">
-        <h2>MY CBT HISTORY</h2>
+    <div class="panel">
+        <h2>EXAMINATION HISTORY</h2>
 
-        <div id="resultsList"></div>
+        <div class="filters">
+            <input
+                type="text"
+                id="searchCandidate"
+                placeholder="Search candidate name..."
+            >
 
-        <button class="clear" onclick="clearResults()">
-            CLEAR LOCAL RESULTS
-        </button>
+            <select id="sortResults">
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
+                <option value="highest">Highest Score</option>
+                <option value="lowest">Lowest Score</option>
+            </select>
+        </div>
+
+        <div id="resultsContainer"></div>
     </div>
 
 </div>
@@ -267,9 +342,10 @@ footer {
 </footer>
 
 <script>
-const STORAGE_KEY = "sonicMindsResults";
 
-function getResults() {
+const STORAGE_KEY = "uniport_cbt_history";
+
+function getHistory() {
     try {
         const data = JSON.parse(
             localStorage.getItem(STORAGE_KEY) || "[]"
@@ -281,109 +357,228 @@ function getResults() {
     }
 }
 
+function renderDashboard() {
+
+    const history = getHistory();
+
+    document.getElementById("totalAttempts").textContent =
+        history.length;
+
+    if (history.length === 0) {
+        document.getElementById("averageScore").textContent = "0%";
+        document.getElementById("bestScore").textContent = "0%";
+    } else {
+        const scores = history.map(r =>
+            Number(r.percentage) || 0
+        );
+
+        const average = scores.reduce((a,b) => a+b, 0)
+            / scores.length;
+
+        document.getElementById("averageScore").textContent =
+            average.toFixed(1) + "%";
+
+        document.getElementById("bestScore").textContent =
+            Math.max(...scores) + "%";
+    }
+
+    renderResults();
+}
+
 function renderResults() {
-    const results = getResults();
-    const list = document.getElementById("resultsList");
 
-    document.getElementById("total").textContent =
-        results.length;
+    const history = getHistory();
+    const container =
+        document.getElementById("resultsContainer");
 
-    const percentages = results.map(result => {
-        const value = Number(result.percentage);
-        if (Number.isFinite(value)) return value;
+    const search = document.getElementById(
+        "searchCandidate"
+    ).value.toLowerCase();
 
-        const score = Number(result.score);
-        const total = Number(result.total);
+    const sort = document.getElementById(
+        "sortResults"
+    ).value;
 
-        return total > 0 ? (score / total) * 100 : 0;
-    });
+    let filtered = history.filter(r =>
+        String(r.candidate || "")
+            .toLowerCase()
+            .includes(search)
+    );
 
-    const average = percentages.length
-        ? percentages.reduce((a, b) => a + b, 0) /
-          percentages.length
-        : 0;
+    if (sort === "newest") {
+        filtered.sort((a,b) =>
+            new Date(b.finishedAt) - new Date(a.finishedAt)
+        );
+    }
 
-    const best = percentages.length
-        ? Math.max(...percentages)
-        : 0;
+    if (sort === "oldest") {
+        filtered.sort((a,b) =>
+            new Date(a.finishedAt) - new Date(b.finishedAt)
+        );
+    }
 
-    document.getElementById("average").textContent =
-        average.toFixed(1) + "%";
+    if (sort === "highest") {
+        filtered.sort((a,b) => b.percentage - a.percentage);
+    }
 
-    document.getElementById("best").textContent =
-        best.toFixed(1) + "%";
+    if (sort === "lowest") {
+        filtered.sort((a,b) => a.percentage - b.percentage);
+    }
 
-    if (results.length === 0) {
-        list.innerHTML = `
-            <div class="empty">
-                <h3>NO RESULTS YET</h3>
-                <p>
-                    Your CBT results will appear here
-                    after you complete a test.
-                </p>
-            </div>
-        `;
+    container.innerHTML = "";
+
+    if (filtered.length === 0) {
+        const empty = document.createElement("div");
+        empty.className = "empty";
+        const heading = document.createElement("h3");
+        heading.textContent = "NO RESULTS FOUND";
+        const message = document.createElement("p");
+        message.textContent = search
+            ? "No candidate matches your search."
+            : "Complete a CBT examination to see your results here.";
+        empty.append(heading, message);
+        container.appendChild(empty);
         return;
     }
 
-    list.innerHTML = "";
-
-    [...results].reverse().forEach(result => {
-        const score = Number(result.score) || 0;
-        const total = Number(result.total) || 0;
-
-        const percentage = Number.isFinite(
-            Number(result.percentage)
-        ) ? Number(result.percentage) :
-            (total > 0 ? score / total * 100 : 0);
-
-        const date = result.date
-            ? new Date(result.date).toLocaleString()
-            : "Date unavailable";
+    filtered.forEach(rec => {
 
         const card = document.createElement("div");
         card.className = "result-card";
 
-        const heading = document.createElement("div");
-        heading.className = "result-top";
+        const head = document.createElement("div");
+        head.className = "result-head";
 
-        const title = document.createElement("h3");
-        title.textContent = result.subject || "CBT Practice";
+        const name = document.createElement("h3");
+        name.textContent = rec.candidate || "Unknown Candidate";
 
-        const scoreText = document.createElement("span");
-        scoreText.className = "score";
-        scoreText.textContent = `${score}/${total}`;
+        const score = document.createElement("span");
+        score.className = "score";
+        score.textContent =
+            `${rec.score} / ${rec.total}`;
 
-        heading.append(title, scoreText);
+        head.append(name, score);
 
-        const details = document.createElement("div");
-        details.className = "details";
-        details.textContent =
-            `Percentage: ${percentage.toFixed(1)}% | Date: ${date}`;
+        const meta = document.createElement("div");
+        meta.className = "meta";
 
-        const status = document.createElement("span");
-        status.className = "status";
-        status.textContent = "COMPLETED";
+        const date = rec.finishedAt
+            ? new Date(rec.finishedAt).toLocaleString()
+            : "Date unavailable";
 
-        card.append(heading, details, status);
-        list.appendChild(card);
+        meta.textContent =
+            `Completed: ${date} | Performance: ${rec.percentage}%`;
+
+        const breakdown = document.createElement("div");
+        breakdown.className = "breakdown";
+
+        Object.entries(rec.bySubject || {}).forEach(
+            ([subject, data]) => {
+
+                const item = document.createElement("div");
+                item.className = "subject";
+
+                const percentage = data.total
+                    ? Math.round(data.correct / data.total * 100)
+                    : 0;
+
+                item.textContent =
+                    `${subject}: ${data.correct}/${data.total} (${percentage}%)`;
+
+                breakdown.appendChild(item);
+            }
+        );
+
+        const button = document.createElement("button");
+        button.className = "btn review-btn";
+        button.textContent = "VIEW FULL RESULT & CORRECTIONS";
+
+        const review = document.createElement("div");
+        review.className = "review";
+
+        button.addEventListener("click", () => {
+            review.classList.toggle("show");
+            button.textContent = review.classList.contains("show")
+                ? "HIDE CORRECTIONS"
+                : "VIEW FULL RESULT & CORRECTIONS";
+        });
+
+        const reviewHeading = document.createElement("h4");
+        reviewHeading.textContent = "DETAILED ANSWER REVIEW";
+        reviewHeading.style.color = "var(--blue)";
+
+        review.appendChild(reviewHeading);
+
+        (rec.questions || []).forEach((q, index) => {
+
+            const isCorrect = q.userAns === q.ans;
+            const unanswered = q.userAns === null;
+            const letters = ["A","B","C","D"];
+
+            const item = document.createElement("div");
+
+            item.className =
+                "review-question " +
+                (isCorrect ? "correct" : "wrong");
+
+            const question = document.createElement("strong");
+            question.textContent =
+                `Q${index + 1}. ${q.q}`;
+
+            const subject = document.createElement("p");
+            subject.textContent =
+                `Subject: ${q.subject}`;
+
+            const userAnswer = document.createElement("p");
+            userAnswer.textContent = unanswered
+                ? "Your answer: Unanswered"
+                : `Your answer: ${letters[q.userAns]}. ${q.opts[q.userAns]}`;
+
+            const correctAnswer = document.createElement("p");
+            correctAnswer.textContent =
+                `Correct answer: ${letters[q.ans]}. ${q.opts[q.ans]}`;
+
+            const explanation = document.createElement("p");
+            explanation.className = "explanation";
+            explanation.textContent =
+                "Explanation: " +
+                (q.exp || "No explanation provided.");
+
+            item.append(
+                question,
+                subject,
+                userAnswer,
+                correctAnswer,
+                explanation
+            );
+
+            review.appendChild(item);
+        });
+
+        card.append(head, meta, breakdown, button, review);
+
+        container.appendChild(card);
     });
 }
 
-function clearResults() {
-    const confirmed = confirm(
-        "Are you sure you want to delete all locally saved results on this device? This cannot be undone."
-    );
+document.getElementById("searchCandidate")
+    .addEventListener("input", renderResults);
 
-    if (!confirmed) return;
+document.getElementById("sortResults")
+    .addEventListener("change", renderResults);
 
-    localStorage.removeItem(STORAGE_KEY);
-    renderResults();
-}
+renderDashboard();
 
-renderResults();
+// Refresh when returning to this page
+window.addEventListener("focus", renderDashboard);
+
+window.addEventListener("storage", event => {
+    if (event.key === STORAGE_KEY) {
+        renderDashboard();
+    }
+});
+
 </script>
 
 </body>
-  </html>
-  
+</html>
