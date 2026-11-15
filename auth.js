@@ -1,7 +1,7 @@
 
 // SONIC MINDS - PASSCODE AUTHENTICATION
 
-const SUPABASE_URL = "yqicyiflmkfujoqstqcc";
+const SUPABASE_URL = "https://yqicyiflmkfujoqstqcc.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlxaWN5aWZsbWtmdWpvcXN0cWNjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ2NTA1MzcsImV4cCI6MjExMDIyNjUzN30.fEhjL7XUGNv6iFCQqgYN-EloAsOvooC5MZay45GHQDk";
 
 const sonicDB = window.supabase.createClient(
