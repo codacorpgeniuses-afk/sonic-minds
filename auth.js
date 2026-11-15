@@ -1,71 +1,100 @@
 
+// SONIC MINDS - PASSCODE AUTHENTICATION
+
 const SUPABASE_URL = "yqicyiflmkfujoqstqcc";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlxaWN5aWZsbWtmdWpvcXN0cWNjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ2NTA1MzcsImV4cCI6MjExMDIyNjUzN30.fEhjL7XUGNv6iFCQqgYN-EloAsOvooC5MZay45GHQDk";
 
-const ADMIN_EMAIL = "yungchidex333@gmail.com";
-
-// Initialize Supabase
-const supabaseClient = window.supabase.createClient(
+const sonicDB = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_ANON_KEY
 );
 
-// Check logged-in user
-async function getCurrentUser() {
-    const { data, error } = await supabaseClient.auth.getUser();
+// Generate a permanent browser ID
+function getDeviceID() {
+    let deviceID = localStorage.getItem("sonic_device_id");
 
-    if (error || !data.user) {
-        window.location.href = "index.html";
-        return null;
+    if (!deviceID) {
+        deviceID = crypto.randomUUID();
+
+        localStorage.setItem(
+            "sonic_device_id",
+            deviceID
+        );
     }
 
-    return data.user;
+    return deviceID;
+}
+
+// Activate or verify passcode
+async function loginWithPasscode(passcode) {
+    const deviceID = getDeviceID();
+
+    const { data, error } = await sonicDB.rpc(
+        "activate_sonic_passcode",
+        {
+            p_code: passcode.trim(),
+            p_device_id: deviceID
+        }
+    );
+
+    if (error) {
+        console.error(error);
+        return {
+            success: false,
+            message: "Connection error. Please try again."
+        };
+    }
+
+    if (
+        data === "activated" ||
+        data === "already_activated_same_device"
+    ) {
+        localStorage.setItem(
+            "sonic_active_passcode",
+            passcode.trim()
+        );
+
+        return {
+            success: true,
+            message: "Access granted!"
+        };
+    }
+
+    if (data === "used_password") {
+        return {
+            success: false,
+            message: "This passcode has already been used on another device."
+        };
+    }
+
+    return {
+        success: false,
+        message: "Invalid passcode. Please check and try again."
+    };
 }
 
 // Protect paid pages
 async function enforcePaywall() {
-    const user = await getCurrentUser();
+    const passcode = localStorage.getItem(
+        "sonic_active_passcode"
+    );
 
-    if (!user) return;
-
-    const { data, error } = await supabaseClient
-        .from("profiles")
-        .select("has_paid")
-        .eq("id", user.id)
-        .single();
-
-    if (error || !data || data.has_paid !== true) {
-        alert("Payment has not been verified. Please complete payment.");
-        window.location.href = "index.html";
+    if (!passcode) {
+        window.location.replace("index.html");
         return;
     }
-}
 
-// Protect admin panel
-async function enforceAdminAccess() {
-    const user = await getCurrentUser();
+    const result = await loginWithPasscode(passcode);
 
-    if (!user) return;
-
-    const { data, error } = await supabaseClient
-        .from("profiles")
-        .select("role")
-        .eq("id", user.id)
-        .single();
-
-    if (
-        error ||
-        user.email.toLowerCase() !== ADMIN_EMAIL.toLowerCase() ||
-        data?.role !== "admin"
-    ) {
-        alert("Access denied: Administrators only.");
-        window.location.href = "index.html";
-        return;
+    if (!result.success) {
+        localStorage.removeItem("sonic_active_passcode");
+        alert(result.message);
+        window.location.replace("index.html");
     }
 }
 
 // Logout
-async function logoutUser() {
-    await supabaseClient.auth.signOut();
-    window.location.href = "index.html";
+function logoutUser() {
+    localStorage.removeItem("sonic_active_passcode");
+    window.location.replace("index.html");
 }
