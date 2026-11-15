@@ -1,25 +1,317 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ABOUT SONIC MINDS</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us | SONIC MINDS</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #050816;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+}
+
+.about-container {
+    padding: 45px 20px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.hero {
+    text-align: center;
+    padding: 65px 20px;
+    background: linear-gradient(135deg, #101b42, #070b1c, #142b55);
+    border: 1px solid #263e70;
+    border-radius: 20px;
+    margin-bottom: 35px;
+}
+
+.hero h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 35px;
+    color: #4cc9ff;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    color: #d4dbea;
+    line-height: 1.8;
+    max-width: 750px;
+    margin: auto;
+}
+
+.section {
+    background: #0d1428;
+    border: 1px solid #1e3155;
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 25px;
+}
+
+.section h2 {
+    color: #4cc9ff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 21px;
+    margin-bottom: 15px;
+}
+
+.section p {
+    color: #cbd5e1;
+    line-height: 1.9;
+    font-size: 14px;
+}
+
+.highlight {
+    color: #4cc9ff;
+    font-weight: 600;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.stat-box {
+    background: #111e3a;
+    border: 1px solid #294777;
+    padding: 25px 15px;
+    text-align: center;
+    border-radius: 15px;
+}
+
+.stat-box h3 {
+    font-family: 'Orbitron', sans-serif;
+    color: #4cc9ff;
+    font-size: 27px;
+    margin-bottom: 8px;
+}
+
+.stat-box p {
+    color: #cbd5e1;
+    font-size: 12px;
+}
+
+.why-list {
+    margin-top: 15px;
+    padding-left: 20px;
+    color: #cbd5e1;
+    line-height: 2.2;
+    font-size: 14px;
+}
+
+.cta {
+    text-align: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #102b55, #10152c);
+    border-radius: 18px;
+    border: 1px solid #31568b;
+}
+
+.cta h2 {
+    color: #4cc9ff;
+    font-family: 'Orbitron', sans-serif;
+    margin-bottom: 15px;
+}
+
+.cta p {
+    color: #d4dbea;
+    margin-bottom: 22px;
+    line-height: 1.8;
+}
+
+.cta a {
+    display: inline-block;
+    background: #28b9f4;
+    color: #06101e;
+    padding: 13px 28px;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: 700;
+    transition: 0.3s;
+}
+
+.cta a:hover {
+    background: white;
+    transform: translateY(-3px);
+}
+
+footer {
+    text-align: center;
+    padding: 25px 10px;
+    color: #71819e;
+    font-size: 12px;
+}
+
+@media(max-width:600px) {
+    .hero h1 {
+        font-size: 26px;
+    }
+
+    .section {
+        padding: 23px;
+    }
+
+    .section h2 {
+        font-size: 18px;
+    }
+}
+</style>
 </head>
+
 <body>
 
-    <nav>
-        <div><strong>MyBrand</strong></div>
-        <div id="nav-links">
-            <a href="index.html">Home</a>
-            <a href="admin.html" class="restricted-link locked" onclick="checkLink(event)">🔒 ADMIN SECTION</a>
-            <a href="jamb.html" class="restricted-link locked" onclick="checkLink(event)">🔒 JAMB TEST</a>
-            <a href="basic.html" class="restricted-link locked" onclick="checkLink(event)">🔒 BASIC CBT TRIAL</a>
-            <a href="about.html" style="color: #ffc107; font-size: 13px;">About SONIC MINDS</a>
-            <button id="nav-logout" class="btn-logout hidden" onclick="logout()">Log Out</button>
-        </div>
-    </nav>
+<div class="about-container">
 
-    <h1>
-        
-    </h1>
+    <div class="hero">
+        <h1>ABOUT SONIC MINDS</h1>
+        <p>
+            More Than Learning. A Journey Towards Excellence.
+            <br><br>
+            SONIC MINDS is an educational platform built on
+            experience, academic excellence and the desire to
+            help students discover their true academic potential.
+            We believe that every student deserves the right
+            guidance, the right resources and the right environment
+            to succeed.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>Our Story & Experience</h2>
+        <p>
+            SONIC MINDS was inspired by real academic experiences,
+            particularly the Basic educational journey and the
+            challenges students encounter while preparing for
+            important examinations.
+
+            <br><br>
+
+            Having experienced the learning process ourselves,
+            we understand that academic success requires more
+            than simply reading textbooks. Students need proper
+            explanations, consistent practice, examination
+            strategies and guidance from people who understand
+            what they are going through.
+
+            <br><br>
+
+            Our goal is to transform those experiences into
+            opportunities for the next generation of students.
+            We want to make learning easier, smarter and more
+            rewarding.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>Learning From Excellence</h2>
+        <p>
+            One of the things that makes SONIC MINDS special
+            is our connection to academic achievers.
+
+            <br><br>
+
+            Our tutors include outstanding individuals who
+            have demonstrated exceptional academic ability,
+            including a JAMB score of <span class="highlight">334</span>.
+
+            <br><br>
+
+            These are people who understand the demands of
+            competitive examinations and the importance of
+            preparation, discipline and effective study methods.
+
+            <br><br>
+
+            We also draw inspiration from former Basic students
+            who have gone on to achieve impressive academic
+            results. Their journeys remind us that today's
+            learners can become tomorrow's success stories.
+        </p>
+    </div>
+
+    <div class="stats">
+        <div class="stat-box">
+            <h3>334</h3>
+            <p>JAMB Score Achieved by a Tutor</p>
+        </div>
+
+        <div class="stat-box">
+            <h3>EXPERIENCE</h3>
+            <p>Learning From Real Academic Journeys</p>
+        </div>
+
+        <div class="stat-box">
+            <h3>SUCCESS</h3>
+            <p>Inspired by Former Basic Students</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>What We Offer</h2>
+        <p>
+            SONIC MINDS provides an interactive learning
+            environment designed to help students prepare
+            effectively and monitor their academic progress.
+        </p>
+
+        <ul class="why-list">
+            <li>Basic CBT practice and preparation.</li>
+            <li>JAMB CBT practice and examination preparation.</li>
+            <li>Access to results and performance records.</li>
+            <li>Academic advice and helpful learning guidance.</li>
+            <li>Learning resources designed to improve understanding.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Our Mission</h2>
+        <p>
+            Our mission is to raise academically confident,
+            knowledgeable and well-prepared students by
+            providing quality learning resources, experienced
+            guidance and opportunities for continuous improvement.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>Our Vision</h2>
+        <p>
+            We envision a future where every student has access
+            to the knowledge, guidance and preparation needed
+            to compete confidently and achieve academic excellence.
+        </p>
+    </div>
+
+    <div class="cta">
+        <h2>YOUR SUCCESS STARTS HERE</h2>
+        <p>
+            You don't have to figure out the entire academic
+            journey alone. Learn from experience, practise
+            with purpose and take the next step towards excellence.
+        </p>
+
+        <a href="home.html">EXPLORE SONIC MINDS</a>
+    </div>
+
+</div>
+
+<footer>
+    © 2026 SONIC MINDS. All Rights Reserved.
+    <br>
+    Empowering Minds. Building Excellence.
+</footer>
+
+</body>
+</html>
