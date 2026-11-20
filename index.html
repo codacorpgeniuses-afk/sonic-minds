@@ -14,16 +14,7 @@
 
 <body>
 
-    <!-- SONIC MINDS CBT EXAMINATION BACKGROUND -->
-<div class="cbt-background">
-
-    <div class="cbt-grid"></div>
-
-    <div class="exam-glow glow-one"></div>
-    <div class="exam-glow glow-two"></div>
-
-
-</div>
+    
 
     <!-- NAVIGATION -->
     <header class="topbar">
@@ -151,28 +142,24 @@
                 </a>
 
                 <a href="jamb.html" class="dashboard-card">
-                    <span class="card-icon">🚀</span>
                     <h3>JAMB CBT</h3>
                     <p>Prepare for your JAMB examination.</p>
                     <span class="card-link">ENTER →</span>
                 </a>
 
                 <a href="results.html" class="dashboard-card">
-                    <span class="card-icon">🏆</span>
                     <h3>RESULTS</h3>
                     <p>View your examination performance.</p>
                     <span class="card-link">ENTER →</span>
                 </a>
 
                 <a href="admin.html" class="dashboard-card">
-                    <span class="card-icon">💡</span>
                     <h3>ADMIN PORTAL</h3>
-                    <p>SPECIFICALLY FOR ADMINS DO NOT ENTER IF NOT ADMIN</p>y.</p>
+                    <p>SPECIFICALLY FOR ADMINS DO NOT ENTER IF NOT ADMIN</p>
                     <span class="card-link">ENTER →</span>
                 </a>
 
                 <a href="about.html" class="dashboard-card">
-                    <span class="card-icon">🌌</span>
                     <h3>ABOUT US</h3>
                     <p>Discover the SONIC MINDS platform.</p>
                     <span class="card-link">ENTER →</span>
@@ -393,55 +380,163 @@
 
 <style>
 
-/* SONIC MINDS PAYMENT DESIGN */
+
+/* =====================================
+   SONIC MINDS - PROFESSIONAL PAYMENT UI
+===================================== */
 
 .payment-container {
   width: 100%;
   max-width: 520px;
   margin: 35px auto;
-  padding: 15px;
-  font-family: Arial, sans-serif;
-  color: white;
+  padding: 18px;
+  font-family: 'Poppins', Arial, sans-serif;
+  color: #1e293b;
   box-sizing: border-box;
 }
 
+/* PAYMENT HEADER */
+
 .payment-header {
   text-align: center;
-  margin-bottom: 25px;
+  margin-bottom: 28px;
 }
 
 .payment-header h2 {
-  color: #00eaff;
-  letter-spacing: 5px;
-  font-size: 27px;
-  text-shadow: 0 0 15px #00eaff;
+  color: #123b70;
+  letter-spacing: 4px;
+  font-size: 25px;
+  font-weight: 800;
+  text-shadow: none;
 }
 
 .payment-header p {
-  color: #aaa;
+  color: #64748b;
   font-size: 12px;
+  margin-top: 7px;
+  letter-spacing: 0.5px;
 }
 
 .payment-header h3 {
-  color: #fff;
+  color: #172b4d;
   font-size: 23px;
+  font-weight: 700;
+  margin-top: 18px;
 }
 
+/* PAYMENT CARD */
+
 .payment-card {
-  background: rgba(10, 15, 40, 0.94);
-  border: 1px solid rgba(0, 225, 255, 0.45);
-  border-radius: 20px;
-  padding: 25px 20px;
+  background: #ffffff;
+  border: 1px solid #dce5f0;
+  border-radius: 14px;
+  padding: 27px 22px;
+
   box-shadow:
-    0 0 20px rgba(0, 225, 255, 0.15),
-    0 0 40px rgba(120, 0, 255, 0.12);
+    0 4px 15px rgba(15, 40, 75, 0.06),
+    0 12px 30px rgba(15, 40, 75, 0.04);
 }
+
+/* PAYMENT ICON */
 
 .payment-icon {
   text-align: center;
   font-size: 38px;
-  color: #00eaff;
-  text-shadow: 0 0 20px #00eaff;
+  color: #1756a9;
+  text-shadow: none;
+  margin-bottom: 15px;
+}
+
+/* GENERAL PAYMENT TEXT */
+
+.payment-card h3 {
+  color: #17365d;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.payment-card p {
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* ACCOUNT DETAILS */
+
+.payment-details {
+  background: #f1f6fc;
+  border: 1px solid #d9e5f2;
+  border-radius: 10px;
+  padding: 18px;
+  margin-top: 18px;
+}
+
+.payment-details p {
+  color: #475569;
+  margin: 9px 0;
+}
+
+.payment-details strong {
+  color: #17365d;
+}
+
+/* PAYMENT BUTTON */
+
+.payment-button {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  margin-top: 20px;
+  background: #1756a9;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+.payment-button:hover {
+  background: #103f80;
+}
+
+/* SECURITY NOTICE */
+
+.payment-notice {
+  background: #f0f7ff;
+  border-left: 4px solid #1756a9;
+  padding: 13px;
+  margin-top: 18px;
+  border-radius: 5px;
+}
+
+.payment-notice p {
+  color: #475569;
+  font-size: 12px;
+}
+
+/* MOBILE RESPONSIVENESS */
+
+@media (max-width: 480px) {
+  .payment-container {
+    padding: 12px;
+    margin: 20px auto;
+  }
+
+  .payment-header h2 {
+    font-size: 22px;
+    letter-spacing: 3px;
+  }
+
+  .payment-header h3 {
+    font-size: 20px;
+  }
+
+  .payment-card {
+    padding: 22px 17px;
+  }
 }
 
 .payment-card h3 {
