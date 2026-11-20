@@ -665,3 +665,257 @@ footer span {
         scroll-behavior: auto !important;
     }
 }
+
+
+/* =====================================
+   SONIC MINDS CBT EXAMINATION THEME
+===================================== */
+
+body {
+    background: #030817;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* MAIN BACKGROUND */
+
+.cbt-background {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: -1;
+    background:
+        radial-gradient(
+            ellipse at 15% 20%,
+            rgba(0, 174, 255, 0.13),
+            transparent 40%
+        ),
+        radial-gradient(
+            ellipse at 85% 80%,
+            rgba(115, 70, 255, 0.13),
+            transparent 40%
+        ),
+        #030817;
+}
+
+/* DIGITAL GRID */
+
+.cbt-grid {
+    position: absolute;
+    inset: 0;
+
+    background-image:
+        linear-gradient(
+            rgba(0, 210, 255, 0.045) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(0, 210, 255, 0.045) 1px,
+            transparent 1px
+        );
+
+    background-size: 45px 45px;
+
+    mask-image: linear-gradient(
+        to bottom,
+        black,
+        transparent 95%
+    );
+}
+
+/* BACKGROUND LIGHTS */
+
+.exam-glow {
+    position: absolute;
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.13;
+}
+
+.glow-one {
+    background: #00c8ff;
+    top: 10%;
+    left: -150px;
+}
+
+.glow-two {
+    background: #7950ff;
+    bottom: 5%;
+    right: -150px;
+}
+
+/* FLOATING EXAMINATION PANELS */
+
+.exam-decoration {
+    position: absolute;
+    padding: 20px;
+    width: 210px;
+
+    background: rgba(8, 19, 43, 0.55);
+
+    border: 1px solid rgba(0, 220, 255, 0.13);
+
+    border-radius: 14px;
+
+    backdrop-filter: blur(5px);
+
+    box-shadow:
+        0 0 25px rgba(0, 200, 255, 0.04);
+
+    opacity: 0.32;
+
+    font-family: 'Orbitron', sans-serif;
+}
+
+.exam-decoration span {
+    color: #00d9ff;
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+
+.exam-card-one {
+    top: 18%;
+    left: 4%;
+    transform: rotate(-8deg);
+}
+
+.exam-card-two {
+    top: 48%;
+    right: 4%;
+    transform: rotate(7deg);
+}
+
+.exam-card-three {
+    bottom: 8%;
+    left: 12%;
+    transform: rotate(5deg);
+}
+
+/* QUESTION PANEL */
+
+.fake-question-line {
+    height: 4px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 5px;
+    margin-top: 18px;
+    width: 100%;
+}
+
+.fake-question-line.short {
+    width: 65%;
+    margin-top: 8px;
+}
+
+.fake-option {
+    font-size: 9px;
+    color: #a9b9d5;
+    padding: 8px;
+    margin-top: 8px;
+    border: 1px solid rgba(0,220,255,0.12);
+    border-radius: 5px;
+}
+
+/* EXAM TIMER */
+
+.fake-timer {
+    font-size: 22px;
+    color: #ffffff;
+    margin: 18px 0 10px;
+    letter-spacing: 2px;
+}
+
+.timer-line {
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(
+        90deg,
+        #00d9ff 65%,
+        rgba(255,255,255,0.1) 65%
+    );
+    border-radius: 5px;
+}
+
+.exam-card-two small {
+    display: block;
+    color: #8298b9;
+    font-size: 8px;
+    margin-top: 12px;
+    letter-spacing: 1px;
+}
+
+/* ANSWER SHEET */
+
+.answer-row {
+    display: flex;
+    justify-content: space-between;
+    color: #a9b9d5;
+    font-size: 10px;
+    margin-top: 12px;
+}
+
+.answer-row i {
+    width: 12px;
+    height: 12px;
+    border: 1px solid #00d9ff;
+    border-radius: 50%;
+}
+
+/* DIGITAL DECORATIONS */
+
+.cbt-cross {
+    position: absolute;
+    color: #00d9ff;
+    font-size: 24px;
+    opacity: 0.2;
+}
+
+.cross-one {
+    top: 20%;
+    right: 25%;
+}
+
+.cross-two {
+    bottom: 25%;
+    right: 35%;
+}
+
+.cross-three {
+    top: 65%;
+    left: 40%;
+}
+
+/* MOBILE OPTIMIZATION */
+
+@media(max-width: 600px) {
+
+    .exam-decoration {
+        opacity: 0.17;
+        transform: scale(0.8);
+    }
+
+    .exam-card-one {
+        left: -100px;
+        top: 20%;
+    }
+
+    .exam-card-two {
+        right: -120px;
+        top: 50%;
+    }
+
+    .exam-card-three {
+        left: -100px;
+        bottom: 5%;
+    }
+
+    .cbt-grid {
+        background-size: 30px 30px;
+    }
+}
+
