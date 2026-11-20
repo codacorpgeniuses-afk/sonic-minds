@@ -1,496 +1,503 @@
 
-/* =====================================
-   SONIC MINDS - PROFESSIONAL PAYMENT UI
-===================================== */
+/* =================================================
+   SONIC MINDS
+   PROFESSIONAL CBT EXAMINATION PLATFORM
+   Version 2.0
+================================================= */
 
-.payment-container {
-  width: 100%;
-  max-width: 520px;
-  margin: 35px auto;
-  padding: 18px;
-  font-family: 'Poppins', Arial, sans-serif;
-  color: #1e293b;
-  box-sizing: border-box;
+/* ================= ROOT VARIABLES ================= */
+
+:root {
+    --primary: #123b70;
+    --primary-dark: #09264b;
+    --primary-light: #1d5fa8;
+    --accent: #3b82d0;
+
+    --background: #f3f6fb;
+    --surface: #ffffff;
+    --surface-light: #edf3fa;
+
+    --text: #172b4d;
+    --muted: #718096;
+
+    --border: #dce5f0;
+
+    --success: #15803d;
+    --danger: #dc2626;
+
+    --shadow: 0 8px 28px rgba(15, 40, 75, 0.07);
 }
 
-/* PAYMENT HEADER */
+/* ================= GLOBAL RESET ================= */
 
-.payment-header {
-  text-align: center;
-  margin-bottom: 28px;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.payment-header h2 {
-  color: #123b70;
-  letter-spacing: 4px;
-  font-size: 25px;
-  font-weight: 800;
-  text-shadow: none;
+html {
+    scroll-behavior: smooth;
 }
 
-.payment-header p {
-  color: #64748b;
-  font-size: 12px;
-  margin-top: 7px;
-  letter-spacing: 0.5px;
+body {
+    min-height: 100vh;
+    background: var(--background);
+    color: var(--text);
+    font-family: 'Poppins', Arial, sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
 }
 
-.payment-header h3 {
-  color: #172b4d;
-  font-size: 23px;
-  font-weight: 700;
-  margin-top: 18px;
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
 }
 
-/* PAYMENT CARD */
-
-.payment-card {
-  background: #ffffff;
-  border: 1px solid #dce5f0;
-  border-radius: 14px;
-  padding: 27px 22px;
-
-  box-shadow:
-    0 4px 15px rgba(15, 40, 75, 0.06),
-    0 12px 30px rgba(15, 40, 75, 0.04);
+button {
+    cursor: pointer;
 }
 
-/* PAYMENT ICON */
-
-.payment-icon {
-  text-align: center;
-  font-size: 38px;
-  color: #1756a9;
-  text-shadow: none;
-  margin-bottom: 15px;
+a {
+    text-decoration: none;
+    color: inherit;
 }
 
-/* GENERAL PAYMENT TEXT */
+/* ================= SPACE BACKGROUND ================= */
 
-.payment-card h3 {
-  color: #17365d;
-  font-size: 19px;
-  font-weight: 700;
+/* Retains existing background HTML elements
+   but removes excessive neon effects. */
+
+.space-background {
+    position: fixed;
+    inset: 0;
+    z-index: -5;
+    overflow: hidden;
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(29, 95, 168, 0.08),
+            transparent 35%
+        ),
+        #f3f6fb;
 }
 
-.payment-card p {
-  color: #64748b;
-  font-size: 14px;
-  line-height: 1.7;
+.stars {
+    opacity: 0.08;
 }
 
-/* ACCOUNT DETAILS */
-
-.payment-details {
-  background: #f1f6fc;
-  border: 1px solid #d9e5f2;
-  border-radius: 10px;
-  padding: 18px;
-  margin-top: 18px;
+.planet,
+[class*="planet-"] {
+    opacity: 0.12;
+    filter: none;
 }
 
-.payment-details p {
-  color: #475569;
-  margin: 9px 0;
+[class*="orbit-"] {
+    opacity: 0.08;
+    border-color: #94b5dc;
 }
 
-.payment-details strong {
-  color: #17365d;
+/* ================= NAVIGATION ================= */
+
+.topbar {
+    width: 100%;
+    min-height: 75px;
+    padding: 15px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 3px 15px rgba(15, 40, 75, 0.04);
+    position: relative;
+    z-index: 20;
 }
 
-/* PAYMENT BUTTON */
-
-.payment-button {
-  display: block;
-  width: 100%;
-  padding: 14px;
-  margin-top: 20px;
-  background: #1756a9;
-  color: #ffffff;
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  text-align: center;
-  cursor: pointer;
-  transition: background 0.25s ease;
+.logo {
+    color: var(--primary);
+    font-size: 23px;
+    font-weight: 800;
+    letter-spacing: 2px;
 }
 
-.payment-button:hover {
-  background: #103f80;
+.topbar a {
+    color: var(--primary);
+    font-weight: 600;
 }
 
-/* SECURITY NOTICE */
+/* ================= MAIN CONTAINER ================= */
 
-.payment-notice {
-  background: #f0f7ff;
-  border-left: 4px solid #1756a9;
-  padding: 13px;
-  margin-top: 18px;
-  border-radius: 5px;
+.main-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 45px 25px;
 }
 
-.payment-notice p {
-  color: #475569;
-  font-size: 12px;
+/* ================= HERO SECTION ================= */
+
+.hero {
+    text-align: center;
+    max-width: 750px;
+    margin: 35px auto 45px;
 }
 
-/* MOBILE RESPONSIVENESS */
+.hero h1 {
+    font-size: clamp(30px, 5vw, 48px);
+    line-height: 1.2;
+    color: var(--primary-dark);
+    font-weight: 800;
+    margin-bottom: 18px;
+}
 
-@media (max-width: 480px) {
-  .payment-container {
+.hero h2 {
+    color: var(--primary);
+    font-size: 25px;
+    margin-bottom: 12px;
+}
+
+.hero p {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.9;
+}
+
+/* ================= LOGIN CARD ================= */
+
+.login-card {
+    width: 100%;
+    max-width: 440px;
+    margin: 35px auto;
+    padding: 35px 30px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+}
+
+.login-card h2,
+.login-card h3 {
+    color: var(--primary);
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.login-card p {
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+/* ================= FORMS ================= */
+
+form {
+    width: 100%;
+}
+
+form label {
+    display: block;
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 7px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 14px 15px;
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    outline: none;
+    color: var(--text);
+    font-size: 14px;
+    margin-bottom: 16px;
+    transition: 0.2s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--primary-light);
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(29, 95, 168, 0.10);
+}
+
+/* ================= BUTTONS ================= */
+
+button,
+.login-button,
+.primary-button {
+    transition: 0.25s ease;
+}
+
+button[type="submit"],
+.login-button,
+.primary-button {
+    background: var(--primary);
+    color: #ffffff;
+    border: none;
+    border-radius: 9px;
+    padding: 14px 20px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+button[type="submit"]:hover,
+.login-button:hover,
+.primary-button:hover {
+    background: var(--primary-light);
+    transform: translateY(-2px);
+}
+
+.login-card button[type="submit"] {
+    width: 100%;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* ================= DASHBOARD ================= */
+
+.dashboard {
+    width: 100%;
+    margin-top: 35px;
+}
+
+.dashboard h1,
+.dashboard h2 {
+    color: var(--primary-dark);
+    margin-bottom: 12px;
+}
+
+.dashboard p {
+    color: var(--muted);
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+    margin-top: 30px;
+}
+
+/* ================= DASHBOARD CARDS ================= */
+
+.dashboard-card {
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 25px 22px;
+    box-shadow: 0 5px 20px rgba(15, 40, 75, 0.04);
+    transition: 0.25s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.dashboard-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--primary);
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+    border-color: #b9cce4;
+}
+
+.dashboard-card h3 {
+    color: var(--primary);
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+
+.dashboard-card p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.dashboard-card a {
+    display: inline-block;
+    margin-top: 15px;
+    color: var(--primary-light);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+/* ================= LOGOUT ================= */
+
+.logout-button {
+    background: #fff1f2;
+    color: #be123c;
+    border: 1px solid #fecdd3;
+    padding: 11px 20px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.logout-button:hover {
+    background: #ffe4e6;
+}
+
+/* ================= STATUS MESSAGES ================= */
+
+.success,
+.success-message {
+    color: var(--success);
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
     padding: 12px;
-    margin: 20px auto;
-  }
-
-  .payment-header h2 {
-    font-size: 22px;
-    letter-spacing: 3px;
-  }
-
-  .payment-header h3 {
-    font-size: 20px;
-  }
-
-  .payment-card {
-    padding: 22px 17px;
-  }
+    border-radius: 8px;
 }
-rgin-right: auto;
-    }
 
-    .features {
-        justify-content: center;
-    }
+.error,
+.error-message {
+    color: var(--danger);
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    padding: 12px;
+    border-radius: 8px;
+}
 
-    .login-card {
-        max-width: 480px;
-        width: 100%;
-        margin: auto;
-    }
+/* ================= HIDDEN ELEMENTS ================= */
+
+.hidden {
+    display: none !important;
+}
+
+/* ================= FOOTER ================= */
+
+footer {
+    width: 100%;
+    margin-top: 60px;
+    padding: 25px 15px;
+    text-align: center;
+    background: #ffffff;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 12px;
+}
+
+footer a {
+    color: var(--primary);
+}
+
+/* ================= ADMIN LINK ================= */
+
+.admin-link {
+    display: inline-block;
+    color: var(--primary);
+    background: #edf4fd;
+    padding: 10px 17px;
+    border: 1px solid #d5e3f4;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.admin-link:hover {
+    background: #dceafa;
+}
+
+/* ================= RESPONSIVE DESIGN ================= */
+
+@media (max-width: 850px) {
 
     .dashboard-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+
+    .main-container {
+        padding: 35px 20px;
+    }
+
+    .hero {
+        margin-top: 20px;
+    }
+
 }
 
 @media (max-width: 520px) {
 
     .topbar {
-        padding: 20px 5%;
+        padding: 14px 18px;
+        min-height: 65px;
     }
 
     .logo {
-        font-size: 16px;
-    }
-
-    .nav-tag {
-        font-size: 7px;
+        font-size: 19px;
         letter-spacing: 1px;
     }
 
     .main-container {
-        padding: 55px 5% 35px;
+        padding: 25px 15px;
     }
 
-    .hero-text h1 {
-        font-size: 34px;
+    .hero {
+        margin: 20px auto 30px;
     }
 
-    .hero-description {
-        font-size: 12px;
+    .hero h1 {
+        font-size: 30px;
+    }
+
+    .hero p {
+        font-size: 13px;
     }
 
     .login-card {
-        padding: 30px 22px;
+        padding: 25px 20px;
+        border-radius: 13px;
     }
 
     .dashboard-grid {
         grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .dashboard-card {
+        padding: 22px 18px;
     }
 
     footer {
-        flex-direction: column;
-        text-align: center;
-        gap: 10px;
-        font-size: 8px;
+        margin-top: 35px;
     }
 
-    .planet-one {
-        width: 110px;
-        height: 110px;
-    }
-
-    .planet-two {
-        width: 90px;
-        height: 90px;
-    }
 }
 
-/* =========================================
-   ACCESSIBILITY
-========================================= */
+/* ================= ACCESSIBILITY ================= */
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+    outline: 3px solid rgba(59, 130, 208, 0.35);
+    outline-offset: 3px;
+}
 
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
     *::after {
-        animation-duration: .01ms !important;
-        transition-duration: .01ms !important;
         scroll-behavior: auto !important;
+        transition: none !important;
+        animation: none !important;
     }
 }
 
-
-/* =====================================
-   SONIC MINDS CBT EXAMINATION THEME
-===================================== */
-
-body {
-    background: #030817;
-    position: relative;
-    overflow-x: hidden;
-}
-
-/* MAIN BACKGROUND */
-
-.cbt-background {
-    position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    pointer-events: none;
-    z-index: -1;
-    background:
-        radial-gradient(
-            ellipse at 15% 20%,
-            rgba(0, 174, 255, 0.13),
-            transparent 40%
-        ),
-        radial-gradient(
-            ellipse at 85% 80%,
-            rgba(115, 70, 255, 0.13),
-            transparent 40%
-        ),
-        #030817;
-}
-
-/* DIGITAL GRID */
-
-.cbt-grid {
-    position: absolute;
-    inset: 0;
-
-    background-image:
-        linear-gradient(
-            rgba(0, 210, 255, 0.045) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(0, 210, 255, 0.045) 1px,
-            transparent 1px
-        );
-
-    background-size: 45px 45px;
-
-    mask-image: linear-gradient(
-        to bottom,
-        black,
-        transparent 95%
-    );
-}
-
-/* BACKGROUND LIGHTS */
-
-.exam-glow {
-    position: absolute;
-    width: 350px;
-    height: 350px;
-    border-radius: 50%;
-    filter: blur(100px);
-    opacity: 0.13;
-}
-
-.glow-one {
-    background: #00c8ff;
-    top: 10%;
-    left: -150px;
-}
-
-.glow-two {
-    background: #7950ff;
-    bottom: 5%;
-    right: -150px;
-}
-
-/* FLOATING EXAMINATION PANELS */
-
-.exam-decoration {
-    position: absolute;
-    padding: 20px;
-    width: 210px;
-
-    background: rgba(8, 19, 43, 0.55);
-
-    border: 1px solid rgba(0, 220, 255, 0.13);
-
-    border-radius: 14px;
-
-    backdrop-filter: blur(5px);
-
-    box-shadow:
-        0 0 25px rgba(0, 200, 255, 0.04);
-
-    opacity: 0.32;
-
-    font-family: 'Orbitron', sans-serif;
-}
-
-.exam-decoration span {
-    color: #00d9ff;
-    font-size: 9px;
-    letter-spacing: 2px;
-}
-
-.exam-card-one {
-    top: 18%;
-    left: 4%;
-    transform: rotate(-8deg);
-}
-
-.exam-card-two {
-    top: 48%;
-    right: 4%;
-    transform: rotate(7deg);
-}
-
-.exam-card-three {
-    bottom: 8%;
-    left: 12%;
-    transform: rotate(5deg);
-}
-
-/* QUESTION PANEL */
-
-.fake-question-line {
-    height: 4px;
-    background: rgba(255,255,255,0.25);
-    border-radius: 5px;
-    margin-top: 18px;
-    width: 100%;
-}
-
-.fake-question-line.short {
-    width: 65%;
-    margin-top: 8px;
-}
-
-.fake-option {
-    font-size: 9px;
-    color: #a9b9d5;
-    padding: 8px;
-    margin-top: 8px;
-    border: 1px solid rgba(0,220,255,0.12);
-    border-radius: 5px;
-}
-
-/* EXAM TIMER */
-
-.fake-timer {
-    font-size: 22px;
-    color: #ffffff;
-    margin: 18px 0 10px;
-    letter-spacing: 2px;
-}
-
-.timer-line {
-    width: 100%;
-    height: 3px;
-    background: linear-gradient(
-        90deg,
-        #00d9ff 65%,
-        rgba(255,255,255,0.1) 65%
-    );
-    border-radius: 5px;
-}
-
-.exam-card-two small {
-    display: block;
-    color: #8298b9;
-    font-size: 8px;
-    margin-top: 12px;
-    letter-spacing: 1px;
-}
-
-/* ANSWER SHEET */
-
-.answer-row {
-    display: flex;
-    justify-content: space-between;
-    color: #a9b9d5;
-    font-size: 10px;
-    margin-top: 12px;
-}
-
-.answer-row i {
-    width: 12px;
-    height: 12px;
-    border: 1px solid #00d9ff;
-    border-radius: 50%;
-}
-
-/* DIGITAL DECORATIONS */
-
-.cbt-cross {
-    position: absolute;
-    color: #00d9ff;
-    font-size: 24px;
-    opacity: 0.2;
-}
-
-.cross-one {
-    top: 20%;
-    right: 25%;
-}
-
-.cross-two {
-    bottom: 25%;
-    right: 35%;
-}
-
-.cross-three {
-    top: 65%;
-    left: 40%;
-}
-
-/* MOBILE OPTIMIZATION */
-
-@media(max-width: 600px) {
-
-    .exam-decoration {
-        opacity: 0.17;
-        transform: scale(0.8);
-    }
-
-    .exam-card-one {
-        left: -100px;
-        top: 20%;
-    }
-
-    .exam-card-two {
-        right: -120px;
-        top: 50%;
-    }
-
-    .exam-card-three {
-        left: -100px;
-        bottom: 5%;
-    }
-
-    .cbt-grid {
-        background-size: 30px 30px;
-    }
-}
-
+/* =================================================
+   END OF SONIC MINDS PROFESSIONAL DESIGN
+================================================= */
