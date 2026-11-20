@@ -1,4 +1,8 @@
 
+/* =========================================
+   SONIC MINDS — UTME / JAMB CBT THEME
+========================================= */
+
 * {
     margin: 0;
     padding: 0;
@@ -6,95 +10,119 @@
 }
 
 :root {
-    --blue: #35c9ff;
-    --purple: #9b5cff;
+    --blue: #0756b8;
+    --light-blue: #1689e8;
+    --purple: #5546bd;
     --white: #ffffff;
-    --muted: #a8b6d8;
+    --muted: #64748b;
+    --dark: #102442;
+    --green: #159b69;
 }
 
 body {
     min-height: 100vh;
-    background: #030817;
-    color: var(--white);
+    background: #f1f6fc;
+    color: var(--dark);
     font-family: 'Poppins', sans-serif;
     overflow-x: hidden;
 }
 
-/* SPACE BACKGROUND */
+/* =========================================
+   ACADEMIC BACKGROUND
+========================================= */
 
 .space-background {
     position: fixed;
     inset: 0;
     z-index: -1;
     overflow: hidden;
+
     background:
-        radial-gradient(ellipse at 15% 20%, #14285b 0%, transparent 35%),
-        radial-gradient(ellipse at 85% 70%, #24104b 0%, transparent 35%),
-        linear-gradient(135deg, #020617, #07112d 55%, #09051d);
+        radial-gradient(
+            circle at 10% 15%,
+            rgba(54, 148, 239, .12),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 85%,
+            rgba(91, 99, 220, .10),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #f8fbff,
+            #edf4fc,
+            #e8f1fb
+        );
 }
+
+/* Subtle academic pattern */
 
 .stars {
     position: absolute;
     inset: 0;
+
     background-image:
-        radial-gradient(2px 2px at 20px 30px, white, transparent),
-        radial-gradient(1px 1px at 100px 150px, white, transparent),
-        radial-gradient(2px 2px at 200px 80px, #8bdfff, transparent),
-        radial-gradient(1px 1px at 300px 250px, white, transparent),
-        radial-gradient(2px 2px at 400px 120px, #b79cff, transparent);
-    background-size: 450px 350px;
-    animation: starMove 35s linear infinite;
-    opacity: .8;
+        radial-gradient(
+            circle,
+            rgba(22, 113, 206, .18) 1px,
+            transparent 1.5px
+        );
+
+    background-size: 35px 35px;
+    opacity: .35;
 }
 
-@keyframes starMove {
-    from { transform: translateY(0); }
-    to { transform: translateY(-350px); }
-}
-
-/* PLANETS */
+/* Decorative circles */
 
 .planet {
     position: absolute;
     border-radius: 50%;
-    filter: blur(.3px);
+    filter: blur(1px);
+    pointer-events: none;
 }
 
 .planet-one {
-    width: 190px;
-    height: 190px;
-    top: 12%;
-    right: 7%;
-    background: radial-gradient(circle at 30% 30%, #d9a7ff, #6832a7 50%, #170e42);
-    box-shadow: 0 0 65px #7836c9;
-    opacity: .65;
+    width: 250px;
+    height: 250px;
+    top: 8%;
+    right: 5%;
+
+    background: radial-gradient(
+        circle at 30% 30%,
+        rgba(77, 166, 255, .15),
+        rgba(20, 102, 190, .04)
+    );
 }
 
 .planet-two {
-    width: 100px;
-    height: 100px;
-    bottom: 13%;
-    left: 4%;
-    background: radial-gradient(circle at 30% 30%, #77e8ff, #146caa 55%, #061b42);
-    box-shadow: 0 0 55px #148bd6;
-    opacity: .7;
+    width: 180px;
+    height: 180px;
+    bottom: 8%;
+    left: 3%;
+
+    background: radial-gradient(
+        circle at 30% 30%,
+        rgba(98, 112, 226, .13),
+        rgba(75, 85, 190, .03)
+    );
 }
 
 .planet-three {
-    width: 55px;
-    height: 55px;
+    width: 90px;
+    height: 90px;
     top: 55%;
     right: 22%;
-    background: radial-gradient(circle at 30% 30%, #fff0c2, #c77a37 60%, #4e1d12);
-    box-shadow: 0 0 35px #e59b56;
-    opacity: .65;
+
+    background: rgba(20, 137, 232, .07);
 }
 
 .orbit {
     position: absolute;
-    border: 1px solid rgba(111, 190, 255, .13);
+    border: 1px solid rgba(30, 112, 190, .08);
     border-radius: 50%;
     transform: rotate(-25deg);
+    pointer-events: none;
 }
 
 .orbit-one {
@@ -111,22 +139,27 @@ body {
     left: -180px;
 }
 
-/* NAVIGATION */
+/* =========================================
+   NAVIGATION
+========================================= */
 
 .topbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 25px 7%;
-    border-bottom: 1px solid rgba(255,255,255,.08);
-    backdrop-filter: blur(12px);
+
+    background: rgba(255, 255, 255, .85);
+    border-bottom: 1px solid #dce8f5;
+
+    backdrop-filter: blur(15px);
 }
 
 .logo {
     font-family: 'Orbitron', sans-serif;
     font-size: 21px;
     font-weight: 800;
-    color: white;
+    color: #12345a;
     text-decoration: none;
     letter-spacing: 2px;
 }
@@ -144,9 +177,12 @@ body {
     color: var(--blue);
     font-size: 10px;
     letter-spacing: 3px;
+    font-weight: 700;
 }
 
-/* MAIN SECTION */
+/* =========================================
+   MAIN SECTION
+========================================= */
 
 .main-container {
     width: 100%;
@@ -166,7 +202,7 @@ body {
     color: var(--blue);
     font-size: 11px;
     letter-spacing: 3px;
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 20px;
 }
 
@@ -176,16 +212,17 @@ body {
     line-height: 1.25;
     font-weight: 800;
     letter-spacing: -1px;
+    color: #102d50;
 }
 
 .hero-text h1 span {
     display: block;
     color: var(--blue);
-    text-shadow: 0 0 25px rgba(53,201,255,.35);
+    text-shadow: 0 3px 15px rgba(53, 133, 220, .12);
 }
 
 .hero-description {
-    color: var(--muted);
+    color: #64748b;
     line-height: 1.9;
     max-width: 480px;
     font-size: 14px;
@@ -201,12 +238,13 @@ body {
 
 .feature {
     padding: 10px 14px;
-    border: 1px solid rgba(92,190,255,.2);
-    background: rgba(25,65,110,.18);
+    border: 1px solid #d5e5f5;
+    background: #ffffff;
     border-radius: 30px;
-    color: #dceaff;
+    color: #315476;
     font-size: 10px;
     letter-spacing: 1px;
+    box-shadow: 0 3px 12px rgba(20, 70, 120, .04);
 }
 
 .feature span {
@@ -214,31 +252,39 @@ body {
     margin-right: 5px;
 }
 
-/* LOGIN CARD */
+/* =========================================
+   LOGIN CARD
+========================================= */
 
 .login-card {
     padding: 38px 32px;
-    border: 1px solid rgba(78,194,255,.35);
+
+    border: 1px solid #d9e7f6;
     border-radius: 22px;
-    background: rgba(7,18,43,.83);
-    backdrop-filter: blur(20px);
+
+    background: rgba(255, 255, 255, .96);
+
     box-shadow:
-        0 0 45px rgba(30,143,255,.12),
-        inset 0 0 30px rgba(69,120,255,.04);
+        0 15px 45px rgba(30, 75, 130, .09),
+        0 3px 12px rgba(30, 75, 130, .04);
 }
 
 .login-symbol {
     width: 55px;
     height: 55px;
+
     display: grid;
     place-items: center;
+
     margin: 0 auto 18px;
+
     border-radius: 16px;
+
     color: var(--blue);
     font-size: 30px;
-    border: 1px solid rgba(53,201,255,.4);
-    background: rgba(53,201,255,.1);
-    box-shadow: 0 0 25px rgba(53,201,255,.15);
+
+    border: 1px solid #cce3fb;
+    background: #edf6ff;
 }
 
 .login-small {
@@ -246,6 +292,7 @@ body {
     color: var(--blue);
     font-size: 9px;
     letter-spacing: 3px;
+    font-weight: 700;
 }
 
 .login-card h2 {
@@ -253,11 +300,12 @@ body {
     font-size: 25px;
     text-align: center;
     margin-top: 12px;
+    color: #153454;
 }
 
 .login-description {
     text-align: center;
-    color: var(--muted);
+    color: #718198;
     font-size: 12px;
     line-height: 1.8;
     margin: 14px 0 30px;
@@ -266,18 +314,29 @@ body {
 .login-card label {
     display: block;
     font-size: 10px;
-    color: #c6d8f5;
+    color: #315476;
     letter-spacing: 1.5px;
     margin-bottom: 12px;
+    font-weight: 600;
 }
 
 .input-wrapper {
     display: flex;
     align-items: center;
-    border: 1px solid rgba(96,178,255,.3);
-    background: rgba(0,0,0,.25);
+
+    border: 1px solid #d5e3f2;
+    background: #f7faff;
+
     border-radius: 10px;
     padding: 0 13px;
+
+    transition: .3s;
+}
+
+.input-wrapper:focus-within {
+    border-color: var(--light-blue);
+    box-shadow: 0 0 0 3px rgba(22, 137, 232, .09);
+    background: white;
 }
 
 .input-icon {
@@ -290,16 +349,18 @@ body {
     width: 100%;
     min-width: 0;
     height: 53px;
+
     background: transparent;
     border: none;
     outline: none;
-    color: white;
+
+    color: #173653;
     font-family: 'Poppins', sans-serif;
     font-size: 12px;
 }
 
 .input-wrapper input::placeholder {
-    color: #7183a5;
+    color: #9aabc0;
 }
 
 .toggle-password {
@@ -311,27 +372,41 @@ body {
     padding: 8px;
 }
 
+/* =========================================
+   LOGIN BUTTON
+========================================= */
+
 .login-button {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     width: 100%;
     margin-top: 22px;
     padding: 17px 20px;
+
     border: none;
     border-radius: 10px;
-    background: linear-gradient(100deg, #087fc2, #7350db);
+
+    background: linear-gradient(
+        100deg,
+        #0756b8,
+        #1689e8
+    );
+
     color: white;
+
     font-family: 'Orbitron', sans-serif;
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 1.5px;
+
     cursor: pointer;
     transition: .3s;
 }
 
 .login-button:hover {
-    box-shadow: 0 0 30px rgba(53,201,255,.35);
+    box-shadow: 0 8px 22px rgba(7, 86, 184, .2);
     transform: translateY(-2px);
 }
 
@@ -352,23 +427,25 @@ body {
 }
 
 .success {
-    color: #64f5b0;
+    color: #159b69;
 }
 
 .error {
-    color: #ff7777;
+    color: #dc4444;
 }
 
 .security-note {
-    border-top: 1px solid rgba(255,255,255,.08);
+    border-top: 1px solid #e6edf5;
     margin-top: 20px;
     padding-top: 17px;
     text-align: center;
-    color: #8495b5;
+    color: #8595aa;
     font-size: 10px;
 }
 
-/* DASHBOARD */
+/* =========================================
+   DASHBOARD
+========================================= */
 
 .dashboard {
     margin-top: 65px;
@@ -379,10 +456,11 @@ body {
     font-family: 'Orbitron', sans-serif;
     font-size: clamp(22px, 4vw, 34px);
     margin-bottom: 12px;
+    color: #153454;
 }
 
 .dashboard-heading > p:last-child {
-    color: var(--muted);
+    color: #718198;
     font-size: 13px;
 }
 
@@ -396,19 +474,25 @@ body {
 .dashboard-card {
     text-align: left;
     text-decoration: none;
-    color: white;
+    color: #183957;
+
     padding: 25px;
     min-height: 190px;
+
     border-radius: 16px;
-    border: 1px solid rgba(80,185,255,.22);
-    background: rgba(8,24,55,.8);
+    border: 1px solid #dce8f5;
+
+    background: rgba(255, 255, 255, .95);
+
+    box-shadow: 0 5px 20px rgba(30, 75, 130, .045);
+
     transition: .3s;
 }
 
 .dashboard-card:hover {
     transform: translateY(-6px);
-    border-color: var(--blue);
-    box-shadow: 0 0 25px rgba(53,201,255,.13);
+    border-color: #75b9f1;
+    box-shadow: 0 12px 28px rgba(30, 100, 180, .1);
 }
 
 .card-icon {
@@ -419,10 +503,11 @@ body {
     font-family: 'Orbitron', sans-serif;
     font-size: 14px;
     margin: 15px 0 8px;
+    color: #17436d;
 }
 
 .dashboard-card p {
-    color: var(--muted);
+    color: #718198;
     font-size: 11px;
     line-height: 1.7;
 }
@@ -433,16 +518,20 @@ body {
     font-size: 10px;
     margin-top: 17px;
     letter-spacing: 1px;
+    font-weight: 700;
 }
 
 .logout-button {
     margin-top: 30px;
     padding: 12px 30px;
-    color: #ff8e8e;
-    border: 1px solid rgba(255,100,100,.4);
-    background: rgba(255,60,60,.08);
+
+    color: #d94d4d;
+    border: 1px solid #f1cccc;
+    background: #fff5f5;
+
     border-radius: 8px;
     cursor: pointer;
+
     letter-spacing: 2px;
     font-size: 10px;
 }
@@ -451,26 +540,36 @@ body {
     display: none !important;
 }
 
-/* FOOTER */
+/* =========================================
+   FOOTER
+========================================= */
 
 footer {
     display: flex;
     justify-content: space-between;
+
     padding: 25px 7%;
     margin-top: 30px;
-    border-top: 1px solid rgba(255,255,255,.08);
-    color: #8292b1;
+
+    border-top: 1px solid #dce7f2;
+
+    color: #8090a6;
     font-size: 10px;
     letter-spacing: 2px;
+
+    background: rgba(255, 255, 255, .55);
 }
 
 footer span {
     color: var(--blue);
 }
 
-/* MOBILE RESPONSIVENESS */
+/* =========================================
+   MOBILE RESPONSIVENESS
+========================================= */
 
 @media (max-width: 850px) {
+
     .hero {
         grid-template-columns: 1fr;
         gap: 45px;
@@ -501,6 +600,7 @@ footer span {
 }
 
 @media (max-width: 520px) {
+
     .topbar {
         padding: 20px 5%;
     }
@@ -544,5 +644,24 @@ footer span {
     .planet-one {
         width: 110px;
         height: 110px;
+    }
+
+    .planet-two {
+        width: 90px;
+        height: 90px;
+    }
+}
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
     }
 }
