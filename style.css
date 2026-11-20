@@ -498,6 +498,125 @@ input:focus-visible {
     }
 }
 
+
+/* ==========================================
+   SONIC MINDS - VISUAL DISPLAY CORRECTION
+========================================== */
+
+html,
+body {
+    background: #f3f6fb !important;
+    color: #172b4d !important;
+    font-family: 'Poppins', Arial, sans-serif !important;
+}
+
+body {
+    min-height: 100vh;
+}
+
+/* Background correction */
+
+.space-background {
+    background: #f3f6fb !important;
+    opacity: 1 !important;
+}
+
+.stars {
+    opacity: 0.04 !important;
+}
+
+/* Text visibility */
+
+h1, h2, h3, h4, h5, h6 {
+    color: #123b70 !important;
+    font-family: 'Poppins', Arial, sans-serif !important;
+}
+
+p, li, label, span {
+    color: #475569;
+}
+
+a {
+    color: #1756a9;
+}
+
+/* Navigation */
+
+.topbar {
+    background: #ffffff !important;
+    border-bottom: 1px solid #dce5f0 !important;
+    box-shadow: 0 3px 15px rgba(15,40,75,0.06) !important;
+}
+
+.logo {
+    color: #123b70 !important;
+}
+
+/* Login section */
+
+.login-card {
+    background: #ffffff !important;
+    border: 1px solid #dce5f0 !important;
+    border-radius: 16px !important;
+    box-shadow: 0 8px 28px rgba(15,40,75,0.08) !important;
+}
+
+.login-card h1,
+.login-card h2,
+.login-card h3 {
+    color: #123b70 !important;
+}
+
+/* Dashboard cards */
+
+.dashboard-card {
+    background: #ffffff !important;
+    border: 1px solid #dce5f0 !important;
+    border-radius: 14px !important;
+    box-shadow: 0 5px 20px rgba(15,40,75,0.06) !important;
+}
+
+/* Inputs */
+
+input,
+select,
+textarea {
+    background: #ffffff !important;
+    color: #172b4d !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+}
+
+/* Buttons */
+
+button {
+    font-family: 'Poppins', Arial, sans-serif;
+}
+
+/* Footer */
+
+footer {
+    background: #ffffff !important;
+    border-top: 1px solid #dce5f0 !important;
+}
+
+/* Mobile */
+
+@media(max-width: 600px) {
+    body {
+        font-size: 14px;
+    }
+
+    h1 {
+        font-size: 29px;
+    }
+
+    .login-card {
+        padding: 22px 17px;
+    }
+}
+
+
 /* =================================================
    END OF SONIC MINDS PROFESSIONAL DESIGN
 ================================================= */
