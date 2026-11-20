@@ -1,0 +1,542 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SONIC MINDS | Payment Portal</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+/* =====================================
+   SONIC MINDS PROFESSIONAL PAYMENT THEME
+===================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background: #f1f5f9;
+    font-family: 'Poppins', Arial, sans-serif;
+    color: #1e293b;
+    display: flex;
+    flex-direction: column;
+}
+
+/* MAIN CONTAINER */
+
+.payment-container {
+    width: 100%;
+    max-width: 520px;
+    margin: 35px auto;
+    padding: 18px;
+}
+
+/* HEADER */
+
+.payment-header {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.brand-icon {
+    width: 58px;
+    height: 58px;
+    margin: 0 auto 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e8f0fb;
+    color: #1756a9;
+    border-radius: 14px;
+    font-size: 27px;
+}
+
+.payment-header h2 {
+    color: #123b70;
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: 4px;
+}
+
+.payment-header p {
+    color: #64748b;
+    font-size: 11px;
+    letter-spacing: 2px;
+    margin-top: 5px;
+}
+
+.header-line {
+    width: 55px;
+    height: 3px;
+    background: #1756a9;
+    margin: 18px auto;
+    border-radius: 5px;
+}
+
+.payment-header h3 {
+    color: #172b4d;
+    font-size: 23px;
+    font-weight: 700;
+}
+
+.payment-header span {
+    color: #64748b;
+    font-size: 12px;
+}
+
+/* PAYMENT CARD */
+
+.payment-card {
+    background: #ffffff;
+    border: 1px solid #dce5f0;
+    border-radius: 15px;
+    padding: 27px 22px;
+    box-shadow: 0 8px 30px rgba(15,40,75,0.07);
+}
+
+.payment-icon {
+    width: 65px;
+    height: 65px;
+    background: #edf4fd;
+    color: #1756a9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin: 0 auto 18px;
+    font-size: 27px;
+}
+
+.payment-card h3 {
+    text-align: center;
+    color: #17365d;
+    font-size: 20px;
+    margin-bottom: 9px;
+}
+
+.payment-description {
+    text-align: center;
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.7;
+    margin-bottom: 22px;
+}
+
+/* BANK DETAILS */
+
+.payment-details {
+    background: #f4f7fb;
+    border: 1px solid #dce5f0;
+    border-radius: 11px;
+    padding: 17px;
+}
+
+.detail-row {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding: 12px 0;
+    border-bottom: 1px solid #dce5f0;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-row span {
+    font-size: 11px;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.detail-row strong {
+    color: #17365d;
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
+
+/* ACCOUNT NUMBER */
+
+.account-number {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.account-number strong {
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+
+.copy-btn {
+    border: none;
+    background: #e1ebf8;
+    color: #1756a9;
+    padding: 9px 12px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* PAYMENT INSTRUCTIONS */
+
+.payment-instructions {
+    margin-top: 23px;
+}
+
+.payment-instructions h4 {
+    color: #17365d;
+    font-size: 15px;
+    margin-bottom: 13px;
+}
+
+.payment-instructions h4 i {
+    color: #1756a9;
+    margin-right: 6px;
+}
+
+.payment-instructions ol {
+    padding-left: 21px;
+}
+
+.payment-instructions li {
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.8;
+    padding-left: 3px;
+    margin-bottom: 7px;
+}
+
+/* WHATSAPP BUTTON */
+
+.payment-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 15px 10px;
+    margin-top: 24px;
+    background: #1756a9;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 9px;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    transition: 0.25s ease;
+}
+
+.payment-button:hover {
+    background: #103f80;
+    transform: translateY(-2px);
+}
+
+/* SECURITY NOTICE */
+
+.payment-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: #f0f7ff;
+    border-left: 4px solid #1756a9;
+    padding: 14px;
+    margin-top: 20px;
+    border-radius: 6px;
+}
+
+.payment-notice > i {
+    color: #1756a9;
+    font-size: 19px;
+}
+
+.payment-notice strong {
+    color: #17365d;
+    font-size: 12px;
+}
+
+.payment-notice p {
+    color: #64748b;
+    font-size: 11px;
+    line-height: 1.6;
+    margin-top: 5px;
+}
+
+/* FOOTER */
+
+.payment-footer {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.payment-footer p {
+    color: #64748b;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.payment-footer span {
+    color: #94a3b8;
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+
+/* MOBILE RESPONSIVENESS */
+
+@media(max-width: 480px) {
+
+    .payment-container {
+        padding: 12px;
+        margin: 20px auto;
+    }
+
+    .payment-card {
+        padding: 22px 16px;
+    }
+
+    .payment-header h2 {
+        font-size: 23px;
+    }
+
+    .payment-header h3 {
+        font-size: 21px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<section class="payment-container">
+
+    <!-- HEADER -->
+
+    <header class="payment-header">
+
+        <div class="brand-icon">
+            <i class="fas fa-graduation-cap"></i>
+        </div>
+
+        <h2>SONIC MINDS</h2>
+
+        <p>LEARN. PRACTICE. EXCEL.</p>
+
+        <div class="header-line"></div>
+
+        <h3>PAYMENT PORTAL</h3>
+
+        <span>Secure Examination Access</span>
+
+    </header>
+
+    <!-- PAYMENT CARD -->
+
+    <div class="payment-card">
+
+        <div class="payment-icon">
+            <i class="fas fa-university"></i>
+        </div>
+
+        <h3>Manual Bank Transfer</h3>
+
+        <p class="payment-description">
+            Complete your payment using the bank details
+            below to activate your examination access.
+        </p>
+
+        <!-- ACCOUNT DETAILS -->
+
+        <div class="payment-details">
+
+            <div class="detail-row">
+                <span>Bank Name</span>
+                <strong>KUDA MFB</strong>
+            </div>
+
+            <div class="detail-row">
+                <span>Account Name</span>
+                <strong>CHUKWU CONQUEROR CHIDERA</strong>
+            </div>
+
+            <div class="detail-row">
+
+                <span>Account Number</span>
+
+                <div class="account-number">
+
+                    <strong id="accountNumber">
+                        2087297092
+                    </strong>
+
+                    <button
+                        onclick="copyAccount()"
+                        type="button"
+                        class="copy-btn"
+                        id="copyButton">
+
+                        <i class="fas fa-copy"></i>
+                        Copy
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- INSTRUCTIONS -->
+
+        <div class="payment-instructions">
+
+            <h4>
+                <i class="fas fa-info-circle"></i>
+                Payment Instructions
+            </h4>
+
+            <ol>
+                <li>Transfer the required examination fee.</li>
+
+                <li>Keep your payment receipt or transaction reference.</li>
+
+                <li>Contact our WhatsApp support for payment confirmation.</li>
+
+                <li>Receive your examination passcode after verification.</li>
+            </ol>
+
+        </div>
+
+        <!-- WHATSAPP CONFIRMATION -->
+
+        <a
+            href="https://wa.me/2348149123544?text=Hello%20SONIC%20MINDS%2C%20I%20have%20made%20payment%20for%20examination%20access.%20Please%20assist%20me%20with%20payment%20confirmation."
+            class="payment-button"
+            target="_blank"
+            rel="noopener noreferrer">
+
+            <i class="fab fa-whatsapp"></i>
+
+            CONFIRM PAYMENT ON WHATSAPP
+
+        </a>
+
+        <!-- SECURITY NOTICE -->
+
+        <div class="payment-notice">
+
+            <i class="fas fa-shield-alt"></i>
+
+            <div>
+
+                <strong>Secure Access Verification</strong>
+
+                <p>
+                    Examination access is activated only
+                    after payment has been verified.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+
+    <footer class="payment-footer">
+
+        <p>© 2026 SONIC MINDS</p>
+
+        <span>LEARN. PRACTICE. EXCEL.</span>
+
+    </footer>
+
+</section>
+
+<script>
+
+/* =====================================
+   COPY ACCOUNT NUMBER
+===================================== */
+
+function copyAccount() {
+
+    const accountNumber = "2087297092";
+    const button = document.getElementById("copyButton");
+
+    function showCopied() {
+        button.innerHTML =
+            '<i class="fas fa-check"></i> Copied';
+
+        setTimeout(() => {
+            button.innerHTML =
+                '<i class="fas fa-copy"></i> Copy';
+        }, 2000);
+    }
+
+    if (navigator.clipboard && window.isSecureContext) {
+
+        navigator.clipboard.writeText(accountNumber)
+            .then(showCopied)
+            .catch(() => {
+                fallbackCopy(accountNumber, showCopied);
+            });
+
+    } else {
+
+        fallbackCopy(accountNumber, showCopied);
+
+    }
+
+}
+
+function fallbackCopy(text, callback) {
+
+    const input = document.createElement("textarea");
+
+    input.value = text;
+    input.style.position = "fixed";
+    input.style.opacity = "0";
+
+    document.body.appendChild(input);
+
+    input.select();
+
+    try {
+        const success = document.execCommand("copy");
+
+        if (success) {
+            callback();
+        } else {
+            alert("Please copy manually: " + text);
+        }
+
+    } catch (error) {
+
+        alert("Please copy manually: " + text);
+
+    }
+
+    document.body.removeChild(input);
+
+}
+
+</script>
+
+</body>
+  </html>
+  
