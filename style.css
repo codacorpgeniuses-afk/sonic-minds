@@ -616,7 +616,134 @@ footer {
     }
 }
 
+/* =================================
+   SONIC MINDS PROFESSIONAL PAYMENT
+================================= */
 
+.payment-link {
+    display: block;
+    position: relative;
+    text-decoration: none;
+
+    background: #080a0f;
+    color: #ffffff;
+
+    padding: 28px;
+    margin: 25px auto;
+
+    border: 1px solid #252c38;
+    border-radius: 10px;
+
+    max-width: 600px;
+    overflow: hidden;
+
+    box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+
+    transition: 0.3s ease;
+}
+
+/* TOP SECTION */
+
+.payment-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 32px;
+}
+
+.payment-top span:first-child {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #35c9ff;
+}
+
+.payment-status {
+    font-family: 'Poppins', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+
+    color: #aab2bf;
+    border: 1px solid #343b47;
+    padding: 6px 10px;
+    border-radius: 3px;
+}
+
+/* MAIN HEADING */
+
+.payment-link h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 25px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+
+    color: #ffffff;
+    margin-bottom: 12px;
+}
+
+/* DESCRIPTION */
+
+.payment-link p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.9;
+
+    color: #929ba9;
+    max-width: 390px;
+
+    margin-bottom: 25px;
+}
+
+/* ACTION AREA */
+
+.payment-action {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border-top: 1px solid #252c38;
+    padding-top: 18px;
+
+    color: #35c9ff;
+
+    font-family: 'Orbitron', sans-serif;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+/* HOVER */
+
+.payment-link:hover {
+    border-color: #35c9ff;
+    background: #0c1018;
+    transform: translateY(-3px);
+}
+
+.payment-link:hover .payment-action {
+    color: #ffffff;
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+    .payment-link {
+        padding: 22px;
+        margin: 20px 10px;
+    }
+
+    .payment-link h3 {
+        font-size: 20px;
+    }
+
+    .payment-link p {
+        font-size: 11px;
+    }
+}
 /* =================================================
    END OF SONIC MINDS PROFESSIONAL DESIGN
 ================================================= */
