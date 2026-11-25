@@ -108,11 +108,8 @@ header h1 {
 <script src="auth.js"></script>
 
 <script>
+
 async function loadLeaderboard() {
-    const { data, error } = await sonicDB
-   .from("sonic_minds_public_leaderboard")
-   .select("student_name, score, total, percentage")
-   .order("percentage", { ascending: false });
     const status = document.getElementById("status");
     const board = document.getElementById("leaderboard");
 
@@ -125,6 +122,7 @@ async function loadLeaderboard() {
         if (error) throw error;
 
         status.textContent = "";
+        board.innerHTML = "";
 
         if (!data || data.length === 0) {
             status.textContent =
@@ -174,6 +172,7 @@ async function loadLeaderboard() {
 }
 
 loadLeaderboard();
+
 </script>
 
 </body>
