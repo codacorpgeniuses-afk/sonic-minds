@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SONIC MINDS | Top Scorers</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background: #f4f6fb;
+    color: #222;
+}
+
+.container {
+    max-width: 750px;
+    margin: 30px auto;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    color: #182b60;
+}
+
+.subtitle {
+    color: #666;
+}
+
+.score-card {
+    background: white;
+    padding: 17px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+}
+
+.rank {
+    font-weight: bold;
+    color: #182b60;
+    min-width: 35px;
+}
+
+.student {
+    flex: 1;
+    font-weight: bold;
+}
+
+.percentage {
+    font-weight: bold;
+    color: #16834a;
+}
+
+.score {
+    color: #666;
+    font-size: 13px;
+}
+
+#status {
+    text-align: center;
+    padding: 25px;
+    color: #666;
+}
+
+.back {
+    display: inline-block;
+    margin-top: 20px;
+    color: #182b60;
+    text-decoration: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+    <h1>🏆 SONIC MINDS</h1>
+    <h2>TOP SCORERS</h2>
+    <p class="subtitle">
+        Celebrating our outstanding students!
+    </p>
+</header>
+
+<div id="status">Loading leaderboard...</div>
+<div id="leaderboard"></div>
+
+<a href="index.html" class="back">← Back to Home</a>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
+
+<script>
+async function loadLeaderboard() {
+    const status = document.getElementById("status");
+    const board = document.getElementById("leaderboard");
+
+    try {
+        const { data, error } = await sonicDB
+            .from("sonic_minds_public_leaderboard")
+            .select("student_name, score, total, percentage")
+            .order("percentage", { ascending: false });
+
+        if (error) throw error;
+
+        status.textContent = "";
+
+        if (!data || data.length === 0) {
+            status.textContent =
+                "No qualifying scores yet. Be the first!";
+            return;
+        }
+
+        data.forEach((student, index) => {
+            const card = document.createElement("div");
+            card.className = "score-card";
+
+            const rank = document.createElement("span");
+            rank.className = "rank";
+            rank.textContent = "#" + (index + 1);
+
+            const name = document.createElement("span");
+            name.className = "student";
+            name.textContent = student.student_name;
+
+            const details = document.createElement("div");
+
+            const percentage = document.createElement("div");
+            percentage.className = "percentage";
+            percentage.textContent =
+                Number(student.percentage).toFixed(2) + "%";
+
+            const score = document.createElement("div");
+            score.className = "score";
+            score.textContent =
+                student.score + " / " + student.total;
+
+            details.appendChild(percentage);
+            details.appendChild(score);
+
+            card.appendChild(rank);
+            card.appendChild(name);
+            card.appendChild(details);
+
+            board.appendChild(card);
+        });
+
+    } catch (error) {
+        console.error(error);
+        status.textContent =
+            "Unable to load leaderboard. Please try again later.";
+    }
+}
+
+loadLeaderboard();
+</script>
+
+</body>
+</html>
