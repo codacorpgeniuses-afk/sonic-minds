@@ -109,6 +109,10 @@ header h1 {
 
 <script>
 async function loadLeaderboard() {
+    const { data, error } = await sonicDB
+   .from("sonic_minds_public_leaderboard")
+   .select("student_name, score, total, percentage")
+   .order("percentage", { ascending: false });
     const status = document.getElementById("status");
     const board = document.getElementById("leaderboard");
 
