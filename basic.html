@@ -1249,7 +1249,35 @@ function confirmSubmit() {
   }
 }
 
-function submitExam(auto = false) {
+async function saveScoreToSupabase() {
+    try {
+        const passcode = localStorage.getItem("sonic_active_passcode");
+        const deviceID = getDeviceID();
+
+        if (!passcode) return;
+
+        const { data, error } = await sonicDB.rpc(
+            "submit_sonic_exam_score",
+            {
+                p_code: passcode,
+                p_device_id: deviceID,
+                p_score: examState.score,
+                p_total: examState.questions.length
+            }
+        );
+
+        if (error) {
+            console.error(error);
+            return;
+        }
+
+        console.log("Score submission:", data);
+
+    } catch (error) {
+        console.error(error);
+    }
+      }
+  function submitExam(auto = false) {
   if (!examState || examState.submitted) return;
   clearInterval(timerInterval);
   examState.submitted = true;
@@ -1288,6 +1316,7 @@ function submitExam(auto = false) {
   // Keep only last 30
   if (history.length > 30) history.length = 30;
   localStorage.setItem('uniport_cbt_history', JSON.stringify(history));
+    saveScoreToSupabase();
 
   updateSavedCount();
 
