@@ -1249,12 +1249,16 @@ function confirmSubmit() {
   }
 }
 
+
 async function saveScoreToSupabase() {
     try {
         const passcode = localStorage.getItem("sonic_active_passcode");
         const deviceID = getDeviceID();
 
-        if (!passcode) return;
+        if (!passcode) {
+            console.error("No active passcode found.");
+            return false;
+        }
 
         const { data, error } = await sonicDB.rpc(
             "submit_sonic_exam_score",
@@ -1267,16 +1271,24 @@ async function saveScoreToSupabase() {
         );
 
         if (error) {
-            console.error(error);
-            return;
+            console.error("Leaderboard submission failed:", error);
+            return false;
         }
 
-        console.log("Score submission:", data);
+        if (data === "success") {
+            console.log("Leaderboard score saved successfully.");
+            return true;
+        }
+
+        console.error("Leaderboard response:", data);
+        return false;
 
     } catch (error) {
-        console.error(error);
+        console.error("Score submission error:", error);
+        return false;
     }
-      }
+}
+
   function submitExam(auto = false) {
   if (!examState || examState.submitted) return;
   clearInterval(timerInterval);
