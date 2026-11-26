@@ -455,6 +455,9 @@ form.addEventListener("submit", async function(event) {
 
     const phone_number =
         document.getElementById("phone").value.trim();
+    const referral_code =
+    new URLSearchParams(window.location.search)
+    .get("ref")?.trim().toUpperCase() || null;
 
     if (!sender_name || !email || !phone_number) {
         showMessage("Please complete all fields.", "error");
