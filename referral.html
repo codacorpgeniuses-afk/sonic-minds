@@ -301,6 +301,9 @@ button:disabled {
     <button type="button" class="whatsapp" onclick="shareWhatsApp()">  
         SHARE ON WHATSAPP  
     </button>  
+    <button type="button" onclick="openReferralDashboard()">
+    CHECK REFERRAL DASHBOARD
+    </button>
 
     <p class="note">  
         A referral counts only after the friend's payment  
@@ -318,7 +321,45 @@ button:disabled {
 <div class="footer">  
     © 2026 SONIC MINDS. All rights reserved.  
 </div>
+<div id="referralDashboard" class="stats-box" style="display:none;">
 
+    <h3>MY REFERRAL DASHBOARD</h3>
+
+    <div class="stats-grid">
+
+        <div class="stat-item">
+            <strong id="successfulCount">0</strong>
+            <span>Successful Referrals</span>
+        </div>
+
+        <div class="stat-item">
+            <strong id="pendingCount">0</strong>
+            <span>Pending Referrals</span>
+        </div>
+
+        <div class="stat-item">
+            <strong id="totalCount">0</strong>
+            <span>Total Referrals</span>
+        </div>
+
+    </div>
+
+    <div style="margin-top:20px; text-align:center;">
+        <p style="color:#aaa;font-size:12px;">
+            Progress towards your next ₦1,000 airtime reward
+        </p>
+
+        <h2 id="rewardProgress" style="color:#e5b94b;margin-top:10px;">
+            0 / 3
+        </h2>
+    </div>
+
+    <p id="dashboardMessage"
+       style="color:#888;font-size:11px;text-align:center;margin-top:15px;">
+       Your referral statistics will appear here.
+    </p>
+
+</div>
 </div>  <script>  
   
 /* SUPABASE CONFIGURATION */  
@@ -343,7 +384,75 @@ function showMessage(text, type) {
     message.style.display = "block";  
 }  
   
-  
+  async function openReferralDashboard() {
+
+    const email = document.getElementById("email").value.trim();
+    const reference = document.getElementById("reference").value.trim();
+
+    if (!email || !reference) {
+        showMessage(
+            "Please enter your registered email and payment reference first.",
+            "error"
+        );
+        return;
+    }
+
+    const dashboard = document.getElementById("referralDashboard");
+    const message = document.getElementById("dashboardMessage");
+
+    dashboard.style.display = "block";
+    message.textContent = "Loading your referral statistics...";
+
+    try {
+
+        const response = await fetch(
+            SUPABASE_URL + "/rest/v1/rpc/get_sonic_referral_stats",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "apikey": SUPABASE_ANON_KEY,
+                    "Authorization": "Bearer " + SUPABASE_ANON_KEY
+                },
+                body: JSON.stringify({
+                    p_email: email,
+                    p_payment_reference: reference
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.message || "Unable to load your dashboard."
+            );
+        }
+
+        const stats = Array.isArray(data) ? data[0] : data;
+
+        const successful = Number(stats.successful_referrals || 0);
+        const pending = Number(stats.pending_referrals || 0);
+        const total = Number(stats.total_referrals || 0);
+
+        document.getElementById("successfulCount").textContent = successful;
+        document.getElementById("pendingCount").textContent = pending;
+        document.getElementById("totalCount").textContent = total;
+
+        document.getElementById("rewardProgress").textContent =
+            (successful % 3) + " / 3";
+
+        message.textContent =
+            "Your referral dashboard has been updated successfully.";
+
+    } catch (error) {
+
+        message.textContent =
+            error.message || "Unable to load your referral dashboard.";
+
+    }
+
+    }
 /* GENERATE REFERRAL LINK */  
   
 async function generateReferralLink() {  
