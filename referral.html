@@ -98,7 +98,7 @@ body {
     margin-top: 7px;
 }
 
-form {
+.fields {
     display: flex;
     flex-direction: column;
     gap: 17px;
@@ -237,9 +237,6 @@ button:disabled {
     font-size: 11px;
 }
 
-.hidden {
-    display: none !important;
-}
 </style>
 </head>
 
@@ -267,7 +264,7 @@ button:disabled {
         <p>Earn ₦1,000 airtime for every 3 successful referrals.</p>
     </div>
 
-    <form id="referralForm">
+    <div class="fields">
 
         <div class="field">
             <label for="email">REGISTERED EMAIL ADDRESS</label>
@@ -291,11 +288,11 @@ button:disabled {
             >
         </div>
 
-        <button type="submit" id="generateButton">
+        <button type="button" id="generateButton">
             GET MY REFERRAL LINK
         </button>
 
-    </form>
+    </div>
 
     <div id="message" class="message"></div>
 
@@ -342,19 +339,25 @@ button:disabled {
 </div>
 
 <script>
+
 /* =====================================
    SUPABASE CONFIGURATION
 ===================================== */
 
-const SUPABASE_URL = "https://yqicyiflmkfujoqstqcc.supabase.co";
+const SUPABASE_URL =
+    "https://yqicyiflmkfujoqstqcc.supabase.co";
 
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlxaWN5aWZsbWtmdWpvcXN0cWNjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ2NTA1MzcsImV4cCI6MjExMDIyNjUzN30.fEhjL7XUGNv6iFCQqgYN-EloAsOvooC5MZay45GHQDk";
-const sonicDB = window.supabase.createClient(
+const SUPABASE_ANON_KEY =
+    "eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlxaWN5aWZsbWtmdWpvcXN0cWNjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ2NTA1MzcsImV4cCI6MjExMDIyNjUzN30.fEhjL7XUGNv6iFCQqgYN-EloAsOvooC5MZay45GHQDk";
+const sonicDB = window.supabase.createClient(";
+
+
 /* =====================================
    PAGE ELEMENTS
 ===================================== */
 
-const form = document.getElementById("referralForm");
+const emailInput = document.getElementById("email");
+const referenceInput = document.getElementById("reference");
 const generateButton = document.getElementById("generateButton");
 const message = document.getElementById("message");
 const result = document.getElementById("result");
@@ -385,15 +388,12 @@ function setLoading(loading) {
    GENERATE REFERRAL CODE
 ===================================== */
 
-form.addEventListener("submit", async function(event) {
+generateButton.addEventListener("click", async function(event) {
 
     event.preventDefault();
 
-    const email = document.getElementById("email")
-        .value.trim();
-
-    const reference = document.getElementById("reference")
-        .value.trim();
+    const email = emailInput.value.trim();
+    const reference = referenceInput.value.trim();
 
     if (!email || !reference) {
         showMessage(
@@ -403,12 +403,21 @@ form.addEventListener("submit", async function(event) {
         return;
     }
 
+    if (!emailInput.checkValidity()) {
+        showMessage(
+            "Please enter a valid email address.",
+            "error"
+        );
+        return;
+    }
+
     if (
-        SUPABASE_URL === "https://yqicyiflmkfujoqstqcc.supabase.co" ||
-        SUPABASE_ANON_KEY === "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlxaWN5aWZsbWtmdWpvcXN0cWNjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ2NTA1MzcsImV4cCI6MjExMDIyNjUzN30.fEhjL7XUGNv6iFCQqgYN-EloAsOvooC5MZay45GHQDk"
+        !SUPABASE_URL.startsWith("https://") ||
+        !SUPABASE_ANON_KEY ||
+        SUPABASE_ANON_KEY.includes("PASTE_YOUR")
     ) {
         showMessage(
-            "Please configure your Supabase URL and anon key first.",
+            "Your Supabase configuration is incomplete. Please check your public anon key.",
             "error"
         );
         return;
@@ -438,7 +447,17 @@ form.addEventListener("submit", async function(event) {
             }
         );
 
-        const data = await response.json();
+        const responseText = await response.text();
+
+        let data;
+
+        try {
+            data = JSON.parse(responseText);
+        } catch {
+            throw new Error(
+                "Supabase returned an unexpected response. Please check your project URL."
+            );
+        }
 
         if (!response.ok) {
             throw new Error(
@@ -450,19 +469,107 @@ form.addEventListener("submit", async function(event) {
 
         if (typeof data !== "string" || !data.trim()) {
             throw new Error(
-                "A referral code was not returned. Please contact support."
+                "No referral code was returned. Please contact support."
             );
         }
 
         const code = data.trim();
 
-        // Build the payment link in the same website folder
         const paymentURL = new URL(
             "payment.html",
             window.location.href
         );
 
         paymentURL.searchParams.set("ref", code);
+
+        generatedLink = paymentURL.href;
+
+        document.getElementById("referralCode").textContent = code;
+
+        document.getElementById("referralLink").textContent =
+            generatedLink;
+
+        result.style.display = "block";
+
+        showMessage(
+            "Payment verified! Your referral link is ready.",
+            "success"
+        );
+
+    } catch (error) {
+
+        showMessage(
+            error.message || "Something went wrong. Please try again.",
+            "error"
+        );
+
+    } finally {
+
+        setLoading(false);
+
+    }
+
+});
+
+
+/* =====================================
+   COPY REFERRAL LINK
+===================================== */
+
+document.getElementById("copyLink").addEventListener(
+    "click",
+    async function() {
+
+        if (!generatedLink) return;
+
+        try {
+
+            await navigator.clipboard.writeText(generatedLink);
+
+            this.textContent = "LINK COPIED!";
+
+        } catch {
+
+            showMessage(
+                "Copying failed. Please select and copy the referral link manually.",
+                "error"
+            );
+
+        }
+
+    }
+);
+
+
+/* =====================================
+   WHATSAPP SHARING
+===================================== */
+
+document.getElementById("shareWhatsApp").addEventListener(
+    "click",
+    function() {
+
+        if (!generatedLink) return;
+
+        const text =
+            "Hello! Join me on SONIC MINDS. Use my referral link to get started:\n\n" +
+            generatedLink;
+
+        const whatsappURL =
+            "https://wa.me/?text=" + encodeURIComponent(text);
+
+        window.open(
+            whatsappURL,
+            "_blank"
+        );
+
+    }
+);
+
+</script>
+
+</body>
+</html>L.searchParams.set("ref", code);
 
         generatedLink = paymentURL.href;
 
