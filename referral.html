@@ -1,833 +1,527 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SONIC MINDS | Referral Program</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Inter', sans-serif;
-    background: #080808;
-    color: white;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 25px 15px;
-}
-
-.container {
-    width: 100%;
-    max-width: 480px;
-    background: #111;
-    border: 1px solid #292929;
-    border-radius: 18px;
-    padding: 30px 24px;
-    box-shadow: 0 15px 50px rgba(0,0,0,.5);
-}
-
-.logo {
-    text-align: center;
-    margin-bottom: 28px;
-}
-
-.logo h1 {
-    font-size: 27px;
-    font-weight: 800;
-    letter-spacing: 3px;
-    color: #e5b94b;
-}
-
-.logo p {
-    color: #888;
-    font-size: 12px;
-    margin-top: 8px;
-    letter-spacing: 1px;
-}
-
-.heading {
-    text-align: center;
-    margin-bottom: 25px;
-}
-
-.heading h2 {
-    font-size: 22px;
-    margin-bottom: 10px;
-}
-
-.heading p {
-    color: #999;
-    font-size: 13px;
-    line-height: 1.7;
-}
-
-.reward-box {
-    background: #191919;
-    border: 1px solid #383027;
-    border-radius: 12px;
-    padding: 20px;
-    text-align: center;
-    margin-bottom: 25px;
-}
-
-.reward-box span {
-    color: #aaa;
-    font-size: 12px;
-}
-
-.reward-box h2 {
-    color: #e5b94b;
-    font-size: 32px;
-    margin-top: 8px;
-}
-
-.reward-box p {
-    color: #999;
-    font-size: 12px;
-    margin-top: 7px;
-}
-
-.fields {
-    display: flex;
-    flex-direction: column;
-    gap: 17px;
-}
-
-.field label {
-    display: block;
-    font-size: 12px;
-    color: #ccc;
-    margin-bottom: 9px;
-    font-weight: 600;
-}
-
-.field input {
-    width: 100%;
-    padding: 14px;
-    background: #1a1a1a;
-    border: 1px solid #333;
-    border-radius: 9px;
-    color: white;
-    font-size: 14px;
-    outline: none;
-}
-
-.field input:focus {
-    border-color: #e5b94b;
-}
-
-.field input::placeholder {
-    color: #666;
-}
-
-button {
-    width: 100%;
-    padding: 15px;
-    background: #e5b94b;
-    color: #111;
-    border: none;
-    border-radius: 9px;
-    font-size: 13px;
-    font-weight: 800;
-    cursor: pointer;
-    display: block;
-    margin-top: 5px;
-}
-
-button:disabled {
-    opacity: .6;
-    cursor: not-allowed;
-}
-
-.whatsapp {
-    background: #168b45;
-    color: white;
-    margin-top: 12px;
-}
-
-.message {
-    display: none;
-    padding: 13px;
-    border-radius: 8px;
-    font-size: 13px;
-    line-height: 1.6;
-    margin-top: 18px;
-    overflow-wrap: anywhere;
-}
-
-.error {
-    background: #351919;
-    border: 1px solid #713333;
-    color: #ffbaba;
-}
-
-.success {
-    background: #17351f;
-    border: 1px solid #28683a;
-    color: #b7f5c5;
-}
-
-.result {
-    display: none;
-    margin-top: 22px;
-}
-
-.result h3 {
-    color: #e5b94b;
-    font-size: 17px;
-    text-align: center;
-    margin-bottom: 15px;
-}
-
-.code-box {
-    background: #080808;
-    border: 1px dashed #e5b94b;
-    padding: 16px;
-    border-radius: 9px;
-    color: #e5b94b;
-    font-size: 17px;
-    font-weight: 800;
-    text-align: center;
-    overflow-wrap: anywhere;
-    margin-bottom: 15px;
-}
-
-.link-box {
-    background: #080808;
-    border: 1px solid #333;
-    padding: 13px;
-    border-radius: 9px;
-    color: #ddd;
-    font-size: 12px;
-    line-height: 1.7;
-    overflow-wrap: anywhere;
-    margin-bottom: 12px;
-}
-
-/* REFERRAL STATISTICS */
-
-.stats-box {
-    background: #191919;
-    border: 1px solid #383027;
-    border-radius: 12px;
-    padding: 18px;
-    margin-top: 22px;
-}
-
-.stats-box h3 {
-    color: #e5b94b;
-    text-align: center;
-    font-size: 16px;
-    margin-bottom: 17px;
-}
-
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 9px;
-}
-
-.stat-item {
-    background: #080808;
-    border: 1px solid #303030;
-    border-radius: 9px;
-    padding: 13px 5px;
-    text-align: center;
-}
-
-.stat-item strong {
-    display: block;
-    color: #e5b94b;
-    font-size: 23px;
-    margin-bottom: 7px;
-}
-
-.stat-item span {
-    display: block;
-    color: #999;
-    font-size: 10px;
-    line-height: 1.5;
-}
-
-.progress-area {
-    margin-top: 20px;
-}
-
-.progress-heading {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    color: #ccc;
-    font-size: 11px;
-    margin-bottom: 9px;
-}
-
-.progress-track {
-    width: 100%;
-    height: 9px;
-    background: #080808;
-    border-radius: 20px;
-    overflow: hidden;
-    border: 1px solid #333;
-}
-
-.progress-fill {
-    width: 0%;
-    height: 100%;
-    background: #e5b94b;
-    border-radius: 20px;
-    transition: width .3s ease;
-}
-
-.stats-note {
-    color: #888;
-    font-size: 11px;
-    line-height: 1.7;
-    text-align: center;
-    margin-top: 15px;
-}
-
-.stats-error {
-    display: none;
-    color: #ffbaba;
-    font-size: 11px;
-    text-align: center;
-    line-height: 1.6;
-    margin-top: 12px;
-}
-
-.note {
-    margin-top: 22px;
-    text-align: center;
-    color: #777;
-    font-size: 11px;
-    line-height: 1.8;
-}
-
-.footer {
-    margin-top: 25px;
-    border-top: 1px solid #292929;
-    padding-top: 18px;
-    text-align: center;
-    color: #666;
-    font-size: 11px;
-}
-
-@media (max-width: 360px) {
-    .stats-grid {
-        gap: 5px;
-    }
-
-    .stat-item strong {
-        font-size: 19px;
-    }
-
-    .stat-item span {
-        font-size: 9px;
-    }
-}
-</style>
-</head>
-
-<body>
-
-<div class="container">
-
-    <div class="logo">
-        <h1>SONIC MINDS</h1>
-        <p>LEARN. PRACTICE. EXCEL.</p>
-    </div>
-
-    <div class="heading">
-        <h2>Referral Program</h2>
-        <p>
-            Invite friends to join SONIC MINDS.
-            Share your personal referral link and earn
-            airtime rewards for successful referrals.
-        </p>
-    </div>
-
-    <div class="reward-box">
-        <span>YOUR REFERRAL REWARD</span>
-        <h2>₦1,000</h2>
-        <p>Earn ₦1,000 airtime for every 3 successful referrals.</p>
-    </div>
-
-    <div class="fields">
-
-        <div class="field">
-            <label for="email">REGISTERED EMAIL ADDRESS</label>
-            <input
-                type="email"
-                id="email"
-                placeholder="Enter the email used for payment"
-                autocomplete="email"
-                required
-            >
-        </div>
-
-        <div class="field">
-            <label for="reference">PAYMENT REFERENCE</label>
-            <input
-                type="text"
-                id="reference"
-                placeholder="Enter your Paystack reference"
-                maxlength="150"
-                required
-            >
-        </div>
-
-        <button
-            type="button"
-            id="generateButton"
-            onclick="generateReferralLink()">
-            GET MY REFERRAL LINK
-        </button>
-
-    </div>
-
-    <div id="message" class="message"></div>
-
-    <div id="result" class="result">
-
-        <h3>Your Referral Details</h3>
-
-        <div class="field">
-            <label>YOUR UNIQUE REFERRAL CODE</label>
-            <div class="code-box" id="referralCode"></div>
-        </div>
-
-        <div class="field">
-            <label>YOUR PERSONAL REFERRAL LINK</label>
-            <div class="link-box" id="referralLink"></div>
-        </div>
-
-        <button type="button" onclick="copyReferralLink()">
-            COPY REFERRAL LINK
-        </button>
-
-        <button type="button" class="whatsapp" onclick="shareWhatsApp()">
-            SHARE ON WHATSAPP
-        </button>
-
-        <!-- REFERRAL STATISTICS -->
-
-        <div class="stats-box">
-
-            <h3>Your Referral Statistics</h3>
-
-            <div class="stats-grid">
-
-                <div class="stat-item">
-                    <strong id="successfulCount">0</strong>
-                    <span>Successful</span>
-                </div>
-
-                <div class="stat-item">
-                    <strong id="pendingCount">0</strong>
-                    <span>Pending</span>
-                </div>
-
-                <div class="stat-item">
-                    <strong id="totalCount">0</strong>
-                    <span>Total</span>
-                </div>
-
-            </div>
-
-            <div class="progress-area">
-
-                <div class="progress-heading">
-                    <span>Progress towards next reward</span>
-                    <span id="progressText">0 / 3</span>
-                </div>
-
-                <div class="progress-track">
-                    <div class="progress-fill" id="progressFill"></div>
-                </div>
-
-            </div>
-
-            <p class="stats-note">
-                Every 3 successful referrals qualify for a ₦1,000 airtime reward.
-                Rewards are processed manually by SONIC MINDS.
-            </p>
-
-            <p class="stats-error" id="statsError"></p>
-
-        </div>
-
-        <p class="note">
-            A referral counts only after the friend's payment
-            has been successfully verified.
-        </p>
-
-    </div>
-
-    <div class="note">
-        Only verified SONIC MINDS payments qualify.
-        <br>
-        Keep your payment reference private.
-    </div>
-
-    <div class="footer">
-        © 2026 SONIC MINDS. All rights reserved.
-    </div>
-
+<!DOCTYPE html>  <html lang="en">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>SONIC MINDS | Referral Program</title>  <link rel="preconnect" href="https://fonts.googleapis.com">  
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">  <style>  
+* {  
+    margin: 0;  
+    padding: 0;  
+    box-sizing: border-box;  
+}  
+  
+body {  
+    font-family: 'Inter', sans-serif;  
+    background: #080808;  
+    color: white;  
+    min-height: 100vh;  
+    display: flex;  
+    justify-content: center;  
+    align-items: center;  
+    padding: 25px 15px;  
+}  
+  
+.container {  
+    width: 100%;  
+    max-width: 480px;  
+    background: #111;  
+    border: 1px solid #292929;  
+    border-radius: 18px;  
+    padding: 30px 24px;  
+    box-shadow: 0 15px 50px rgba(0,0,0,.5);  
+}  
+  
+.logo {  
+    text-align: center;  
+    margin-bottom: 28px;  
+}  
+  
+.logo h1 {  
+    font-size: 27px;  
+    font-weight: 800;  
+    letter-spacing: 3px;  
+    color: #e5b94b;  
+}  
+  
+.logo p {  
+    color: #888;  
+    font-size: 12px;  
+    margin-top: 8px;  
+    letter-spacing: 1px;  
+}  
+  
+.heading {  
+    text-align: center;  
+    margin-bottom: 25px;  
+}  
+  
+.heading h2 {  
+    font-size: 22px;  
+    margin-bottom: 10px;  
+}  
+  
+.heading p {  
+    color: #999;  
+    font-size: 13px;  
+    line-height: 1.7;  
+}  
+  
+.reward-box {  
+    background: #191919;  
+    border: 1px solid #383027;  
+    border-radius: 12px;  
+    padding: 20px;  
+    text-align: center;  
+    margin-bottom: 25px;  
+}  
+  
+.reward-box span {  
+    color: #aaa;  
+    font-size: 12px;  
+}  
+  
+.reward-box h2 {  
+    color: #e5b94b;  
+    font-size: 32px;  
+    margin-top: 8px;  
+}  
+  
+.reward-box p {  
+    color: #999;  
+    font-size: 12px;  
+    margin-top: 7px;  
+}  
+  
+.fields {  
+    display: flex;  
+    flex-direction: column;  
+    gap: 17px;  
+}  
+  
+.field label {  
+    display: block;  
+    font-size: 12px;  
+    color: #ccc;  
+    margin-bottom: 9px;  
+    font-weight: 600;  
+}  
+  
+.field input {  
+    width: 100%;  
+    padding: 14px;  
+    background: #1a1a1a;  
+    border: 1px solid #333;  
+    border-radius: 9px;  
+    color: white;  
+    font-size: 14px;  
+    outline: none;  
+}  
+  
+.field input:focus {  
+    border-color: #e5b94b;  
+}  
+  
+.field input::placeholder {  
+    color: #666;  
+}  
+  
+button {  
+    width: 100%;  
+    padding: 15px;  
+    background: #e5b94b;  
+    color: #111;  
+    border: none;  
+    border-radius: 9px;  
+    font-size: 13px;  
+    font-weight: 800;  
+    cursor: pointer;  
+    display: block;  
+    margin-top: 5px;  
+}  
+  
+button:disabled {  
+    opacity: .6;  
+    cursor: not-allowed;  
+}  
+  
+.whatsapp {  
+    background: #168b45;  
+    color: white;  
+    margin-top: 12px;  
+}  
+  
+.message {  
+    display: none;  
+    padding: 13px;  
+    border-radius: 8px;  
+    font-size: 13px;  
+    line-height: 1.6;  
+    margin-top: 18px;  
+    overflow-wrap: anywhere;  
+}  
+  
+.error {  
+    background: #351919;  
+    border: 1px solid #713333;  
+    color: #ffbaba;  
+}  
+  
+.success {  
+    background: #17351f;  
+    border: 1px solid #28683a;  
+    color: #b7f5c5;  
+}  
+  
+.result {  
+    display: none;  
+    margin-top: 22px;  
+}  
+  
+.result h3 {  
+    color: #e5b94b;  
+    font-size: 17px;  
+    text-align: center;  
+    margin-bottom: 15px;  
+}  
+  
+.code-box {  
+    background: #080808;  
+    border: 1px dashed #e5b94b;  
+    padding: 16px;  
+    border-radius: 9px;  
+    color: #e5b94b;  
+    font-size: 17px;  
+    font-weight: 800;  
+    text-align: center;  
+    overflow-wrap: anywhere;  
+    margin-bottom: 15px;  
+}  
+  
+.link-box {  
+    background: #080808;  
+    border: 1px solid #333;  
+    padding: 13px;  
+    border-radius: 9px;  
+    color: #ddd;  
+    font-size: 12px;  
+    line-height: 1.7;  
+    overflow-wrap: anywhere;  
+    margin-bottom: 12px;  
+}  
+  
+.note {  
+    margin-top: 22px;  
+    text-align: center;  
+    color: #777;  
+    font-size: 11px;  
+    line-height: 1.8;  
+}  
+  
+.footer {  
+    margin-top: 25px;  
+    border-top: 1px solid #292929;  
+    padding-top: 18px;  
+    text-align: center;  
+    color: #666;  
+    font-size: 11px;  
+}  
+</style>  </head>  <body>  <div class="container">  <div class="logo">  
+    <h1>SONIC MINDS</h1>  
+    <p>LEARN. PRACTICE. EXCEL.</p>  
+</div>  
+
+<div class="heading">  
+    <h2>Referral Program</h2>  
+    <p>  
+        Invite friends to join SONIC MINDS.  
+        Share your personal referral link and earn  
+        airtime rewards for successful referrals.  
+    </p>  
+</div>  
+
+<div class="reward-box">  
+    <span>YOUR REFERRAL REWARD</span>  
+    <h2>₦1,000</h2>  
+    <p>Earn ₦1,000 airtime for every 3 successful referrals.</p>  
+</div>  
+
+<div class="fields">  
+
+    <div class="field">  
+        <label for="email">REGISTERED EMAIL ADDRESS</label>  
+        <input  
+            type="email"  
+            id="email"  
+            placeholder="Enter the email used for payment"  
+            autocomplete="email"  
+            required  
+        >  
+    </div>  
+
+    <div class="field">  
+        <label for="reference">PAYMENT REFERENCE</label>  
+        <input  
+            type="text"  
+            id="reference"  
+            placeholder="Enter your Paystack reference"  
+            maxlength="150"  
+            required  
+        >  
+    </div>  
+
+    <button  
+        type="button"  
+        id="generateButton"  
+        onclick="generateReferralLink()">  
+        GET MY REFERRAL LINK  
+    </button>  
+
+</div>  
+
+<div id="message" class="message"></div>  
+
+<div id="result" class="result">  
+
+    <h3>Your Referral Details</h3>  
+
+    <div class="field">  
+        <label>YOUR UNIQUE REFERRAL CODE</label>  
+        <div class="code-box" id="referralCode"></div>  
+    </div>  
+
+    <div class="field">  
+        <label>YOUR PERSONAL REFERRAL LINK</label>  
+        <div class="link-box" id="referralLink"></div>  
+    </div>  
+
+    <button type="button" onclick="copyReferralLink()">  
+        COPY REFERRAL LINK  
+    </button>  
+
+    <button type="button" class="whatsapp" onclick="shareWhatsApp()">  
+        SHARE ON WHATSAPP  
+    </button>  
+
+    <p class="note">  
+        A referral counts only after the friend's payment  
+        has been successfully verified.  
+    </p>  
+
+</div>  
+
+<div class="note">  
+    Only verified SONIC MINDS payments qualify.  
+    <br>  
+    Keep your payment reference private.  
+</div>  
+
+<div class="footer">  
+    © 2026 SONIC MINDS. All rights reserved.  
 </div>
 
-<script>
-
-/* SUPABASE CONFIGURATION */
-
-const SUPABASE_URL =
-    "https://yqicyiflmkfujoqstqcc.supabase.co";
-
-const SUPABASE_ANON_KEY =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlxaWN5aWZsbWtmdWpvcXN0cWNjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ2NTA1MzcsImV4cCI6MjExMDIyNjUzN30.fEhjL7XUGNv6iFCQqgYN-EloAsOvooC5MZay45GHQDk";
-const sonicDB = window.supabase.createClient(
-let generatedLink = "";
-
-
-/* MESSAGE DISPLAY */
-
-function showMessage(text, type) {
-
-    const message = document.getElementById("message");
-
-    message.className = "message " + type;
-    message.textContent = text;
-    message.style.display = "block";
-
-}
-
-
-/* LOAD REFERRAL STATISTICS */
-
-async function loadReferralStats(email, reference) {
-
-    const statsError = document.getElementById("statsError");
-
-    statsError.style.display = "none";
-    statsError.textContent = "";
-
-    try {
-
-        const response = await fetch(
-            SUPABASE_URL + "/rest/v1/rpc/get_sonic_referral_stats",
-            {
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json",
-                    "apikey": SUPABASE_ANON_KEY,
-                    "Authorization": "Bearer " + SUPABASE_ANON_KEY
-                },
-
-                body: JSON.stringify({
-                    p_email: email,
-                    p_payment_reference: reference
-                })
-            }
-        );
-
-        const responseText = await response.text();
-
-        let data;
-
-        try {
-            data = JSON.parse(responseText);
-        } catch {
-            throw new Error("Invalid statistics response.");
-        }
-
-        if (!response.ok) {
-            throw new Error(
-                data.message ||
-                data.details ||
-                "Unable to load referral statistics."
-            );
-        }
-
-        // Support either a JSON object or a one-row array.
-
-        if (Array.isArray(data)) {
-            data = data[0];
-        }
-
-        if (!data || typeof data !== "object") {
-            throw new Error("Referral statistics were not returned.");
-        }
-
-        const successful = Number(data.successful_referrals || 0);
-        const pending = Number(data.pending_referrals || 0);
-        const total = Number(data.total_referrals || 0);
-
-        if (
-            !Number.isFinite(successful) ||
-            !Number.isFinite(pending) ||
-            !Number.isFinite(total)
-        ) {
-            throw new Error("Invalid referral statistics received.");
-        }
-
-        document.getElementById("successfulCount").textContent =
-            successful;
-
-        document.getElementById("pendingCount").textContent =
-            pending;
-
-        document.getElementById("totalCount").textContent =
-            total;
-
-        // Each reward milestone requires 3 successful referrals.
-
-        const progress = successful % 3;
-        const remaining = progress === 0 ? 3 : 3 - progress;
-        const percentage = (progress / 3) * 100;
-
-        document.getElementById("progressText").textContent =
-            progress + " / 3";
-
-        document.getElementById("progressFill").style.width =
-            percentage + "%";
-
-        if (progress === 0) {
-
-            document.getElementById("progressText").textContent =
-                "0 / 3";
-
-        }
-
-        document.getElementById("progressFill").setAttribute(
-            "aria-valuenow",
-            percentage
-        );
-
-    } catch (error) {
-
-        console.error("Referral statistics error:", error);
-
-        statsError.textContent =
-            "Your referral link is ready, but statistics could not load. Please try again later.";
-
-        statsError.style.display = "block";
-
-    }
-
-}
-
-
-/* GENERATE REFERRAL LINK */
-
-async function generateReferralLink() {
-
-    const emailInput = document.getElementById("email");
-    const referenceInput = document.getElementById("reference");
-    const button = document.getElementById("generateButton");
-    const result = document.getElementById("result");
-
-    const email = emailInput.value.trim();
-    const reference = referenceInput.value.trim();
-
-    if (!email || !reference) {
-
-        showMessage(
-            "Please enter your registered email and payment reference.",
-            "error"
-        );
-
-        return;
-    }
-
-    if (!emailInput.checkValidity()) {
-
-        showMessage("Please enter a valid email address.", "error");
-
-        return;
-    }
-
-    if (
-        !SUPABASE_ANON_KEY ||
-        SUPABASE_ANON_KEY.includes("PASTE_YOUR")
-    ) {
-
-        showMessage(
-            "Please enter your complete Supabase public key.",
-            "error"
-        );
-
-        return;
-    }
-
-    button.disabled = true;
-    button.textContent = "VERIFYING PAYMENT...";
-
-    result.style.display = "none";
-
-    showMessage("Checking your payment details...", "success");
-
-    try {
-
-        const response = await fetch(
-            SUPABASE_URL + "/rest/v1/rpc/get_sonic_referral_code",
-            {
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json",
-                    "apikey": SUPABASE_ANON_KEY,
-                    "Authorization": "Bearer " + SUPABASE_ANON_KEY
-                },
-
-                body: JSON.stringify({
-                    p_email: email,
-                    p_payment_reference: reference
-                })
-            }
-        );
-
-        const responseText = await response.text();
-
-        let data;
-
-        try {
-            data = JSON.parse(responseText);
-        } catch {
-            throw new Error(
-                "Unexpected response from Supabase. Check your project URL."
-            );
-        }
-
-        if (!response.ok) {
-
-            throw new Error(
-                data.message ||
-                data.details ||
-                data.hint ||
-                "Payment verification failed."
-            );
-
-        }
-
-        let code = "";
-
-        if (typeof data === "string") {
-
-            code = data.trim();
-
-        } else if (data && typeof data === "object") {
-
-            code = String(
-                data.referral_code ||
-                data.code ||
-                data.get_sonic_referral_code ||
-                ""
-            ).trim();
-
-        }
-
-        if (!code) {
-
-            throw new Error("Supabase did not return a referral code.");
-
-        }
-
-        const paymentURL = new URL(
-            "payment.html",
-            window.location.href
-        );
-
-        paymentURL.searchParams.set("ref", code);
-
-        generatedLink = paymentURL.href;
-
-        document.getElementById("referralCode").textContent = code;
-
-        document.getElementById("referralLink").textContent =
-            generatedLink;
-
-        result.style.display = "block";
-
-        showMessage(
-            "Payment verified! Your referral link is ready.",
-            "success"
-        );
-
-        // Load statistics separately so a statistics error
-        // does not prevent the referral link from working.
-
-        await loadReferralStats(email, reference);
-
-    } catch (error) {
-
-        showMessage(
-            error.message || "Something went wrong. Please try again.",
-            "error"
-        );
-
-    } finally {
-
-        button.disabled = false;
-        button.textContent = "GET MY REFERRAL LINK";
-
-    }
-
-}
-
-
-/* COPY LINK */
-
-async function copyReferralLink() {
-
-    if (!generatedLink) return;
-
-    try {
-
-        await navigator.clipboard.writeText(generatedLink);
-
-        showMessage("Referral link copied successfully!", "success");
-
-    } catch {
-
-        showMessage(
-            "Copying failed. Please select and copy the referral link manually.",
-            "error"
-        );
-
-    }
-
-}
-
-
-/* WHATSAPP SHARING */
-
-function shareWhatsApp() {
-
-    if (!generatedLink) return;
-
-    const text =
-        "Hello! Join me on SONIC MINDS. Use my referral link to get started:\n\n" +
-        generatedLink;
-
-    const whatsappURL =
-        "https://wa.me/?text=" + encodeURIComponent(text);
-
-    window.open(whatsappURL, "_blank");
-
-}
-
-</script>
-
-</body>
-    </html>
+</div>  <script>  
+  
+/* SUPABASE CONFIGURATION */  
+  
+const SUPABASE_URL =  
+    "https://yqicyiflmkfujoqstqcc.supabase.co";  
+  
+const SUPABASE_ANON_KEY =  
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlxaWN5aWZsbWtmdWpvcXN0cWNjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ2NTA1MzcsImV4cCI6MjExMDIyNjUzN30.fEhjL7XUGNv6iFCQqgYN-EloAsOvooC5MZay45GHQDk";  
+  
+  
+let generatedLink = "";  
+  
+  
+/* MESSAGE DISPLAY */  
+  
+function showMessage(text, type) {  
+    const message = document.getElementById("message");  
+  
+    message.className = "message " + type;  
+    message.textContent = text;  
+    message.style.display = "block";  
+}  
+  
+  
+/* GENERATE REFERRAL LINK */  
+  
+async function generateReferralLink() {  
+  
+    const emailInput = document.getElementById("email");  
+    const referenceInput = document.getElementById("reference");  
+    const button = document.getElementById("generateButton");  
+    const result = document.getElementById("result");  
+  
+    const email = emailInput.value.trim();  
+    const reference = referenceInput.value.trim();  
+  
+    if (!email || !reference) {  
+        showMessage(  
+            "Please enter your registered email and payment reference.",  
+            "error"  
+        );  
+        return;  
+    }  
+  
+    if (!emailInput.checkValidity()) {  
+        showMessage("Please enter a valid email address.", "error");  
+        return;  
+    }  
+  
+    if (  
+        !SUPABASE_ANON_KEY ||  
+        SUPABASE_ANON_KEY.includes("PASTE_YOUR")  
+    ) {  
+        showMessage(  
+            "Please enter your complete Supabase public key.",  
+            "error"  
+        );  
+        return;  
+    }  
+  
+    button.disabled = true;  
+    button.textContent = "VERIFYING PAYMENT...";  
+  
+    result.style.display = "none";  
+  
+    showMessage("Checking your payment details...", "success");  
+  
+    try {  
+  
+        const response = await fetch(  
+            SUPABASE_URL + "/rest/v1/rpc/get_sonic_referral_code",  
+            {  
+                method: "POST",  
+  
+                headers: {  
+                    "Content-Type": "application/json",  
+                    "apikey": SUPABASE_ANON_KEY,  
+                    "Authorization": "Bearer " + SUPABASE_ANON_KEY  
+                },  
+  
+                body: JSON.stringify({  
+                    p_email: email,  
+                    p_payment_reference: reference  
+                })  
+            }  
+        );  
+  
+        const responseText = await response.text();  
+  
+        let data;  
+  
+        try {  
+            data = JSON.parse(responseText);  
+        } catch {  
+            throw new Error(  
+                "Unexpected response from Supabase. Check your project URL."  
+            );  
+        }  
+  
+        if (!response.ok) {  
+            throw new Error(  
+                data.message ||  
+                data.details ||  
+                data.hint ||  
+                "Payment verification failed."  
+            );  
+        }  
+  
+        let code = "";  
+  
+        if (typeof data === "string") {  
+            code = data.trim();  
+        } else if (data && typeof data === "object") {  
+            code = String(  
+                data.referral_code ||  
+                data.code ||  
+                data.get_sonic_referral_code ||  
+                ""  
+            ).trim();  
+        }  
+  
+        if (!code) {  
+            throw new Error("Supabase did not return a referral code.");  
+        }  
+  
+        const paymentURL = new URL(  
+            "payment.html",  
+            window.location.href  
+        );  
+  
+        paymentURL.searchParams.set("ref", code);  
+  
+        generatedLink = paymentURL.href;  
+  
+        document.getElementById("referralCode").textContent = code;  
+  
+        document.getElementById("referralLink").textContent =  
+            generatedLink;  
+  
+        result.style.display = "block";  
+  
+        showMessage(  
+            "Payment verified! Your referral link is ready.",  
+            "success"  
+        );  
+  
+    } catch (error) {  
+  
+        showMessage(  
+            error.message || "Something went wrong. Please try again.",  
+            "error"  
+        );  
+  
+    } finally {  
+  
+        button.disabled = false;  
+        button.textContent = "GET MY REFERRAL LINK";  
+  
+    }  
+}  
+  
+  
+/* COPY LINK */  
+  
+async function copyReferralLink() {  
+  
+    if (!generatedLink) return;  
+  
+    try {  
+  
+        await navigator.clipboard.writeText(generatedLink);  
+  
+        showMessage("Referral link copied successfully!", "success");  
+  
+    } catch {  
+  
+        showMessage(  
+            "Copying failed. Please select and copy the referral link manually.",  
+            "error"  
+        );  
+  
+    }  
+}  
+  
+  
+/* WHATSAPP SHARING */  
+  
+function shareWhatsApp() {  
+  
+    if (!generatedLink) return;  
+  
+    const text =  
+        "Hello! Join me on SONIC MINDS. Use my referral link to get started:\n\n" +  
+        generatedLink;  
+  
+    const whatsappURL =  
+        "https://wa.me/?text=" + encodeURIComponent(text);  
+  
+    window.open(whatsappURL, "_blank");  
+  
+}  
+  
+</script> 
+</body>  
+</html>
