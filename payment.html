@@ -428,6 +428,8 @@ async function verifyPayment(reference) {
 ===================================== */
 
 const params = new URLSearchParams(window.location.search);
+    
+const referralCode = params.get("ref") || "";
 
 const returnedReference =
     params.get("reference") || params.get("trxref");
@@ -485,7 +487,8 @@ form.addEventListener("submit", async function(event) {
             body: JSON.stringify({
                 sender_name,
                 email,
-                phone_number
+                phone_number,
+                referral_code: referralCode
             })
         });
 
