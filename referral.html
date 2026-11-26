@@ -214,6 +214,98 @@ button:disabled {
     margin-bottom: 12px;
 }
 
+/* REFERRAL STATISTICS */
+
+.stats-box {
+    background: #191919;
+    border: 1px solid #383027;
+    border-radius: 12px;
+    padding: 18px;
+    margin-top: 22px;
+}
+
+.stats-box h3 {
+    color: #e5b94b;
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 17px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 9px;
+}
+
+.stat-item {
+    background: #080808;
+    border: 1px solid #303030;
+    border-radius: 9px;
+    padding: 13px 5px;
+    text-align: center;
+}
+
+.stat-item strong {
+    display: block;
+    color: #e5b94b;
+    font-size: 23px;
+    margin-bottom: 7px;
+}
+
+.stat-item span {
+    display: block;
+    color: #999;
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+.progress-area {
+    margin-top: 20px;
+}
+
+.progress-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    color: #ccc;
+    font-size: 11px;
+    margin-bottom: 9px;
+}
+
+.progress-track {
+    width: 100%;
+    height: 9px;
+    background: #080808;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid #333;
+}
+
+.progress-fill {
+    width: 0%;
+    height: 100%;
+    background: #e5b94b;
+    border-radius: 20px;
+    transition: width .3s ease;
+}
+
+.stats-note {
+    color: #888;
+    font-size: 11px;
+    line-height: 1.7;
+    text-align: center;
+    margin-top: 15px;
+}
+
+.stats-error {
+    display: none;
+    color: #ffbaba;
+    font-size: 11px;
+    text-align: center;
+    line-height: 1.6;
+    margin-top: 12px;
+}
+
 .note {
     margin-top: 22px;
     text-align: center;
@@ -229,6 +321,20 @@ button:disabled {
     text-align: center;
     color: #666;
     font-size: 11px;
+}
+
+@media (max-width: 360px) {
+    .stats-grid {
+        gap: 5px;
+    }
+
+    .stat-item strong {
+        font-size: 19px;
+    }
+
+    .stat-item span {
+        font-size: 9px;
+    }
 }
 </style>
 </head>
@@ -314,6 +420,53 @@ button:disabled {
             SHARE ON WHATSAPP
         </button>
 
+        <!-- REFERRAL STATISTICS -->
+
+        <div class="stats-box">
+
+            <h3>Your Referral Statistics</h3>
+
+            <div class="stats-grid">
+
+                <div class="stat-item">
+                    <strong id="successfulCount">0</strong>
+                    <span>Successful</span>
+                </div>
+
+                <div class="stat-item">
+                    <strong id="pendingCount">0</strong>
+                    <span>Pending</span>
+                </div>
+
+                <div class="stat-item">
+                    <strong id="totalCount">0</strong>
+                    <span>Total</span>
+                </div>
+
+            </div>
+
+            <div class="progress-area">
+
+                <div class="progress-heading">
+                    <span>Progress towards next reward</span>
+                    <span id="progressText">0 / 3</span>
+                </div>
+
+                <div class="progress-track">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+
+            </div>
+
+            <p class="stats-note">
+                Every 3 successful referrals qualify for a ₦1,000 airtime reward.
+                Rewards are processed manually by SONIC MINDS.
+            </p>
+
+            <p class="stats-error" id="statsError"></p>
+
+        </div>
+
         <p class="note">
             A referral counts only after the friend's payment
             has been successfully verified.
@@ -341,8 +494,7 @@ const SUPABASE_URL =
     "https://yqicyiflmkfujoqstqcc.supabase.co";
 
 const SUPABASE_ANON_KEY =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlxaWN5aWZsbWtmdWpvcXN0cWNjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ2NTA1MzcsImV4cCI6MjExMDIyNjUzN30.fEhjL7XUGNv6iFCQqgYN-EloAsOvooC5MZay45GHQDk";
-
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJIUzI1NiIsInJlZiI6InlxaWN5aWZsbWtmdWpvcXN0cWNjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ2NTA1MzcsImV4cCI6MjExMDIyNjUzN30.fEhjL7XUGNv6iFCQqgYN-EloAsOvooC5MZay45GHQDk";
 
 let generatedLink = "";
 
@@ -350,11 +502,129 @@ let generatedLink = "";
 /* MESSAGE DISPLAY */
 
 function showMessage(text, type) {
+
     const message = document.getElementById("message");
 
     message.className = "message " + type;
     message.textContent = text;
     message.style.display = "block";
+
+}
+
+
+/* LOAD REFERRAL STATISTICS */
+
+async function loadReferralStats(email, reference) {
+
+    const statsError = document.getElementById("statsError");
+
+    statsError.style.display = "none";
+    statsError.textContent = "";
+
+    try {
+
+        const response = await fetch(
+            SUPABASE_URL + "/rest/v1/rpc/get_sonic_referral_stats",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json",
+                    "apikey": SUPABASE_ANON_KEY,
+                    "Authorization": "Bearer " + SUPABASE_ANON_KEY
+                },
+
+                body: JSON.stringify({
+                    p_email: email,
+                    p_payment_reference: reference
+                })
+            }
+        );
+
+        const responseText = await response.text();
+
+        let data;
+
+        try {
+            data = JSON.parse(responseText);
+        } catch {
+            throw new Error("Invalid statistics response.");
+        }
+
+        if (!response.ok) {
+            throw new Error(
+                data.message ||
+                data.details ||
+                "Unable to load referral statistics."
+            );
+        }
+
+        // Support either a JSON object or a one-row array.
+
+        if (Array.isArray(data)) {
+            data = data[0];
+        }
+
+        if (!data || typeof data !== "object") {
+            throw new Error("Referral statistics were not returned.");
+        }
+
+        const successful = Number(data.successful_referrals || 0);
+        const pending = Number(data.pending_referrals || 0);
+        const total = Number(data.total_referrals || 0);
+
+        if (
+            !Number.isFinite(successful) ||
+            !Number.isFinite(pending) ||
+            !Number.isFinite(total)
+        ) {
+            throw new Error("Invalid referral statistics received.");
+        }
+
+        document.getElementById("successfulCount").textContent =
+            successful;
+
+        document.getElementById("pendingCount").textContent =
+            pending;
+
+        document.getElementById("totalCount").textContent =
+            total;
+
+        // Each reward milestone requires 3 successful referrals.
+
+        const progress = successful % 3;
+        const remaining = progress === 0 ? 3 : 3 - progress;
+        const percentage = (progress / 3) * 100;
+
+        document.getElementById("progressText").textContent =
+            progress + " / 3";
+
+        document.getElementById("progressFill").style.width =
+            percentage + "%";
+
+        if (progress === 0) {
+
+            document.getElementById("progressText").textContent =
+                "0 / 3";
+
+        }
+
+        document.getElementById("progressFill").setAttribute(
+            "aria-valuenow",
+            percentage
+        );
+
+    } catch (error) {
+
+        console.error("Referral statistics error:", error);
+
+        statsError.textContent =
+            "Your referral link is ready, but statistics could not load. Please try again later.";
+
+        statsError.style.display = "block";
+
+    }
+
 }
 
 
@@ -371,15 +641,19 @@ async function generateReferralLink() {
     const reference = referenceInput.value.trim();
 
     if (!email || !reference) {
+
         showMessage(
             "Please enter your registered email and payment reference.",
             "error"
         );
+
         return;
     }
 
     if (!emailInput.checkValidity()) {
+
         showMessage("Please enter a valid email address.", "error");
+
         return;
     }
 
@@ -387,10 +661,12 @@ async function generateReferralLink() {
         !SUPABASE_ANON_KEY ||
         SUPABASE_ANON_KEY.includes("PASTE_YOUR")
     ) {
+
         showMessage(
             "Please enter your complete Supabase public key.",
             "error"
         );
+
         return;
     }
 
@@ -434,29 +710,37 @@ async function generateReferralLink() {
         }
 
         if (!response.ok) {
+
             throw new Error(
                 data.message ||
                 data.details ||
                 data.hint ||
                 "Payment verification failed."
             );
+
         }
 
         let code = "";
 
         if (typeof data === "string") {
+
             code = data.trim();
+
         } else if (data && typeof data === "object") {
+
             code = String(
                 data.referral_code ||
                 data.code ||
                 data.get_sonic_referral_code ||
                 ""
             ).trim();
+
         }
 
         if (!code) {
+
             throw new Error("Supabase did not return a referral code.");
+
         }
 
         const paymentURL = new URL(
@@ -480,6 +764,11 @@ async function generateReferralLink() {
             "success"
         );
 
+        // Load statistics separately so a statistics error
+        // does not prevent the referral link from working.
+
+        await loadReferralStats(email, reference);
+
     } catch (error) {
 
         showMessage(
@@ -493,6 +782,7 @@ async function generateReferralLink() {
         button.textContent = "GET MY REFERRAL LINK";
 
     }
+
 }
 
 
@@ -516,6 +806,7 @@ async function copyReferralLink() {
         );
 
     }
+
 }
 
 
@@ -539,4 +830,4 @@ function shareWhatsApp() {
 </script>
 
 </body>
-</html>
+    </html>
